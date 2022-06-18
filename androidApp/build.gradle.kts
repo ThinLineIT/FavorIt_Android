@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -11,6 +13,7 @@ android {
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
+        buildConfigField("String", "KAKAO_API_KEY", getApiKey("KAKAO_API_KEY"))
     }
     buildTypes {
         getByName("release") {
@@ -21,6 +24,10 @@ android {
         dataBinding = true
         viewBinding = true
     }
+}
+
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {
