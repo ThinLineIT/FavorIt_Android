@@ -3,6 +3,8 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -14,6 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         buildConfigField("String", "KAKAO_API_KEY", getApiKey("KAKAO_API_KEY"))
+        manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("KAKAO_API_KEY")
     }
     buildTypes {
         getByName("release") {
@@ -34,7 +37,8 @@ dependencies {
     val LIFECYCLE_VERSION = "2.5.0-rc01"
     val RETROFIT_VERSION = "2.9.0"
     val OKHTTP_VERSION = "4.9.1"
-    val GLIDE_VERSIOON = "4.13.0"
+    val GLIDE_VERSION = "4.13.0"
+    val HILT_VERSION = "2.42"
 
     implementation(project(":shared"))
     implementation("com.google.android.material:material:1.4.0")
@@ -67,6 +71,12 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
 
     //Glide
-    implementation("com.github.bumptech.glide:glide:$GLIDE_VERSIOON")
-    annotationProcessor("com.github.bumptech.glide:compiler:$GLIDE_VERSIOON")
+    implementation("com.github.bumptech.glide:glide:$GLIDE_VERSION")
+    annotationProcessor("com.github.bumptech.glide:compiler:$GLIDE_VERSION")
+
+    //Hilt
+    implementation ("com.google.dagger:hilt-android:$HILT_VERSION")
+    kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
+
 }
