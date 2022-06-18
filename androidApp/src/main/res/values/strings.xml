@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- login -->
+    <string name="label_easy_login">간편 로그인</string>
+    <string name="label_kakao_login">카카오 계정으로 간편하게 로그인하세요</string>
+
+    <!-- landing -->
+    <string name="button_create_funding">+ 펀딩 만들기</string>
+    <string name="button_login">로그인</string>
+</resources>
