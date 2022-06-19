@@ -79,4 +79,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
+    //preference
+    implementation("androidx.preference:preference:1.2.0")
+
 }
