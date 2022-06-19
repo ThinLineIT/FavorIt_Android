@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.common.util.Utility
-import com.kakao.sdk.user.UserApiClient
 import com.thinlineit.favorit_android.Greeting
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.login.LoginActivity
@@ -32,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getHashKey(){
+    //TODO : 4명(윤권,민기,정민,동기) keyHash를 developer에 등록하면 삭제
+    private fun getHashKey() {
         var keyHash = Utility.getKeyHash(this)
         Log.d("kakaoHash", keyHash)
     }

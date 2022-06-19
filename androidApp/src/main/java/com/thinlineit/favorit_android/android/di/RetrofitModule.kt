@@ -15,6 +15,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
+    private const val BASE_URL = "http://3.35.218.213/api/"
+
     @Provides
     @Singleton
     fun providesInterceptor() : HttpLoggingInterceptor =
@@ -33,7 +35,7 @@ object RetrofitModule {
     @Singleton
     fun providesRetrofit(client: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("http://3.35.218.213/api/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

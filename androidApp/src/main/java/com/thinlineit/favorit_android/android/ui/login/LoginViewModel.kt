@@ -17,9 +17,9 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository
 ) : ViewModel() {
 
-    private val _isSuccessLogin = MutableLiveData<Event<Boolean>>()
-    val isSuccessLogin: LiveData<Event<Boolean>>
-        get() = _isSuccessLogin
+    private val _isLoginSuccess = MutableLiveData<Event<Boolean>>()
+    val isLoginSuccess: LiveData<Event<Boolean>>
+        get() = _isLoginSuccess
 
     val kakaoLoginCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (token != null) {
@@ -31,22 +31,22 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun tryLogin(kakaoToken : String){
-        viewModelScope.launch{
+    private fun tryLogin(kakaoToken: String) {
+        viewModelScope.launch {
             try {
-                if(loginRepository.login(kakaoToken))
+                if (loginRepository.login(kakaoToken))
                     initLoginState(true)
                 else
                     initLoginState(false)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 initLoginState(false)
-                Log.e("test",e.toString())
+                Log.e("test", e.toString())
             }
         }
     }
 
     private fun initLoginState(isSuccess: Boolean) {
-        _isSuccessLogin.value = Event(isSuccess)
+        _isLoginSuccess.value = Event(isSuccess)
     }
 
 }
