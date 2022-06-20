@@ -17,7 +17,7 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun providesLoginRepository(
-        localPreferenceDataSource: FavoritSharedPreference,
+        localPreferenceDataSource: LocalPreferenceDataSource,
         loginApi: LoginApi
     ): LoginRepository = LoginRepositoryImpl(localPreferenceDataSource, loginApi)
 }
