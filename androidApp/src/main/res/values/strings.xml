@@ -12,4 +12,5 @@
     <string name="button_previous">이전</string>
     <string name="button_next">다음</string>
     <string name="tooltip_please_enter_available_product_link">올바른 상품 링크를 입력해주세요.</string>
+    <string name="label_product_link">상품 링크를 입력해주세요!</string>
 </resources>
