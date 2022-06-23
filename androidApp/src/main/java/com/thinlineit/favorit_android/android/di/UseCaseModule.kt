@@ -1,18 +1,16 @@
 package com.thinlineit.favorit_android.android.di
 
-import com.thinlineit.favorit_android.android.data.api.LoginApi
+import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object UseCaseModule {
     @Provides
     @Singleton
-    fun providesLoginApi(retrofit: Retrofit): LoginApi =
-        retrofit.create(LoginApi::class.java)
+    fun providesCreateFundingUseCase(): CreateFundingUseCase = CreateFundingUseCase()
 }

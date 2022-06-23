@@ -1,11 +1,9 @@
 package com.thinlineit.favorit_android.android.di
 
-import com.thinlineit.favorit_android.android.data.RetrofitBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,7 +17,7 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun providesInterceptor() : HttpLoggingInterceptor =
+    fun providesInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().also {
             it.level = HttpLoggingInterceptor.Level.BODY
         }

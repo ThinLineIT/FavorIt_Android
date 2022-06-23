@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         binding.apply {
             lifecycleOwner = this@LoginActivity
             this.loginViewModel = viewModel
@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun startLoginActivity(context: Context) {
+        fun start(context: Context) {
             val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
         }
