@@ -13,6 +13,7 @@ class EnterFundingNameFragment : CreateFundingBaseFragment<FragmentEnterFundingN
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            viewModel = this@EnterFundingNameFragment.viewModel
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingNameFragment_to_enterFundingPriceFragment)
             }

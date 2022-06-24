@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tooltip_please_enter_available_product_link"
+            android:text="@string/tooltip_please_enter_available_funding_description"
             android:visibility="@{viewModel.fundingDescriptionState.toVisibility()}"
             app:layout_constraintEnd_toEndOf="@id/productLinkEditText"
             app:layout_constraintStart_toStartOf="@id/productLinkEditText"

@@ -11,6 +11,7 @@ class FundingPreviewFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            viewModel = this@FundingPreviewFragment.viewModel
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_fundingPreviewFragment_to_enterFundingExpiredDateFragment)
             }

@@ -11,6 +11,8 @@ class EnterProductOptionFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            viewModel = this@EnterProductOptionFragment.viewModel
+
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterProductOptionFragment_to_enterProductLinkFragment)
             }

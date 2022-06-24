@@ -11,6 +11,7 @@ class EnterFundingDescriptionFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            viewModel = this@EnterFundingDescriptionFragment.viewModel
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingDescriptionFragment_to_enterFundingNameFragment)
             }

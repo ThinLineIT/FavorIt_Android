@@ -14,22 +14,22 @@
         android:layout_height="match_parent"
         tools:context=".ui.createfunding.EnterFundingPriceFragment">
 
-        <EditText
-            android:id="@+id/productLinkEditText"
+        <TextView
+            android:id="@+id/productPriceAsCurrencyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewModel.fundingPrice}"
+            android:text="@{viewModel.fundingPriceAsCurrency}"
+            tools:text="100,000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/productPriceAsNumeralsTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tooltip_please_enter_available_product_link"
-            android:visibility="@{viewModel.productPriceState.toVisibility()}"
-            app:layout_constraintEnd_toEndOf="@id/productLinkEditText"
-            app:layout_constraintStart_toStartOf="@id/productLinkEditText"
-            app:layout_constraintTop_toBottomOf="@id/productLinkEditText" />
+            android:text="@{viewModel.fundingPriceAsNumerals}"
+            app:layout_constraintTop_toBottomOf="@id/productPriceAsCurrencyTextView"
+            tools:text="10만원" />
 
         <TextView
             android:id="@+id/previousButton"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_previous"
             android:textColor="@color/blue"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPad"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -46,8 +46,14 @@
             android:layout_height="wrap_content"
             android:text="@string/button_next"
             android:textColor="@{viewModel.productPriceState.toColor()}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPad"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.thinlineit.favorit_android.android.ui.createfunding.NumberKeyPad
+            android:id="@+id/numberKeyPad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

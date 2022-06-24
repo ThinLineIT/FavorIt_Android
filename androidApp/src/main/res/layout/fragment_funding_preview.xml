@@ -24,7 +24,8 @@
             app:layout_constraintBottom_toTopOf="@+id/fundingNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/fundingNameTextView"
@@ -73,7 +74,7 @@
             android:id="@+id/fundingPriceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.fundingPrice}"
+            android:text="@{viewModel.fundingPriceAsCurrency}"
             app:layout_constraintBottom_toTopOf="@+id/previousButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

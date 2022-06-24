@@ -11,6 +11,9 @@ class EnterFundingPriceFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            viewModel = this@EnterFundingPriceFragment.viewModel.also {
+                binding.numberKeyPad.numberResult = it.fundingPrice
+            }
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingPriceFragment_to_enterProductOptionFragment)
             }
@@ -20,5 +23,9 @@ class EnterFundingPriceFragment :
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }
