@@ -1,4 +1,4 @@
-package com.thinlineit.favorit_android.android.ui.createfunding
+package com.thinlineit.favorit_android.android.ui.customview
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.thinlineit.favorit_android.android.databinding.NumberKeyPadBinding
 import com.thinlineit.favorit_android.android.util.longToast
 
-class NumberKeyPad @JvmOverloads constructor(
+class NumberKeyPadView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

@@ -49,7 +49,7 @@
             app:layout_constraintBottom_toTopOf="@+id/numberKeyPad"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.thinlineit.favorit_android.android.ui.createfunding.NumberKeyPad
+        <com.thinlineit.favorit_android.android.ui.customview.NumberKeyPadView
             android:id="@+id/numberKeyPad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
