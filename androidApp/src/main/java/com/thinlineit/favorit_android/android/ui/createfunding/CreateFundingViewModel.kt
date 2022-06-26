@@ -20,7 +20,8 @@ class CreateFundingViewModel @Inject constructor(
     val productOption = MutableLiveData("")
     val fundingPrice = MutableLiveData(0L)
     val fundingPriceAsCurrency: LiveData<String> = Transformations.map(fundingPrice) {
-        NumberFormatter.asCurrency(it)
+        if (it == 0L) ""
+        else NumberFormatter.asCurrency(it)
     }
     val fundingPriceAsNumerals: LiveData<String> = Transformations.map(fundingPrice) {
         NumberFormatter.asNumerals(it)
