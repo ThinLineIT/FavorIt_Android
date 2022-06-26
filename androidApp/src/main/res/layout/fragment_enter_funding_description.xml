@@ -14,22 +14,38 @@
         android:layout_height="match_parent"
         tools:context=".ui.createfunding.EnterFundingDescriptionFragment">
 
-        <EditText
-            android:id="@+id/productLinkEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@={viewModel.fundingDescription}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/background_onlytop_round_white" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tooltip_please_enter_available_funding_description"
-            android:visibility="@{viewModel.fundingDescriptionState.toVisibility()}"
-            app:layout_constraintEnd_toEndOf="@id/productLinkEditText"
-            app:layout_constraintStart_toStartOf="@id/productLinkEditText"
-            app:layout_constraintTop_toBottomOf="@id/productLinkEditText" />
+            <EditText
+                android:id="@+id/productLinkEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:textSize="18sp"
+                android:paddingBottom="18dp"
+                android:layout_marginTop="75dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/background_round_white"
+                android:hint="@string/hint_product_description"
+                android:text="@={viewModel.fundingDescription}"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tooltip_please_enter_available_funding_description"
+                android:visibility="@{viewModel.fundingDescriptionState.toVisibility()}"
+                app:layout_constraintEnd_toEndOf="@id/productLinkEditText"
+                app:layout_constraintStart_toStartOf="@id/productLinkEditText"
+                app:layout_constraintTop_toBottomOf="@id/productLinkEditText" />
 
         <TextView
             android:id="@+id/previousButton"
@@ -37,6 +53,9 @@
             android:layout_height="wrap_content"
             android:text="@string/button_previous"
             android:textColor="@color/blue"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -45,9 +64,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_next"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="17sp"
             android:textColor="@{viewModel.fundingDescriptionState.toColor()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

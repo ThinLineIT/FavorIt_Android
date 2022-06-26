@@ -12,15 +12,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.createfunding.EnterProductOptionFragment">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/background_onlytop_round_white">
 
-        <EditText
+    <EditText
             android:id="@+id/productLinkEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:textSize="18sp"
+            android:paddingBottom="18dp"
+            android:paddingTop="10dp"
+            android:layout_marginTop="75dp"
+            android:paddingStart="20dp"
+            android:background="@drawable/background_round_white"
+            android:hint="@string/hint_product_option"
             android:text="@={viewModel.productOption}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+        />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,6 +51,9 @@
             android:layout_height="wrap_content"
             android:text="@string/button_previous"
             android:textColor="@color/blue"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -45,6 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_next"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="17sp"
             android:textColor="@{viewModel.productOptionState.toColor()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

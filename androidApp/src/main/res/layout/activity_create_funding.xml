@@ -4,7 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.createfunding.CreateFundingActivity">
+    tools:context=".ui.createfunding.CreateFundingActivity"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBaseline_toTopOf="parent"
+        android:src="@drawable/logo"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingEnd="180dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/navFragment"
+        android:id="@+id/logo"
+        />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -14,7 +31,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/logo"
         app:navGraph="@navigation/create_funding_nav_graph"
-        android:background="@drawable/background"/>
+         >
+
+
+    </androidx.fragment.app.FragmentContainerView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

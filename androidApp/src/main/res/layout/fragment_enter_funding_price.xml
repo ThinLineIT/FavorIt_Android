@@ -14,19 +14,38 @@
         android:layout_height="match_parent"
         tools:context=".ui.createfunding.EnterFundingPriceFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/background_onlytop_round_white">
         <TextView
             android:id="@+id/productPriceAsCurrencyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{viewModel.fundingPriceAsCurrency}"
-            tools:text="100,000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:hint="@string/hint_product_price"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/previousButton"/>
 
         <TextView
             android:id="@+id/productPriceAsNumeralsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
             android:text="@{viewModel.fundingPriceAsNumerals}"
             app:layout_constraintTop_toBottomOf="@id/productPriceAsCurrencyTextView"
             tools:text="10만원" />
@@ -37,6 +56,9 @@
             android:layout_height="wrap_content"
             android:text="@string/button_previous"
             android:textColor="@color/blue"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toTopOf="@+id/numberKeyPad"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -45,6 +67,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_next"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="17sp"
             android:textColor="@{viewModel.productPriceState.toColor()}"
             app:layout_constraintBottom_toTopOf="@+id/numberKeyPad"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -54,6 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent" />
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

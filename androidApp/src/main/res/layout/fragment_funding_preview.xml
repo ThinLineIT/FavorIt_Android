@@ -16,11 +16,19 @@
         tools:context=".ui.createfunding.FundingPreviewFragment">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/background_onlytop_round_white">
+
         <ImageView
             android:id="@+id/fundingPreviewImageView"
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_android_black_24dp"
+            android:src="@drawable/icon_present"
             app:layout_constraintBottom_toTopOf="@+id/fundingNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +39,8 @@
             android:id="@+id/fundingNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/black"
             android:text="@{viewModel.fundingName}"
             app:layout_constraintBottom_toTopOf="@+id/productLinkTextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +52,10 @@
             android:id="@+id/productLinkTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="상품 보러 가기"
+            android:text="@string/label_going_to_product"
+            android:textColor="@color/yellow"
+            android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/fundingDescriptionTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,12 +70,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productLinkTextView"
+            android:paddingLeft="28dp"
+            android:paddingRight="28dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
             tools:text="제 작고 귀여운 노트북이 어도비를 힘들어합니다..일러스트레이터,애펙까지 돌리고 싶은데 노트북이 터지지 않을까 걱정입니다. 이김에 아이맥을 사고 싶은데요..도와주시면 감사하겠습니다" />
 
         <TextView
             android:id="@+id/fundingExpiredDateTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:minHeight="80dp"
+            android:padding="20dp"
+            android:background="@drawable/background_round_shadow"
             android:text="@{viewModel.fundingExpiredDate}"
             app:layout_constraintBottom_toTopOf="@+id/fundingPriceTextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,8 +94,13 @@
 
         <TextView
             android:id="@+id/fundingPriceTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:minHeight="80dp"
+            android:padding="20dp"
+            android:background="@drawable/background_round_shadow"
             android:text="@{viewModel.fundingPriceAsCurrency}"
             app:layout_constraintBottom_toTopOf="@+id/previousButton"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,21 +110,32 @@
 
         <TextView
             android:id="@+id/previousButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/button_previous"
-
-            android:textColor="@color/blue"
+            android:text="@string/button_edit"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:padding="15dp"
+            android:background="@drawable/background_round_shadow"
+            android:textColor="@color/yellow"
+            app:layout_constraintTop_toBottomOf="@+id/fundingPriceTextView"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextButton"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/button_next"
-            android:textColor="@{viewModel.fundingExpiredDateState.toColor()}"
+            android:text="@string/button_start_funding"
+            android:layout_marginEnd="25dp"
+            android:padding="15dp"
+            android:background="@drawable/background_round_shadow"
+            android:textColor="@color/yellow"
+            app:layout_constraintStart_toEndOf="@+id/previousButton"
+            app:layout_constraintTop_toBottomOf="@+id/fundingPriceTextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
