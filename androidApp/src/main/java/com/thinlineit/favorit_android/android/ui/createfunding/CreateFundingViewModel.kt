@@ -89,6 +89,12 @@ class CreateFundingViewModel @Inject constructor(
             View.GONE
         }
 
+        fun toVisibilityCursor() = if (this == EMPTY) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+
         fun toColor(): Int = if (this == UNAVAILABLE) {
             R.color.blue
         } else {

@@ -21,6 +21,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/background_onlytop_round_white">
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/priceCursor"
+            android:textColor="@color/black"
+            android:text="@string/hint_product_price_cursor"
+            android:visibility="@{viewModel.fundingPriceState.toVisibilityCursor()}"
+            app:layout_constraintBottom_toBottomOf="@+id/productPriceAsCurrencyTextView"
+            app:layout_constraintEnd_toStartOf="@+id/productPriceAsCurrencyTextView"
+            />
         <TextView
             android:id="@+id/productPriceAsCurrencyTextView"
             android:layout_width="match_parent"
@@ -29,7 +40,6 @@
             android:hint="@string/hint_product_price"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
@@ -70,7 +80,7 @@
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="25dp"
             android:textSize="17sp"
-            android:textColor="@{viewModel.productPriceState.toColor()}"
+            android:textColor="@{viewModel.fundingPriceState.toColor()}"
             app:layout_constraintBottom_toTopOf="@+id/numberKeyPad"
             app:layout_constraintEnd_toEndOf="parent" />
 

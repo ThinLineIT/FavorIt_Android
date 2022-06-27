@@ -19,7 +19,8 @@
     <string name="hint_funding_name">펀딩의 이름을 지어주세요!</string>
     <string name="hint_product_description">펀딩 내용을 담아주세요!\n\n
         <font size="15">• 60자 이내</font></string>
-    <string name="hint_product_price">▏펀딩 목표액을 입력해주세요 </string>
+    <string name="hint_product_price">펀딩 목표액을 입력해주세요 </string>
+    <string name="hint_product_price_cursor">▏</string>
     <string name="hint_product_option">상품 옵션을 입력해주세요!\n\n
        <font size="15">• 60자 이내 \n • 단일 상품이라면 작성하지 않으셔도 됩니다. </font>  </string>
     <string name="tooltip_please_enter_available_product_option">60자 이내로 작성해주세요.</string>
