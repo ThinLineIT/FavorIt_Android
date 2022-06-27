@@ -46,7 +46,7 @@ class CreateFundingViewModel @Inject constructor(
         }
     }
 
-    val productPriceState: LiveData<InputState> = Transformations.map(fundingPrice) {
+    val fundingPriceState: LiveData<InputState> = Transformations.map(fundingPrice) {
         when {
             it == 0L -> InputState.EMPTY
             it > 0 -> InputState.AVAILABLE
