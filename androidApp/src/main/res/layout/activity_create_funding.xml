@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.createfunding.CreateFundingActivity"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBaseline_toTopOf="parent"
+        android:src="@drawable/logo"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingEnd="180dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/navFragment"
+        android:id="@+id/logo"
+        />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/logo"
+        app:navGraph="@navigation/create_funding_nav_graph"
+         >
+
+
+    </androidx.fragment.app.FragmentContainerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
