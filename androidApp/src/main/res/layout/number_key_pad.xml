@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/numberKeyPadOne"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_one"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/numberKeyPadFour"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadTwo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/numberKeyPadTwo"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_two"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPadFive"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadThree"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadOne"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/numberKeyPadThree"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_three"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPadSix"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadTwo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/numberKeyPadFour"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_four"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/numberKeyPadSeven"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadFive"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadOne" />
+
+        <TextView
+            android:id="@+id/numberKeyPadFive"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_five"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPadEight"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadSix"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadFour"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadTwo" />
+
+        <TextView
+            android:id="@+id/numberKeyPadSix"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_six"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPadNine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadFive"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadThree" />
+
+        <TextView
+            android:id="@+id/numberKeyPadSeven"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_seven"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/numberKeyPadDoubleZero"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadEight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadFour" />
+
+        <TextView
+            android:id="@+id/numberKeyPadEight"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_eight"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPadZero"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadNine"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadSeven"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadFive" />
+
+        <TextView
+            android:id="@+id/numberKeyPadNine"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_nine"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/numberKeyPadDelete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadEight"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadSix" />
+
+        <TextView
+            android:id="@+id/numberKeyPadDoubleZero"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_double_zero"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadZero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadSeven" />
+
+        <TextView
+            android:id="@+id/numberKeyPadZero"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_zero"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/numberKeyPadDelete"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadDoubleZero"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadEight"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/numberKeyPadDelete"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:text="@string/number_key_pad_delete"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/numberKeyPadZero"
+            app:layout_constraintTop_toBottomOf="@id/numberKeyPadNine" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
