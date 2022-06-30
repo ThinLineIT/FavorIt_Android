@@ -1,6 +1,6 @@
 package com.thinlineit.favorit_android.android.di
 
-import com.thinlineit.favorit_android.android.data.RetrofitBuilder
+import com.thinlineit.favorit_android.android.data.interceptor.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,16 +19,20 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun providesInterceptor() : HttpLoggingInterceptor =
-        HttpLoggingInterceptor().also {
-            it.level = HttpLoggingInterceptor.Level.BODY
-        }
+    fun providesAuthInterceptor(authInterceptor: AuthInterceptor): Interceptor = authInterceptor
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient =
+    fun providesOkHttpInterceptor(
+        authInterceptor: Interceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(interceptor)
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }
+            )
+            .addInterceptor(authInterceptor)
             .build()
 
     @Provides
