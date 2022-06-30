@@ -34,6 +34,9 @@ fun getApiKey(propertyKey: String): String {
 }
 
 dependencies {
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-fragment:2.3.5")
     val LIFECYCLE_VERSION = "2.5.0-rc01"
     val RETROFIT_VERSION = "2.9.0"
     val OKHTTP_VERSION = "4.9.1"

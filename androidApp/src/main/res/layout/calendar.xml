@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/monthTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{viewModel.month}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="June" />
+
+        <TextView
+            android:id="@+id/yearTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{viewModel.year}"
+            app:layout_constraintStart_toEndOf="@id/monthTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2022" />
+
+        <TextView
+            android:id="@+id/yearSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="V"
+            app:layout_constraintBottom_toBottomOf="@id/monthTextView"
+            app:layout_constraintStart_toEndOf="@id/yearTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/previousMonthButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:onClick="@{() -> viewModel.onPreviousClicked()}"
+            android:text="prev"
+            app:layout_constraintBottom_toBottomOf="@id/monthTextView"
+            app:layout_constraintEnd_toStartOf="@id/nextMonthButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nextMonthButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:onClick="@{() -> viewModel.onNextClicked()}"
+            android:text="next"
+            app:layout_constraintBottom_toBottomOf="@id/monthTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <GridView
+            android:id="@+id/calendarGridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="7"
+            app:layout_constraintTop_toBottomOf="@id/monthTextView"
+            tools:listitem="@layout/item_view_calendar_day_cell" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,6 +1,5 @@
 package com.thinlineit.favorit_android.android.di
 
-import com.thinlineit.favorit_android.android.data.local.FavoritSharedPreference
 import com.thinlineit.favorit_android.android.data.api.LoginApi
 import com.thinlineit.favorit_android.android.data.local.LocalPreferenceDataSource
 import com.thinlineit.favorit_android.android.data.repository.LoginRepository
