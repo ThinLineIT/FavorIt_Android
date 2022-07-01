@@ -2,11 +2,13 @@ package com.thinlineit.favorit_android.android.ui.createfunding
 
 import android.view.View
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
+import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
 import com.thinlineit.favorit_android.android.ui.customview.calendar.laterThanTomorrow
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -85,6 +87,82 @@ class CreateFundingViewModel @Inject constructor(
         fundingExpiredDate.postValue(endDate)
     }
 
+    val currentFragment = MutableLiveData(FragmentType.PRODUCT_LINK)
+
+    private val productLinkProgressState =
+        createProgressStateMediatorLiveData(
+            productLinkState,
+            currentFragment,
+            FragmentType.PRODUCT_LINK
+        )
+
+    private val productOptionProgressState =
+        createProgressStateMediatorLiveData(
+            productOptionState,
+            currentFragment,
+            FragmentType.PRODUCT_OPTION
+        )
+
+    private val fundingPriceProgressState =
+        createProgressStateMediatorLiveData(
+            fundingPriceState,
+            currentFragment,
+            FragmentType.FUNDING_PRICE
+        )
+    private val fundingNameProgressState =
+        createProgressStateMediatorLiveData(
+            fundingNameState,
+            currentFragment,
+            FragmentType.FUNDING_NAME
+        )
+
+    private val fundingDescriptionProgressState =
+        createProgressStateMediatorLiveData(
+            fundingDescriptionState,
+            currentFragment,
+            FragmentType.FUNDING_DESCRIPTION
+        )
+
+    private val fundingExpiredDateProgressState =
+        createProgressStateMediatorLiveData(
+            fundingExpiredDateState,
+            currentFragment,
+            FragmentType.FUNDING_EXPIRED_DATE
+        )
+
+    private fun createProgressStateMediatorLiveData(
+        inputState: LiveData<InputState>,
+        currentFragment: LiveData<FragmentType>,
+        fragmentType: FragmentType
+    ): MediatorLiveData<ProgressState> = MediatorLiveData<ProgressState>().apply {
+        addSource(inputState) {
+            value = createProgressState(it, currentFragment.value == fragmentType)
+        }
+        addSource(currentFragment) {
+            value = createProgressState(inputState.value, currentFragment.value == fragmentType)
+        }
+    }
+
+    val progressStateList: List<MediatorLiveData<ProgressState>> = listOf(
+        productLinkProgressState,
+        productOptionProgressState,
+        fundingPriceProgressState,
+        fundingNameProgressState,
+        fundingDescriptionProgressState,
+        fundingExpiredDateProgressState
+    )
+
+    private fun createProgressState(
+        inputState: InputState?,
+        isCurrentFragment: Boolean
+    ): ProgressState = when {
+        !isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EMPTY
+        isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EDITING
+        isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
+        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
+        else -> throw Exception("Something is wrong")
+    }
+
     sealed class InputState {
         object EMPTY : InputState()
         object AVAILABLE : InputState()
@@ -107,5 +185,10 @@ class CreateFundingViewModel @Inject constructor(
         } else {
             R.color.lightGray
         }
+    }
+
+    enum class FragmentType {
+        PRODUCT_LINK, PRODUCT_OPTION, FUNDING_PRICE,
+        FUNDING_NAME, FUNDING_DESCRIPTION, FUNDING_EXPIRED_DATE
     }
 }

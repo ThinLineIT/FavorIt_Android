@@ -13,7 +13,11 @@ class EnterProductLinkFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = this@EnterProductLinkFragment.viewModel
+            viewModel = this@EnterProductLinkFragment.viewModel.apply {
+                currentFragment.value = CreateFundingViewModel.FragmentType.PRODUCT_LINK
+            }.also {
+                progressButtons.setProgressState(it.progressStateList)
+            }
             nextButton.setOnClickListener {
                 if (viewModel?.productLinkState?.value == CreateFundingViewModel.InputState.AVAILABLE) {
                     navController.navigate(R.id.action_enterProductLinkFragment_to_enterProductOptionFragment)
