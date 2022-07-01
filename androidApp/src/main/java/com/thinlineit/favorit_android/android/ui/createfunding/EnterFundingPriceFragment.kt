@@ -14,8 +14,11 @@ class EnterFundingPriceFragment :
         val cursorAnim = AnimationUtils.loadAnimation(context, R.anim.blink_animation)
 
         binding.apply {
-            viewModel = this@EnterFundingPriceFragment.viewModel.also {
-                binding.numberKeyPad.numberResult = it.fundingPrice
+            viewModel = this@EnterFundingPriceFragment.viewModel.apply {
+                currentFragment.value = CreateFundingViewModel.FragmentType.FUNDING_PRICE
+            }.also {
+                numberKeyPad.numberResult = it.fundingPrice
+                progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingPriceFragment_to_enterProductOptionFragment)
@@ -26,7 +29,7 @@ class EnterFundingPriceFragment :
                 }
             }
             this@EnterFundingPriceFragment.viewModel.fundingPriceState.observe(viewLifecycleOwner) {
-                if(it === CreateFundingViewModel.InputState.EMPTY) {
+                if (it === CreateFundingViewModel.InputState.EMPTY) {
                     priceCursor.startAnimation(cursorAnim)
                 } else {
                     priceCursor.clearAnimation()

@@ -15,6 +15,13 @@
         android:layout_height="match_parent"
         tools:context=".ui.createfunding.EnterFundingExpiredDateFragment">
 
+        <com.thinlineit.favorit_android.android.ui.customview.ProgressButtons
+            android:id="@+id/progressButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarView
             android:id="@+id/calendarDatePicker"
             android:layout_width="match_parent"

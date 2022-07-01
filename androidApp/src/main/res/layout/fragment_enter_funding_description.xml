@@ -22,6 +22,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/background_onlytop_round_white" >
 
+            <com.thinlineit.favorit_android.android.ui.customview.ProgressButtons
+                android:id="@+id/progressButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="75dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <EditText
                 android:id="@+id/productLinkEditText"
                 android:layout_width="match_parent"
@@ -36,7 +43,7 @@
                 android:background="@drawable/background_round_white"
                 android:hint="@string/hint_product_description"
                 android:text="@={viewModel.fundingDescription}"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/progressButtons" />
 
             <TextView
                 android:layout_width="wrap_content"
