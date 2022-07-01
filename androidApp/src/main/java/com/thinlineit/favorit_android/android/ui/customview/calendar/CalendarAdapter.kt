@@ -64,10 +64,17 @@ class CalendarAdapter(
                 AppCompatResources.getDrawable(context, R.drawable.icon_circle_button)
         } else if (dayCell.isEndDay) {
             binding.dayTextView.background =
+<<<<<<< HEAD
                 AppCompatResources.getDrawable(context, R.drawable.icon_circle_button)
         } else if (dayCell.isBetweenDay) {
             binding.dayTextView.background =
                 AppCompatResources.getDrawable(context, R.drawable.icon_circle_button)
+=======
+                AppCompatResources.getDrawable(context, R.drawable.icon_circle_button_end)
+        } else if (dayCell.isBetweenDay) {
+            binding.dayTextView.background =
+                AppCompatResources.getDrawable(context, R.drawable.icon_circle_button_between)
+>>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
         } else {
             binding.dayTextView.background = null
         }

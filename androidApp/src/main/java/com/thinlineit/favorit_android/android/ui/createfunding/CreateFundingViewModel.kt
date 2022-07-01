@@ -7,15 +7,25 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
+<<<<<<< HEAD
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
+=======
+import com.thinlineit.favorit_android.android.ui.customview.calendar.laterThanTomorrow
+import com.thinlineit.favorit_android.android.util.NumberFormatter
+import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Date
+>>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateFundingViewModel @Inject constructor(
     private val createFundingUseCases: CreateFundingUseCases
 ) : ViewModel() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
     val productLink = MutableLiveData("")
     val productOption = MutableLiveData("")
     val fundingPrice = MutableLiveData(0L)
@@ -28,8 +38,15 @@ class CreateFundingViewModel @Inject constructor(
     }
     val fundingName = MutableLiveData("")
     val fundingDescription = MutableLiveData("")
+<<<<<<< HEAD
     val fundingExpiredDate = MutableLiveData("")
 
+=======
+    val fundingExpiredDate = MutableLiveData<Date?>(null)
+    val fundingExpiredDateAsString = Transformations.map(fundingExpiredDate) {
+        fundingExpiredDate.toString()
+    }
+>>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
     val productLinkState: LiveData<InputState> = Transformations.map(productLink) {
         when {
             it.isEmpty() -> InputState.EMPTY
@@ -72,12 +89,24 @@ class CreateFundingViewModel @Inject constructor(
 
     val fundingExpiredDateState: LiveData<InputState> = Transformations.map(fundingExpiredDate) {
         when {
+<<<<<<< HEAD
             it.isEmpty() -> InputState.EMPTY
             it.length > 3 -> InputState.AVAILABLE
+=======
+            it == null -> InputState.EMPTY
+            it.laterThanTomorrow() -> InputState.AVAILABLE
+>>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
             else -> InputState.UNAVAILABLE
         }
     }
 
+<<<<<<< HEAD
+=======
+    fun onEndDateSelected(endDate: Date) {
+        fundingExpiredDate.postValue(endDate)
+    }
+
+>>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
     sealed class InputState {
         object EMPTY : InputState()
         object AVAILABLE : InputState()
