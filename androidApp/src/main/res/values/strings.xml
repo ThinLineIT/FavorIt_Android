@@ -13,6 +13,7 @@
     <string name="button_next">다음</string>
     <string name="button_edit">← 내용 수정</string>
     <string name="button_start_funding">펀딩 시작 →</string>
+    <string name="button_copy_link">링크 복사</string>
     <string name="label_going_to_product">상품 보러 가기</string>
     <string name="tooltip_please_enter_available_product_link">올바른 상품 링크를 입력해주세요.</string>
     <string name="hint_product_link">상품 링크를 입력해주세요!</string>
@@ -20,9 +21,10 @@
     <string name="hint_product_description">펀딩 내용을 담아주세요!\n\n
         <font size="15">• 60자 이내</font></string>
     <string name="hint_product_price">펀딩 목표액을 입력해주세요 </string>
-    <string name="hint_product_price_cursor">▏</string>
     <string name="hint_product_option">상품 옵션을 입력해주세요!\n\n
        <font size="15">• 60자 이내 \n • 단일 상품이라면 작성하지 않으셔도 됩니다. </font>  </string>
+    <string name="hint_product_price_cursor">▏</string>
+    <string name="label_finish_creating_funding">펀딩이 시작되었습니다.\n 링크를 공유하여 펀딩을 받으세요!</string>
     <string name="tooltip_please_enter_available_product_option">60자 이내로 작성해주세요.</string>
     <string name="tooltip_please_enter_available_funding_name">20자 이내로 작성해주세요.</string>
     <string name="tooltip_please_enter_available_funding_description">100자 이내로 작성해주세요.</string>
