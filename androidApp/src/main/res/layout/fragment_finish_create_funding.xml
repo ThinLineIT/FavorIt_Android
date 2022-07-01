@@ -27,6 +27,7 @@
                 android:id="@+id/createFundingFinishImageView"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
+                android:layout_marginTop="50dp"
                 android:src="@drawable/icon_celebrate"
                 app:layout_constraintBottom_toTopOf="@+id/createFundingFinishTextView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,28 +49,33 @@
 
             <Button
                 android:id="@+id/copyLinkButton"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_round_shadow"
-                android:drawableLeft="@drawable/ic_icon_link"
-                android:paddingEnd="15dp"
-                android:text="@string/button_copy_link"
-                android:textColor="@color/yellow"
-                app:layout_constraintBottom_toTopOf="@+id/goToFundingDetailButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/createFundingFinishTextView" />
-
-            <TextView
-                android:id="@+id/goToFundingDetailButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_round_shadow"
-                android:drawableLeft="@drawable/ic_icon_link"
+                android:drawableStart="@drawable/icon_link"
+                android:paddingStart="10dp"
                 android:paddingEnd="15dp"
                 android:text="@string/button_copy_link"
                 android:textColor="@color/yellow"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/goToFundingDetailButton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/background_round_shadow"
+                android:drawableStart="@drawable/icon_arrow"
+                android:paddingStart="15dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="17dp"
+                android:paddingBottom="15dp"
+                android:text="@string/button_to_funding_detail"
+                android:textColor="@color/pinky"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/copyLinkButton" />

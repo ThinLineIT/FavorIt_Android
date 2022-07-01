@@ -29,6 +29,7 @@
                 android:id="@+id/fundingPreviewImageView"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
+                android:layout_marginTop="50dp"
                 android:contentDescription="@null"
                 android:src="@drawable/icon_present"
                 app:layout_constraintBottom_toTopOf="@+id/fundingNameTextView"
@@ -77,37 +78,72 @@
                 app:layout_constraintTop_toBottomOf="@+id/productLinkTextView"
                 tools:text="제 작고 귀여운 노트북이 어도비를 힘들어합니다..일러스트레이터,애펙까지 돌리고 싶은데 노트북이 터지지 않을까 걱정입니다. 이김에 아이맥을 사고 싶은데요..도와주시면 감사하겠습니다" />
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/fundingExpiredDateTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/background_round_shadow"
-                android:minHeight="80dp"
+                android:minHeight="30dp"
                 android:padding="20dp"
-                android:text="@{viewModel.fundingExpiredDateAsString}"
                 app:layout_constraintBottom_toTopOf="@+id/fundingPriceTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fundingDescriptionTextView"
-                tools:text="00일 남음" />
+                app:layout_constraintTop_toBottomOf="@+id/fundingDescriptionTextView">
 
-            <TextView
+                <ProgressBar
+                    android:id="@+id/expiredDateProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progressBackgroundTint="@color/lightBlue"
+                    android:progressTint="@color/blue" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/fundingPriceTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:background="@drawable/background_round_shadow"
-                android:minHeight="80dp"
+                android:minHeight="30dp"
                 android:padding="20dp"
-                android:text="@{viewModel.fundingPriceAsCurrency}"
                 app:layout_constraintBottom_toTopOf="@+id/previousButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fundingExpiredDateTextView"
-                tools:text="목표금액 123,456원" />
+                app:layout_constraintTop_toBottomOf="@+id/fundingExpiredDateTextView">
+
+                <ProgressBar
+                    android:id="@+id/priceProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progressBackgroundTint="@color/blue"
+                    android:progressTint="@color/pinky"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/label_funding_aim_price"
+                    android:textColor="@color/pinky"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/priceProgress"
+                    tools:text="목표금액" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@{viewModel.fundingPrice.toString()}"
+                    android:textColor="@color/pinky"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/priceProgress"
+                    tools:text="123456원" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/previousButton"
@@ -119,6 +155,8 @@
                 android:padding="15dp"
                 android:text="@string/button_edit"
                 android:textColor="@color/yellow"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/nextButton"
                 app:layout_constraintStart_toStartOf="parent"
@@ -133,6 +171,8 @@
                 android:padding="15dp"
                 android:text="@string/button_start_funding"
                 android:textColor="@color/yellow"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/previousButton"

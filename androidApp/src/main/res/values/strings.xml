@@ -15,7 +15,9 @@
     <string name="button_edit">← 내용 수정</string>
     <string name="button_start_funding">펀딩 시작 →</string>
     <string name="button_copy_link">링크 복사</string>
+    <string name="button_to_funding_detail">펀딩 보기</string>
     <string name="label_going_to_product">상품 보러 가기</string>
+    <string name="label_funding_aim_price">목표금액</string>
     <string name="tooltip_please_enter_available_product_link">올바른 상품 링크를 입력해주세요.</string>
     <string name="hint_product_link">상품 링크를 입력해주세요!</string>
     <string name="hint_funding_name">펀딩의 이름을 지어주세요!</string>
