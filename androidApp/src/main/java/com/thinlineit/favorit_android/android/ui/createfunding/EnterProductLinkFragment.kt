@@ -13,9 +13,10 @@ class EnterProductLinkFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = this@EnterProductLinkFragment.viewModel.also {
-                it.currentFragment.value = CreateFundingViewModel.FragmentType.PRODUCT_LINK
-                binding.progressButtons.setProgressState(it.progressStateList)
+            viewModel = this@EnterProductLinkFragment.viewModel.apply {
+                currentFragment.value = CreateFundingViewModel.FragmentType.PRODUCT_LINK
+            }.also {
+                progressButtons.setProgressState(it.progressStateList)
             }
             nextButton.setOnClickListener {
                 if (viewModel?.productLinkState?.value == CreateFundingViewModel.InputState.AVAILABLE) {

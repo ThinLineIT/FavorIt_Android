@@ -8,14 +8,16 @@ import androidx.fragment.app.Fragment
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.FragmentEnterFundingNameBinding
 
-class EnterFundingNameFragment : CreateFundingBaseFragment<FragmentEnterFundingNameBinding>(R.layout.fragment_enter_funding_name){
+class EnterFundingNameFragment :
+    CreateFundingBaseFragment<FragmentEnterFundingNameBinding>(R.layout.fragment_enter_funding_name) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = this@EnterFundingNameFragment.viewModel.also {
-                it.currentFragment.value = CreateFundingViewModel.FragmentType.FUNDING_NAME
-                binding.progressButtons.setProgressState(it.progressStateList)
+            viewModel = this@EnterFundingNameFragment.viewModel.apply {
+                currentFragment.value = CreateFundingViewModel.FragmentType.FUNDING_NAME
+            }.also {
+                progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingNameFragment_to_enterFundingPriceFragment)

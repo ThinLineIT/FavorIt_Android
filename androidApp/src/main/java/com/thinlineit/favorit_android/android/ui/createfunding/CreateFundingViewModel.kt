@@ -1,7 +1,11 @@
 package com.thinlineit.favorit_android.android.ui.createfunding
 
 import android.view.View
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
 import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
@@ -85,88 +89,57 @@ class CreateFundingViewModel @Inject constructor(
 
     val currentFragment = MutableLiveData(FragmentType.PRODUCT_LINK)
 
-    val productLinkProgressState = MediatorLiveData<ProgressState>().apply {
-        addSource(productLinkState) {
-            value = createEnum(
-                productLinkState.value,
-                currentFragment.value == FragmentType.PRODUCT_LINK
-            )
+    private val productLinkProgressState =
+        createProgressStateMediatorLiveData(
+            productLinkState,
+            currentFragment,
+            FragmentType.PRODUCT_LINK
+        )
+
+    private val productOptionProgressState =
+        createProgressStateMediatorLiveData(
+            productOptionState,
+            currentFragment,
+            FragmentType.PRODUCT_OPTION
+        )
+
+    private val fundingPriceProgressState =
+        createProgressStateMediatorLiveData(
+            fundingPriceState,
+            currentFragment,
+            FragmentType.FUNDING_PRICE
+        )
+    private val fundingNameProgressState =
+        createProgressStateMediatorLiveData(
+            fundingNameState,
+            currentFragment,
+            FragmentType.FUNDING_NAME
+        )
+
+    private val fundingDescriptionProgressState =
+        createProgressStateMediatorLiveData(
+            fundingDescriptionState,
+            currentFragment,
+            FragmentType.FUNDING_DESCRIPTION
+        )
+
+    private val fundingExpiredDateProgressState =
+        createProgressStateMediatorLiveData(
+            fundingExpiredDateState,
+            currentFragment,
+            FragmentType.FUNDING_EXPIRED_DATE
+        )
+
+    private fun createProgressStateMediatorLiveData(
+        inputState: LiveData<InputState>,
+        currentFragment: LiveData<FragmentType>,
+        fragmentType: FragmentType
+    ): MediatorLiveData<ProgressState> = MediatorLiveData<ProgressState>().apply {
+        addSource(inputState) {
+            value = createEnum(it, currentFragment.value == fragmentType)
         }
         addSource(currentFragment) {
-            value = createEnum(
-                productLinkState.value,
-                currentFragment.value == FragmentType.PRODUCT_LINK
-            )
-        }
-    }
-    val productOptionProgressState = MediatorLiveData<ProgressState>().apply {
-        addSource(productOptionState) {
-            value = createEnum(
-                productOptionState.value,
-                currentFragment.value == FragmentType.PRODUCT_OPTION
-            )
-        }
-        addSource(currentFragment) {
-            value = createEnum(
-                productOptionState.value,
-                currentFragment.value == FragmentType.PRODUCT_OPTION
-            )
-        }
-    }
-    val fundingPriceProgressState = MediatorLiveData<ProgressState>().apply {
-        addSource(fundingPriceState) {
-            value = createEnum(
-                fundingPriceState.value,
-                currentFragment.value == FragmentType.FUNDING_PRICE
-            )
-        }
-        addSource(currentFragment) {
-            value = createEnum(
-                fundingPriceState.value,
-                currentFragment.value == FragmentType.FUNDING_PRICE
-            )
-        }
-    }
-    val fundingNameProgressState = MediatorLiveData<ProgressState>().apply {
-        addSource(fundingNameState) {
-            value = createEnum(
-                fundingNameState.value,
-                currentFragment.value == FragmentType.FUNDING_NAME
-            )
-        }
-        addSource(currentFragment) {
-            value = createEnum(
-                fundingNameState.value,
-                currentFragment.value == FragmentType.FUNDING_NAME
-            )
-        }
-    }
-    val fundingDescriptionProgressState = MediatorLiveData<ProgressState>().apply {
-        addSource(fundingDescriptionState) {
-            value = createEnum(
-                fundingDescriptionState.value,
-                currentFragment.value == FragmentType.FUNDING_DESCRIPTION
-            )
-        }
-        addSource(currentFragment) {
-            value = createEnum(
-                fundingDescriptionState.value,
-                currentFragment.value == FragmentType.FUNDING_DESCRIPTION
-            )
-        }
-    }
-    val fundingExpiredDateProgressState = MediatorLiveData<ProgressState>().apply {
-        addSource(fundingExpiredDateState) {
-            value = createEnum(
-                fundingExpiredDateState.value,
-                currentFragment.value == FragmentType.FUNDING_EXPIRED_DATE
-            )
-        }
-        addSource(currentFragment) {
-            value = createEnum(
-                fundingExpiredDateState.value,
-                currentFragment.value == FragmentType.FUNDING_EXPIRED_DATE
-            )
+            value = createEnum(inputState.value, currentFragment.value == fragmentType)
         }
     }
 
@@ -178,6 +151,17 @@ class CreateFundingViewModel @Inject constructor(
         fundingDescriptionProgressState,
         fundingExpiredDateProgressState
     )
+
+    private fun createProgressStateEnum(
+        inputState: InputState?,
+        isCurrentFragment: Boolean
+    ): ProgressState = when {
+        !isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EMPTY
+        isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EDITING
+        isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
+        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
+        else -> throw Exception("Something is wrong")
+    }
 
     fun createEnum(inputState: InputState?, isCurrentFragment: Boolean): ProgressState {
         var enumState: ProgressState = ProgressState.EMPTY
@@ -222,6 +206,7 @@ class CreateFundingViewModel @Inject constructor(
     }
 
     enum class FragmentType {
-        PRODUCT_LINK, PRODUCT_OPTION, FUNDING_PRICE, FUNDING_NAME, FUNDING_DESCRIPTION, FUNDING_EXPIRED_DATE
+        PRODUCT_LINK, PRODUCT_OPTION, FUNDING_PRICE,
+        FUNDING_NAME, FUNDING_DESCRIPTION, FUNDING_EXPIRED_DATE
     }
 }

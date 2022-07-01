@@ -16,13 +16,13 @@ class ProgressButtons @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
-    val binding: ProgressButtonsBinding =
+    private val binding: ProgressButtonsBinding =
         ProgressButtonsBinding.inflate(LayoutInflater.from(context), this, true)
     private val lifecycleOwner by lazy {
         findViewTreeLifecycleOwner() ?: throw Exception("Lifecycle is not exist")
     }
-    var circles: List<ImageView> = listOf(
-        binding.productLinkProgressCircle,
+    private var progressImageView: List<ImageView> = listOf(
+        binding.productLinkProgress,
         binding.productOptionProgress,
         binding.fundingPriceProgress,
         binding.fundingNameProgress,
@@ -33,10 +33,9 @@ class ProgressButtons @JvmOverloads constructor(
     fun setProgressState(
         progressStates: List<MediatorLiveData<ProgressState>>
     ) {
-        for (state in 0..5) {
-            progressStates[state].observe(lifecycleOwner) {
-                val image = it.asImage()
-                circles[state].setImageResource(image)
+        progressStates.forEachIndexed { index, state ->
+            state.observe(lifecycleOwner) {
+                progressImageView[index].setImageResource(it.asImage())
             }
         }
     }
