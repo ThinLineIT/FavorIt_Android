@@ -13,6 +13,21 @@ sealed class CalendarCell {
         val isToday: Boolean,
         val isEndDay: Boolean,
         val isBetweenDay: Boolean,
+        val isEndDaySelected: Boolean,
         val onSelected: (View) -> Unit
-    ) : CalendarCell()
+    ) : CalendarCell() {
+        fun isLeftBackgroundVisible(): Int = when {
+            isEndDaySelected && isToday -> View.INVISIBLE
+            isEndDaySelected && isBetweenDay -> View.VISIBLE
+            isEndDaySelected && isEndDay -> View.VISIBLE
+            else -> View.INVISIBLE
+        }
+
+        fun isRightBackgroundVisible(): Int = when {
+            isEndDaySelected && isToday -> View.VISIBLE
+            isEndDaySelected && isBetweenDay -> View.VISIBLE
+            isEndDaySelected && isEndDay -> View.INVISIBLE
+            else -> View.INVISIBLE
+        }
+    }
 }

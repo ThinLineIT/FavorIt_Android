@@ -6,13 +6,12 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
 import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
 import com.thinlineit.favorit_android.android.ui.customview.calendar.laterThanTomorrow
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,7 +33,7 @@ class CreateFundingViewModel @Inject constructor(
     val fundingDescription = MutableLiveData("")
     val fundingExpiredDate = MutableLiveData<Date?>(null)
     val fundingExpiredDateAsString = Transformations.map(fundingExpiredDate) {
-        fundingExpiredDate.toString()
+        fundingExpiredDate.value.toString()
     }
     val productLinkState: LiveData<InputState> = Transformations.map(productLink) {
         when {
@@ -160,7 +159,7 @@ class CreateFundingViewModel @Inject constructor(
         !isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EMPTY
         isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EDITING
         isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
-        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
+        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.COMPLETE
         else -> throw Exception("Something is wrong")
     }
 
@@ -181,11 +180,7 @@ class CreateFundingViewModel @Inject constructor(
             View.GONE
         }
 
-        fun toColor(): Int = if (this == UNAVAILABLE) {
-            R.color.blue
-        } else {
-            R.color.lightGray
-        }
+        fun toEnabled(): Boolean = this == AVAILABLE
     }
 
     enum class FragmentType {

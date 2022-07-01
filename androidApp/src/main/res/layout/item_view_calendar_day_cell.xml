@@ -11,16 +11,55 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="50dp"
+        android:layout_height="30dp">
+
+        <ImageView
+            android:id="@+id/cell_left_background"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@color/lightYellow"
+            android:visibility="@{dayCell.isLeftBackgroundVisible}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cell_right_back_ground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/cell_right_back_ground"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@color/lightYellow"
+            android:visibility="@{dayCell.isRightBackgroundVisible}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cell_left_background"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/cellBackGround"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/icon_circle_today" />
 
         <TextView
             android:id="@+id/dayTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:enabled="@{dayCell.enabled}"
+            android:gravity="center"
             android:text="@{dayCell.day}"
             android:textColor="@color/calendar_day_cell_color"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="31" />

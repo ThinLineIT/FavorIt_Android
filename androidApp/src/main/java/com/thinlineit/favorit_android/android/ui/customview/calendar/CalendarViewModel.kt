@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModel
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarCell.DayCell
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarCell.HeaderCell
 import java.time.Month
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 class CalendarViewModel : ViewModel() {
     private val calendar = MutableLiveData(Calendar.getInstance())
@@ -95,6 +96,7 @@ class CalendarViewModel : ViewModel() {
                     isToday,
                     isEndDay,
                     isBetweenDay,
+                    endDate.value != null,
                     onSelected
                 )
             )
