@@ -136,10 +136,10 @@ class CreateFundingViewModel @Inject constructor(
         fragmentType: FragmentType
     ): MediatorLiveData<ProgressState> = MediatorLiveData<ProgressState>().apply {
         addSource(inputState) {
-            value = createProgressStateEnum(it, currentFragment.value == fragmentType)
+            value = createProgressState(it, currentFragment.value == fragmentType)
         }
         addSource(currentFragment) {
-            value = createProgressStateEnum(inputState.value, currentFragment.value == fragmentType)
+            value = createProgressState(inputState.value, currentFragment.value == fragmentType)
         }
     }
 
@@ -152,7 +152,7 @@ class CreateFundingViewModel @Inject constructor(
         fundingExpiredDateProgressState
     )
 
-    private fun createProgressStateEnum(
+    private fun createProgressState(
         inputState: InputState?,
         isCurrentFragment: Boolean
     ): ProgressState = when {
