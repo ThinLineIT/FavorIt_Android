@@ -11,7 +11,10 @@ class EnterFundingExpiredDateFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = this@EnterFundingExpiredDateFragment.viewModel
+            viewModel = this@EnterFundingExpiredDateFragment.viewModel.also {
+                it.currentFragment.value = CreateFundingViewModel.FragmentType.FUNDING_EXPIRED_DATE
+                binding.progressButtons.setProgressState(it.progressStateList)
+            }
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingExpiredDateFragment_to_enterFundingDescriptionFragment)
             }

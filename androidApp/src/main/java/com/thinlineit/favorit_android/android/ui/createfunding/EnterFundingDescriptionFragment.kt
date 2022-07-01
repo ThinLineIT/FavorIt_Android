@@ -11,7 +11,10 @@ class EnterFundingDescriptionFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = this@EnterFundingDescriptionFragment.viewModel
+            viewModel = this@EnterFundingDescriptionFragment.viewModel.also {
+                it.currentFragment.value = CreateFundingViewModel.FragmentType.FUNDING_DESCRIPTION
+                binding.progressButtons.setProgressState(it.progressStateList)
+            }
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingDescriptionFragment_to_enterFundingNameFragment)
             }

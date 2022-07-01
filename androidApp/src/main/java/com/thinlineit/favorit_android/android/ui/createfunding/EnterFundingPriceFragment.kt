@@ -16,6 +16,8 @@ class EnterFundingPriceFragment :
         binding.apply {
             viewModel = this@EnterFundingPriceFragment.viewModel.also {
                 binding.numberKeyPad.numberResult = it.fundingPrice
+                it.currentFragment.value = CreateFundingViewModel.FragmentType.FUNDING_PRICE
+                binding.progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
                 navController.navigate(R.id.action_enterFundingPriceFragment_to_enterProductOptionFragment)
