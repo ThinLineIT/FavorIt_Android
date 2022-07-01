@@ -136,10 +136,10 @@ class CreateFundingViewModel @Inject constructor(
         fragmentType: FragmentType
     ): MediatorLiveData<ProgressState> = MediatorLiveData<ProgressState>().apply {
         addSource(inputState) {
-            value = createEnum(it, currentFragment.value == fragmentType)
+            value = createProgressStateEnum(it, currentFragment.value == fragmentType)
         }
         addSource(currentFragment) {
-            value = createEnum(inputState.value, currentFragment.value == fragmentType)
+            value = createProgressStateEnum(inputState.value, currentFragment.value == fragmentType)
         }
     }
 
@@ -161,24 +161,6 @@ class CreateFundingViewModel @Inject constructor(
         isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
         !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
         else -> throw Exception("Something is wrong")
-    }
-
-    fun createEnum(inputState: InputState?, isCurrentFragment: Boolean): ProgressState {
-        var enumState: ProgressState = ProgressState.EMPTY
-        if (isCurrentFragment) {
-            when (inputState) {
-                InputState.EMPTY -> enumState = ProgressState.EMPTY
-                InputState.AVAILABLE -> enumState = ProgressState.CORRECT_ENTERED
-                InputState.UNAVAILABLE -> enumState = ProgressState.EDITING
-            }
-        } else {
-            when (inputState) {
-                InputState.EMPTY -> enumState = ProgressState.EMPTY
-                InputState.AVAILABLE -> enumState = ProgressState.COMPLETE
-                InputState.UNAVAILABLE -> enumState = ProgressState.EDITING
-            }
-        }
-        return enumState
     }
 
     sealed class InputState {
