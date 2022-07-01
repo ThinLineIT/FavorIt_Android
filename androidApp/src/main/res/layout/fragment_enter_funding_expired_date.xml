@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingViewModel" />
@@ -14,19 +15,8 @@
         android:layout_height="match_parent"
         tools:context=".ui.createfunding.EnterFundingExpiredDateFragment">
 
-<<<<<<< HEAD
-        <EditText
-            android:id="@+id/productLinkEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@={viewModel.fundingExpiredDate}"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarView
-=======
         <com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarView
             android:id="@+id/calendarDatePicker"
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

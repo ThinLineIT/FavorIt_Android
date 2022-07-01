@@ -2,50 +2,16 @@ package com.thinlineit.favorit_android.android.ui.customview.calendar
 
 import android.text.format.DateUtils
 import android.view.View
-<<<<<<< HEAD
-import androidx.lifecycle.MutableLiveData
-=======
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
 import androidx.lifecycle.ViewModel
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarCell.DayCell
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarCell.HeaderCell
 import java.time.Month
-import java.util.Calendar
-import java.util.Date
+import java.util.*
 
 class CalendarViewModel : ViewModel() {
-<<<<<<< HEAD
-    val showingMonthAndYear = MutableLiveData(Date())
-
-    val year = MutableLiveData("2022")
-    val month = MutableLiveData("June")
-    val dayCellsOfMonth = MutableLiveData<List<CalendarCell>>(HEADER_CELLS_LIST)
-    val startDate = Date(System.currentTimeMillis())
-    val endDate = MutableLiveData<Date>(null)
-    private val calendar = Calendar.getInstance().apply {
-        set(Calendar.DAY_OF_MONTH, 1)
-    }
-
-    fun onPreviousClicked() {
-        calendar.add(Calendar.MONTH, -1)
-        updateLiveData()
-    }
-
-    fun onNextClicked() {
-        calendar.add(Calendar.MONTH, 1)
-        updateLiveData()
-    }
-
-    private fun updateLiveData() {
-        year.postValue(calendar.get(Calendar.YEAR).toString())
-        val currentMonth = calendar.get(Calendar.MONTH)
-        this.month.postValue(Month.of(currentMonth + 1).name)
-
-        val calendar = calendar.clone() as Calendar
-=======
     private val calendar = MutableLiveData(Calendar.getInstance())
 
     val year = Transformations.map(calendar) {
@@ -99,7 +65,6 @@ class CalendarViewModel : ViewModel() {
 
     private fun getCalendarCells(calendar: Calendar): List<CalendarCell> {
         calendar.set(Calendar.DAY_OF_MONTH, 1)
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
         val monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK) - 1
         calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell)
 
@@ -111,17 +76,11 @@ class CalendarViewModel : ViewModel() {
             val day = calendar.get(Calendar.DAY_OF_MONTH).toString()
             val enabled = !date.before(startDate)
             val isToday = DateUtils.isToday(date.time)
-<<<<<<< HEAD
-            val isEndDay = endDate.value != null
-            val isSelected = endDate.value?.let { endDate ->
-                date.after(startDate) || date.before(endDate)
-=======
             val isEndDay = endDate.value?.let {
                 isSameDay(it, date)
             } ?: false
             val isBetweenDay = endDate.value?.let { endDate ->
                 !isEndDay && (date.after(startDate) && date.before(endDate))
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
             } ?: false
             val onSelected = { _: View ->
                 if (date.after(startDate)) {
@@ -135,29 +94,17 @@ class CalendarViewModel : ViewModel() {
                     enabled,
                     isToday,
                     isEndDay,
-<<<<<<< HEAD
-                    isSelected,
-=======
                     isBetweenDay,
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
                     onSelected
                 )
             )
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
-<<<<<<< HEAD
-        dayCellsOfMonth.postValue(cells)
-=======
         return cells
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
     }
 
     private fun onEndDateSelected(endDate: Date) {
         this.endDate.postValue(endDate)
-<<<<<<< HEAD
-        updateLiveData()
-=======
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
     }
 
     companion object {
@@ -172,9 +119,6 @@ class CalendarViewModel : ViewModel() {
         )
         const val HEADER_CELLS_SIZE = 7
         const val DAY_CELLS_OF_MONTH_MAX_SIZE = 42
-<<<<<<< HEAD
-=======
         const val MONTH_INDEX_ADJUSTER = 1
->>>>>>> cd737a79c43cb114f75b2c948efe5fbeb95889c9
     }
 }
