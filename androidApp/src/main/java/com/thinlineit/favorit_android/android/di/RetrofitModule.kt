@@ -1,5 +1,7 @@
 package com.thinlineit.favorit_android.android.di
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.thinlineit.favorit_android.android.data.interceptor.AuthInterceptor
 import dagger.Module
 import dagger.Provides
@@ -15,7 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
-    private const val BASE_URL = "http://3.35.218.213/api/"
+    const val BASE_URL = "http://3.35.218.213/api/"
 
     @Provides
     @Singleton
@@ -34,6 +36,10 @@ object RetrofitModule {
             )
             .addInterceptor(authInterceptor)
             .build()
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson = GsonBuilder().setLenient().create()
 
     @Provides
     @Singleton
