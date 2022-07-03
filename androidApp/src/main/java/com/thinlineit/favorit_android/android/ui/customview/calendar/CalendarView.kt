@@ -4,12 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.thinlineit.favorit_android.android.databinding.CalendarBinding
-import java.util.Date
+import java.util.*
 
 class CalendarView @JvmOverloads constructor(
     context: Context,
@@ -18,7 +17,6 @@ class CalendarView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
     val binding: CalendarBinding =
         CalendarBinding.inflate(LayoutInflater.from(context), this, true)
-
     var onEndDateUpdated: ((Date) -> Unit)? = null
 
     private val lifecycleOwner by lazy {

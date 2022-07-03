@@ -24,6 +24,7 @@ class EnterFundingExpiredDateFragment :
                     navController.navigate(R.id.action_enterFundingExpiredDateFragment_to_fundingPreviewFragment)
                 }
             }
+
             calendarDatePicker.setEndDate(this@EnterFundingExpiredDateFragment.viewModel.fundingExpiredDate.value)
             calendarDatePicker.onEndDateUpdated = {
                 this@EnterFundingExpiredDateFragment.viewModel.onEndDateSelected(it)

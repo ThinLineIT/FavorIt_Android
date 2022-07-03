@@ -7,12 +7,14 @@
     <!-- landing -->
     <string name="button_create_funding">+ 펀딩 만들기</string>
     <string name="button_login">로그인</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_previous">이전</string>
     <string name="button_next">다음</string>
+    <string name="button_preview">미리보기</string>
     <string name="button_edit">← 내용 수정</string>
     <string name="button_start_funding">펀딩 시작 →</string>
+    <string name="button_copy_link">&#032;&#032;링크&#032;복사</string>
+    <string name="button_go_to_funding_detail">&#032;&#032;펀딩&#032;보기</string>
     <string name="label_going_to_product">상품 보러 가기</string>
     <string name="label_funding_aim_price">목표금액</string>
     <string name="tooltip_please_enter_available_product_link">올바른 상품 링크를 입력해주세요.</string>
@@ -21,9 +23,10 @@
     <string name="hint_product_description">펀딩 내용을 담아주세요!\n\n
         <font size="15">• 60자 이내</font></string>
     <string name="hint_product_price">펀딩 목표액을 입력해주세요 </string>
-    <string name="hint_product_price_cursor">▏</string>
+    <string name="hint_product_price_cursor">ㅣ&#032;</string>
     <string name="hint_product_option">상품 옵션을 입력해주세요!\n\n
        <font size="15">• 60자 이내 \n • 단일 상품이라면 작성하지 않으셔도 됩니다. </font>  </string>
+    <string name="label_finish_creating_funding">펀딩이 시작되었습니다.\n 링크를 공유하여 펀딩을 받으세요!</string>
     <string name="tooltip_please_enter_available_product_option">60자 이내로 작성해주세요.</string>
     <string name="tooltip_please_enter_available_funding_name">20자 이내로 작성해주세요.</string>
     <string name="tooltip_please_enter_available_funding_description">100자 이내로 작성해주세요.</string>
@@ -49,4 +52,7 @@
     <string name="label_aim_percent">목표달성까지 00% 남았어요. \n 펀딩을 마감하시겠어요?</string>
     <string name="label_funding_detail_dialog_text">펀딩 기간이 종료되었습니다. \n [펀딩 마감]을 눌러 펀딩을 마감해주세요</string>
     <string name="label_funding_detail_dialog_edit">확인</string>
+    <string name="label_funding_expired_date">언제까지 펀딩할까요?</string>
+    <string name="label_copy_complete">복사 완료</string>
+    <string name="label_funding_link">펀딩 링크</string>
 </resources>

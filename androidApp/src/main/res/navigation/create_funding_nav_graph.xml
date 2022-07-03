@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/createFunding"
-    app:startDestination="@id/enterProductLinkFragment">
+    app:startDestination="@id/enterFundingExpiredDateFragment">
 
     <fragment
         android:id="@+id/enterProductLinkFragment"
@@ -12,10 +12,11 @@
             android:id="@+id/action_enterProductLinkFragment_to_enterProductOptionFragment"
             app:destination="@id/enterProductOptionFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/enterProductOptionFragment"
         android:name="com.thinlineit.favorit_android.android.ui.createfunding.EnterProductOptionFragment"
-        android:label="EnterProductOptionFragment">
+        android:label="enterProductOptionFragment">
         <action
             android:id="@+id/action_enterProductOptionFragment_to_enterFundingPriceFragment"
             app:destination="@id/enterFundingPriceFragment" />
@@ -23,10 +24,11 @@
             android:id="@+id/action_enterProductOptionFragment_to_enterProductLinkFragment"
             app:destination="@id/enterProductLinkFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/enterFundingPriceFragment"
         android:name="com.thinlineit.favorit_android.android.ui.createfunding.EnterFundingPriceFragment"
-        android:label="EnterProductOptionFragment">
+        android:label="EnterFundingPriceFragment">
         <action
             android:id="@+id/action_enterFundingPriceFragment_to_enterProductOptionFragment"
             app:destination="@id/enterProductOptionFragment" />
@@ -34,10 +36,11 @@
             android:id="@+id/action_enterFundingPriceFragment_to_enterFundingNameFragment"
             app:destination="@id/enterFundingNameFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/enterFundingNameFragment"
         android:name="com.thinlineit.favorit_android.android.ui.createfunding.EnterFundingNameFragment"
-        android:label="EnterProductOptionFragment">
+        android:label="EnterFundingNameFragment">
         <action
             android:id="@+id/action_enterFundingNameFragment_to_enterFundingDescriptionFragment"
             app:destination="@id/enterFundingDescriptionFragment" />
@@ -45,10 +48,11 @@
             android:id="@+id/action_enterFundingNameFragment_to_enterFundingPriceFragment"
             app:destination="@id/enterFundingPriceFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/enterFundingDescriptionFragment"
         android:name="com.thinlineit.favorit_android.android.ui.createfunding.EnterFundingDescriptionFragment"
-        android:label="EnterProductOptionFragment">
+        android:label="EnterFundingDescriptionFragment">
         <action
             android:id="@+id/action_enterFundingDescriptionFragment_to_enterFundingNameFragment"
             app:destination="@id/enterFundingNameFragment" />
@@ -56,10 +60,11 @@
             android:id="@+id/action_enterFundingDescriptionFragment_to_enterFundingExpiredDateFragment"
             app:destination="@id/enterFundingExpiredDateFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/enterFundingExpiredDateFragment"
         android:name="com.thinlineit.favorit_android.android.ui.createfunding.EnterFundingExpiredDateFragment"
-        android:label="EnterProductOptionFragment">
+        android:label="EnterFundingExpiredDateFragment">
         <action
             android:id="@+id/action_enterFundingExpiredDateFragment_to_enterFundingDescriptionFragment"
             app:destination="@id/enterFundingDescriptionFragment" />
@@ -67,19 +72,28 @@
             android:id="@+id/action_enterFundingExpiredDateFragment_to_fundingPreviewFragment"
             app:destination="@id/fundingPreviewFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/fundingPreviewFragment"
         android:name="com.thinlineit.favorit_android.android.ui.createfunding.FundingPreviewFragment"
-        android:label="EnterProductOptionFragment">
+        android:label="FundingPreviewFragment">
         <action
-            android:id="@+id/action_fundingPreviewFragment_to_finishCreateFundingFragment"
-            app:destination="@id/finishCreateFundingFragment" />
+            android:id="@+id/action_fundingPreviewFragment_to_finishCreateFundingActivity"
+            app:destination="@id/finishCreateFundingActivity" />
         <action
             android:id="@+id/action_fundingPreviewFragment_to_enterFundingExpiredDateFragment"
             app:destination="@id/enterFundingExpiredDateFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/finishCreateFundingFragment"
-        android:name="com.thinlineit.favorit_android.android.ui.createfunding.FinishCreateFundingFragment"
-        android:label="EnterProductOptionFragment" />
+
+    <activity
+        android:id="@+id/finishCreateFundingActivity"
+        android:name="com.thinlineit.favorit_android.android.ui.createfunding.FinishCreateFundingActivity"
+        android:label="FinishCreateFundingActivity">
+        <argument
+            android:name="fundingLink"
+            app:argType="string" />
+        <argument
+            android:name="fundingID"
+            app:argType="string" />
+    </activity>
 </navigation>
