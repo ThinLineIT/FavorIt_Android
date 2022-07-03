@@ -15,7 +15,7 @@ android {
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "KAKAO_API_KEY", getApiKey("KAKAO_API_KEY"))
+        buildConfigField("String", "KAKAO_API_KEY", "\"${getApiKey("KAKAO_API_KEY")}\"")
         manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("KAKAO_API_KEY")
     }
     buildTypes {
@@ -78,7 +78,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:$GLIDE_VERSION")
 
     //Hilt
-    implementation ("com.google.dagger:hilt-android:$HILT_VERSION")
+    implementation("com.google.dagger:hilt-android:$HILT_VERSION")
     kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 }
