@@ -123,14 +123,14 @@
                     android:layout_height="match_parent"
                     android:max="100"
                     android:progressBackgroundTint="@color/blue"
-                    android:progressTint="@color/pinky"
+                    android:progressTint="@color/pink"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:text="@string/label_funding_aim_price"
-                    android:textColor="@color/pinky"
+                    android:textColor="@color/pink"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/priceProgress"
                     tools:text="목표금액" />
@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:text="@{viewModel.fundingPrice.toString()}"
-                    android:textColor="@color/pinky"
+                    android:textColor="@color/pink"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/priceProgress"
                     tools:text="123456원" />

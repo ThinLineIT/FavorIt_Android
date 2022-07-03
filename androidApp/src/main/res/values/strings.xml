@@ -14,8 +14,8 @@
     <string name="button_preview">미리보기</string>
     <string name="button_edit">← 내용 수정</string>
     <string name="button_start_funding">펀딩 시작 →</string>
-    <string name="button_copy_link">링크 복사</string>
-    <string name="button_to_funding_detail">펀딩 보기</string>
+    <string name="button_copy_link">&#032;&#032;링크&#032;복사</string>
+    <string name="button_go_to_funding_detail">&#032;&#032;펀딩&#032;보기</string>
     <string name="label_going_to_product">상품 보러 가기</string>
     <string name="label_funding_aim_price">목표금액</string>
     <string name="tooltip_please_enter_available_product_link">올바른 상품 링크를 입력해주세요.</string>
@@ -44,4 +44,6 @@
     <string name="number_key_pad_zero">0</string>
     <string name="number_key_pad_delete"> ← </string>
     <string name="label_funding_expired_date">언제까지 펀딩할까요?</string>
+    <string name="label_copy_complete">복사 완료</string>
+    <string name="label_funding_link">펀딩 링크</string>
 </resources>

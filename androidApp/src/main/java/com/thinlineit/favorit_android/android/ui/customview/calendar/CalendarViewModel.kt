@@ -46,7 +46,8 @@ class CalendarViewModel : ViewModel() {
                     !isEndDay && (it.date.after(startDate) && it.date.before(endDate))
                 it.copy(
                     isEndDay = isEndDay,
-                    isBetweenDay = isBetweenDay
+                    isBetweenDay = isBetweenDay,
+                    isEndDaySelected = true
                 )
             }
         }
@@ -75,7 +76,7 @@ class CalendarViewModel : ViewModel() {
         while (cells.size < HEADER_CELLS_SIZE + DAY_CELLS_OF_MONTH_MAX_SIZE) {
             val date = calendar.time
             val day = calendar.get(Calendar.DAY_OF_MONTH).toString()
-            val enabled = !date.before(startDate)
+            val enabled = !date.before(startDate) || DateUtils.isToday(date.time)
             val isToday = DateUtils.isToday(date.time)
             val isEndDay = endDate.value?.let {
                 isSameDay(it, date)
@@ -83,6 +84,7 @@ class CalendarViewModel : ViewModel() {
             val isBetweenDay = endDate.value?.let { endDate ->
                 !isEndDay && (date.after(startDate) && date.before(endDate))
             } ?: false
+            val isEndDaySelected = endDate.value != null
             val onSelected = { _: View ->
                 if (date.after(startDate)) {
                     onEndDateSelected(date)
@@ -96,7 +98,7 @@ class CalendarViewModel : ViewModel() {
                     isToday,
                     isEndDay,
                     isBetweenDay,
-                    endDate.value != null,
+                    isEndDaySelected,
                     onSelected
                 )
             )
