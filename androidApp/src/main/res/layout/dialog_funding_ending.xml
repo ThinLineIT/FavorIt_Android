@@ -26,8 +26,9 @@
                 android:id="@+id/dialogBodyText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="펀딩 기간이 종료되었습니다.
-                [펀딩 마감]을 눌러 펀딩을 마감해주세요"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="@string/label_funding_detail_dialog_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +36,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="확인"
+                android:text="@string/label_funding_detail_dialog_edit"
                 android:layout_marginTop="30dp"
                 android:textColor="@color/yellow"
                 android:gravity="center"

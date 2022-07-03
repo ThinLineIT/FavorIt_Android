@@ -14,6 +14,7 @@
     <string name="button_edit">← 내용 수정</string>
     <string name="button_start_funding">펀딩 시작 →</string>
     <string name="label_going_to_product">상품 보러 가기</string>
+    <string name="label_funding_aim_price">목표금액</string>
     <string name="tooltip_please_enter_available_product_link">올바른 상품 링크를 입력해주세요.</string>
     <string name="hint_product_link">상품 링크를 입력해주세요!</string>
     <string name="hint_funding_name">펀딩의 이름을 지어주세요!</string>
@@ -39,4 +40,13 @@
     <string name="number_key_pad_zero">0</string>
     <string name="number_key_pad_delete"> ← </string>
 
+    <!-- fundingDetail -->
+    <string name="button_present">선물 하기</string>
+    <string name="button_end_funding">펀딩 마감</string>
+    <string name="button_left_arrow">←</string>
+    <string name="button_right_arrow">→</string>
+    <string name="button_keep_funding">계속 진행</string>
+    <string name="label_aim_percent">목표달성까지 00% 남았어요. \n 펀딩을 마감하시겠어요?</string>
+    <string name="label_funding_detail_dialog_text">펀딩 기간이 종료되었습니다. \n [펀딩 마감]을 눌러 펀딩을 마감해주세요</string>
+    <string name="label_funding_detail_dialog_edit">확인</string>
 </resources>
