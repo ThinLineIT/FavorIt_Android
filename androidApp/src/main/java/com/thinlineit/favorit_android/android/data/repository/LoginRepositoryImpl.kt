@@ -12,8 +12,7 @@ class LoginRepositoryImpl @Inject constructor(
 
     override suspend fun login(kakaoToken: String): Boolean = try {
         val data = authDataSource.postLogin(kakaoToken)
-        saveAccessToken(data.accessToken)
-        saveRefreshToken(data.refreshToken)
+        saveTokens(data.accessToken, data.refreshToken)
         true
     } catch (e: Exception) {
         Log.d(TAG, e.toString())
@@ -22,20 +21,16 @@ class LoginRepositoryImpl @Inject constructor(
 
     override suspend fun requestAccessToken(refreshToken: String): Boolean = try {
         val data = authDataSource.postLogin(refreshToken)
-        saveAccessToken(data.accessToken)
-        saveRefreshToken(data.refreshToken)
+        saveTokens(data.accessToken, data.refreshToken)
         true
     } catch (e: Exception) {
         Log.d(TAG, e.toString())
         false
     }
 
-    override fun saveAccessToken(accessToken: String) {
+    override fun saveTokens(accessToken: String, refreshToken: String) {
         localPreferenceDataSource.setAccessToken(accessToken)
-    }
-
-    override fun saveRefreshToken(refreshToken: String) {
-        localPreferenceDataSource.setAccessToken(refreshToken)
+        localPreferenceDataSource.setRefreshToken(refreshToken)
     }
 
     companion object {

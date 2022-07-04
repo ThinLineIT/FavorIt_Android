@@ -15,20 +15,15 @@ class AuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val authRequest = if (isAuth(originalRequest)) originalRequest else
-            originalRequest.newBuilder()
-                .addHeader("Authorization", "Bearer${localPreferenceDataSource.getAccessToken()}")
-                .build()
+            requestWithToken(originalRequest)
         val response = chain.proceed(authRequest)
         when (response.code) {
             401 -> {
                 val body = FormBody.Builder().add(
-                    "refresh_token",
+                    REFRESH_TOKEN,
                     localPreferenceDataSource.getRefreshToken()
                 ) as RequestBody
-                val refreshTokenRequest = originalRequest.newBuilder().get()
-                    .url("${RetrofitModule.BASE_URL}auth/refresh_token")
-                    .post(body)
-                    .build()
+                val refreshTokenRequest = requestRefreshToken(originalRequest, body)
                 val refreshTokenResponse = chain.proceed(refreshTokenRequest)
 
                 if (refreshTokenResponse.isSuccessful) {
@@ -40,12 +35,8 @@ class AuthInterceptor @Inject constructor(
                         setAccessToken(refreshToken.data.accessToken)
                         setRefreshToken(refreshToken.data.refreshToken)
                     }
-                    val newRequest = originalRequest.newBuilder()
-                        .addHeader(
-                            "Authorization",
-                            "Bearer${localPreferenceDataSource.getAccessToken()}"
-                        )
-                        .build()
+                    val newRequest = requestWithToken(originalRequest)
+
                     return chain.proceed(newRequest)
                 }
             }
@@ -53,7 +44,27 @@ class AuthInterceptor @Inject constructor(
         return response
     }
 
+    private fun requestWithToken(originalRequest: Request): Request =
+        originalRequest.newBuilder()
+            .addHeader(
+                "Authorization",
+                "Bearer${localPreferenceDataSource.getAccessToken()}"
+            )
+            .build()
+
+
+    private fun requestRefreshToken(originalRequest: Request, body: RequestBody): Request =
+        originalRequest.newBuilder().get()
+            .url("${RetrofitModule.BASE_URL}auth/refresh_token")
+            .post(body)
+            .build()
+
     private fun isAuth(originalRequest: Request) =
-        originalRequest.url.encodedPath.contains("auth")
+        originalRequest.url.encodedPath.contains(AUTH)
+
+    companion object {
+        const val REFRESH_TOKEN = "refresh_token"
+        const val AUTH = "auth"
+    }
 
 }
