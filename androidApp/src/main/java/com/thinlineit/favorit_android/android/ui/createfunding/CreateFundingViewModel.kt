@@ -6,7 +6,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
 import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
 import com.thinlineit.favorit_android.android.ui.customview.calendar.laterThanTomorrow
@@ -85,11 +84,19 @@ class CreateFundingViewModel @Inject constructor(
         }
     }
 
-    fun onEndDateSelected(endDate: Date) {
-        fundingExpiredDate.postValue(endDate)
-    }
 
     val currentFragment = MutableLiveData(FragmentType.PRODUCT_LINK)
+
+    val progressStateList: List<MediatorLiveData<ProgressState>> by lazy {
+        listOf(
+            productLinkProgressState,
+            productOptionProgressState,
+            fundingPriceProgressState,
+            fundingNameProgressState,
+            fundingDescriptionProgressState,
+            fundingExpiredDateProgressState
+        )
+    }
 
     private val productLinkProgressState =
         createProgressStateMediatorLiveData(
@@ -132,6 +139,10 @@ class CreateFundingViewModel @Inject constructor(
             FragmentType.FUNDING_EXPIRED_DATE
         )
 
+    fun onEndDateSelected(endDate: Date) {
+        fundingExpiredDate.postValue(endDate)
+    }
+
     private fun createProgressStateMediatorLiveData(
         inputState: LiveData<InputState>,
         currentFragment: LiveData<FragmentType>,
@@ -144,15 +155,6 @@ class CreateFundingViewModel @Inject constructor(
             value = createProgressState(inputState.value, currentFragment.value == fragmentType)
         }
     }
-
-    val progressStateList: List<MediatorLiveData<ProgressState>> = listOf(
-        productLinkProgressState,
-        productOptionProgressState,
-        fundingPriceProgressState,
-        fundingNameProgressState,
-        fundingDescriptionProgressState,
-        fundingExpiredDateProgressState
-    )
 
     private fun createProgressState(
         inputState: InputState?,
@@ -182,11 +184,7 @@ class CreateFundingViewModel @Inject constructor(
             View.GONE
         }
 
-        fun toColor(): Int = if (this == UNAVAILABLE) {
-            R.color.blue
-        } else {
-            R.color.lightGray
-        }
+        fun toEnabled(): Boolean = this == AVAILABLE
     }
 
     enum class FragmentType {
