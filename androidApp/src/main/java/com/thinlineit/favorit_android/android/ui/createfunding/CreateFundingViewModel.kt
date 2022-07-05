@@ -19,15 +19,16 @@ import javax.inject.Inject
 class CreateFundingViewModel @Inject constructor(
     private val createFundingUseCases: CreateFundingUseCases
 ) : ViewModel() {
+
     val productLink = MutableLiveData("")
     val productOption = MutableLiveData("")
-    val fundingPrice = MutableLiveData(0L)
+    val fundingPrice = MutableLiveData(0)
     val fundingPriceAsCurrency: LiveData<String> = Transformations.map(fundingPrice) {
-        if (it == 0L) ""
-        else NumberFormatter.asCurrency(it)
+        if (it == 0) ""
+        else NumberFormatter.asCurrency(it.toLong())
     }
     val fundingPriceAsNumerals: LiveData<String> = Transformations.map(fundingPrice) {
-        NumberFormatter.asNumerals(it)
+        NumberFormatter.asNumerals(it.toLong())
     }
     val fundingName = MutableLiveData("")
     val fundingDescription = MutableLiveData("")
@@ -53,7 +54,7 @@ class CreateFundingViewModel @Inject constructor(
 
     val fundingPriceState: LiveData<InputState> = Transformations.map(fundingPrice) {
         when {
-            it == 0L -> InputState.EMPTY
+            it == 0 -> InputState.EMPTY
             it > 0 -> InputState.AVAILABLE
             else -> InputState.UNAVAILABLE
         }
@@ -174,7 +175,7 @@ class CreateFundingViewModel @Inject constructor(
             View.GONE
         }
 
-        fun toVisibilityCursor() = if (this == EMPTY) {
+        fun toCursorVisibility() = if (this == EMPTY) {
             View.VISIBLE
         } else {
             View.GONE

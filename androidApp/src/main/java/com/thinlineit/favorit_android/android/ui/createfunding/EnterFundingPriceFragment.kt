@@ -5,20 +5,18 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.FragmentEnterFundingPriceBinding
-import com.thinlineit.favorit_android.android.util.shortToast
+import com.thinlineit.favorit_android.android.ui.customview.NumberKeyPadView
 
 class EnterFundingPriceFragment :
     CreateFundingBaseFragment<FragmentEnterFundingPriceBinding>(R.layout.fragment_enter_funding_price) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val cursorAnim = AnimationUtils.loadAnimation(context, R.anim.blink_animation)
 
         binding.apply {
             viewModel = this@EnterFundingPriceFragment.viewModel.apply {
                 currentFragment.value = CreateFundingViewModel.FragmentType.FUNDING_PRICE
-            }.also {
-                numberKeyPad.numberResult = it.fundingPrice
-                progressButtons.setProgressState(it.progressStateList)
+            }.also { viewModel ->
+                progressButtons.setProgressState(viewModel.progressStateList)
             }
             previousButton.setOnClickListener {
                 navController.navigate(
@@ -32,17 +30,28 @@ class EnterFundingPriceFragment :
                         .actionEnterFundingPriceFragmentToEnterFundingNameFragment()
                 )
             }
-            this@EnterFundingPriceFragment.viewModel.fundingPriceState.observe(viewLifecycleOwner) {
-                if (it === CreateFundingViewModel.InputState.EMPTY) {
-                    priceCursor.startAnimation(cursorAnim)
-                } else {
-                    priceCursor.clearAnimation()
-                }
-            }
+            initNumberKeyPadView(binding.numberKeyPad)
+            initPriceCursorAnimation(binding.priceCursor)
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    private fun initNumberKeyPadView(numberKeyPad: NumberKeyPadView) {
+        viewModel.fundingPrice.value?.let { initialPrice ->
+            binding.numberKeyPad.init(initialPrice)
+        }
+        numberKeyPad.numberResult.observe(viewLifecycleOwner) { newPrice ->
+            viewModel.fundingPrice.postValue(newPrice)
+        }
+    }
+
+    private fun initPriceCursorAnimation(priceCursor: View) {
+        val cursorAnim = AnimationUtils.loadAnimation(context, R.anim.blink_animation)
+        this@EnterFundingPriceFragment.viewModel.fundingPriceState.observe(viewLifecycleOwner) {
+            if (it === CreateFundingViewModel.InputState.EMPTY) {
+                priceCursor.startAnimation(cursorAnim)
+            } else {
+                priceCursor.clearAnimation()
+            }
+        }
     }
 }
