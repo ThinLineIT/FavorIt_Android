@@ -1,7 +1,7 @@
 package com.thinlineit.favorit_android.android.di
 
-import com.thinlineit.favorit_android.android.data.api.LoginApi
 import com.thinlineit.favorit_android.android.data.local.LocalPreferenceDataSource
+import com.thinlineit.favorit_android.android.data.remote.AuthDataSource
 import com.thinlineit.favorit_android.android.data.repository.LoginRepository
 import com.thinlineit.favorit_android.android.data.repository.LoginRepositoryImpl
 import dagger.Module
@@ -17,6 +17,6 @@ object RepositoryModule {
     @Singleton
     fun providesLoginRepository(
         localPreferenceDataSource: LocalPreferenceDataSource,
-        loginApi: LoginApi
-    ): LoginRepository = LoginRepositoryImpl(localPreferenceDataSource, loginApi)
+        authDataSource: AuthDataSource
+    ): LoginRepository = LoginRepositoryImpl(localPreferenceDataSource, authDataSource)
 }
