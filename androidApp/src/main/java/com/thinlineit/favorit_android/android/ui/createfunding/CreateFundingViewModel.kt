@@ -40,7 +40,7 @@ class CreateFundingViewModel @Inject constructor(
     val productLinkState: LiveData<InputState> = Transformations.map(productLink) {
         when {
             it.isEmpty() -> InputState.EMPTY
-            it.length > 10 -> InputState.AVAILABLE
+            URLUtil.isNetworkUrl(it) -> InputState.AVAILABLE
             else -> InputState.UNAVAILABLE
         }
     }
