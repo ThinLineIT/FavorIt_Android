@@ -21,12 +21,16 @@ class EnterFundingPriceFragment :
                 progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
-                navController.navigate(R.id.action_enterFundingPriceFragment_to_enterProductOptionFragment)
+                navController.navigate(
+                    EnterFundingPriceFragmentDirections
+                        .actionEnterFundingPriceFragmentToEnterProductOptionFragment()
+                )
             }
             nextButton.setOnClickListener {
-                if (viewModel?.fundingPriceState?.value == CreateFundingViewModel.InputState.AVAILABLE) {
-                    navController.navigate(R.id.action_enterFundingPriceFragment_to_enterFundingNameFragment)
-                }
+                navController.navigate(
+                    EnterFundingPriceFragmentDirections
+                        .actionEnterFundingPriceFragmentToEnterFundingNameFragment()
+                )
             }
             this@EnterFundingPriceFragment.viewModel.fundingPriceState.observe(viewLifecycleOwner) {
                 if (it === CreateFundingViewModel.InputState.EMPTY) {

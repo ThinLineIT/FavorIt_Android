@@ -17,12 +17,16 @@ class EnterFundingExpiredDateFragment :
                 progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
-                navController.navigate(R.id.action_enterFundingExpiredDateFragment_to_enterFundingDescriptionFragment)
+                navController.navigate(
+                    EnterFundingExpiredDateFragmentDirections
+                        .actionEnterFundingExpiredDateFragmentToEnterFundingDescriptionFragment()
+                )
             }
             nextButton.setOnClickListener {
-                if (viewModel?.fundingExpiredDateState?.value == CreateFundingViewModel.InputState.AVAILABLE) {
-                    navController.navigate(R.id.action_enterFundingExpiredDateFragment_to_fundingPreviewFragment)
-                }
+                navController.navigate(
+                    EnterFundingExpiredDateFragmentDirections
+                        .actionEnterFundingExpiredDateFragmentToFundingPreviewFragment()
+                )
             }
             calendarDatePicker.setEndDate(this@EnterFundingExpiredDateFragment.viewModel.fundingExpiredDate.value)
             calendarDatePicker.onEndDateUpdated = {

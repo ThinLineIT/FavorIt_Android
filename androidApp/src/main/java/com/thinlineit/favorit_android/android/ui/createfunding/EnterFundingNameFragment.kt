@@ -1,10 +1,7 @@
 package com.thinlineit.favorit_android.android.ui.createfunding
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.FragmentEnterFundingNameBinding
 
@@ -20,12 +17,16 @@ class EnterFundingNameFragment :
                 progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
-                navController.navigate(R.id.action_enterFundingNameFragment_to_enterFundingPriceFragment)
+                navController.navigate(
+                    EnterFundingNameFragmentDirections
+                        .actionEnterFundingNameFragmentToEnterFundingPriceFragment()
+                )
             }
             nextButton.setOnClickListener {
-                if (viewModel?.fundingNameState?.value == CreateFundingViewModel.InputState.AVAILABLE) {
-                    navController.navigate(R.id.action_enterFundingNameFragment_to_enterFundingDescriptionFragment)
-                }
+                navController.navigate(
+                    EnterFundingNameFragmentDirections
+                        .actionEnterFundingNameFragmentToEnterFundingDescriptionFragment()
+                )
             }
         }
     }

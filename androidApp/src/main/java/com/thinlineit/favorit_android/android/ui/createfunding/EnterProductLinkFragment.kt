@@ -19,9 +19,10 @@ class EnterProductLinkFragment :
                 progressButtons.setProgressState(it.progressStateList)
             }
             nextButton.setOnClickListener {
-                if (viewModel?.productLinkState?.value == CreateFundingViewModel.InputState.AVAILABLE) {
-                    navController.navigate(R.id.action_enterProductLinkFragment_to_enterProductOptionFragment)
-                }
+                navController.navigate(
+                    EnterProductLinkFragmentDirections
+                        .actionEnterProductLinkFragmentToEnterProductOptionFragment()
+                )
             }
         }
     }

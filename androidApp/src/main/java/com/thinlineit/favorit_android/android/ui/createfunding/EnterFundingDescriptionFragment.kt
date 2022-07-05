@@ -17,12 +17,16 @@ class EnterFundingDescriptionFragment :
                 progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
-                navController.navigate(R.id.action_enterFundingDescriptionFragment_to_enterFundingNameFragment)
+                navController.navigate(
+                    EnterFundingDescriptionFragmentDirections
+                        .actionEnterFundingDescriptionFragmentToEnterFundingNameFragment()
+                )
             }
             nextButton.setOnClickListener {
-                if (viewModel?.fundingDescriptionState?.value == CreateFundingViewModel.InputState.AVAILABLE) {
-                    navController.navigate(R.id.action_enterFundingDescriptionFragment_to_enterFundingExpiredDateFragment)
-                }
+                navController.navigate(
+                    EnterFundingDescriptionFragmentDirections
+                        .actionEnterFundingDescriptionFragmentToEnterFundingExpiredDateFragment()
+                )
             }
         }
     }

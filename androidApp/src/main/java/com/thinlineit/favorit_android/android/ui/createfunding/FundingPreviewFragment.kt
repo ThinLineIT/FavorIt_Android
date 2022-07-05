@@ -13,7 +13,10 @@ class FundingPreviewFragment :
         binding.apply {
             viewModel = this@FundingPreviewFragment.viewModel
             previousButton.setOnClickListener {
-                navController.navigate(R.id.action_fundingPreviewFragment_to_enterFundingExpiredDateFragment)
+                navController.navigate(
+                    FundingPreviewFragmentDirections
+                        .actionFundingPreviewFragmentToEnterFundingExpiredDateFragment()
+                )
             }
             nextButton.setOnClickListener {
                 navController.navigate(R.id.action_fundingPreviewFragment_to_finishCreateFundingFragment)
