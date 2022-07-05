@@ -18,8 +18,10 @@
             android:id="@+id/monthTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:text="@{viewModel.month}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="June" />
@@ -30,38 +32,43 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@{viewModel.year}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/monthTextView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2022" />
 
-        <TextView
+        <ImageButton
             android:id="@+id/yearSelector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="V"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_baseline_arrow_drop_down_24"
             app:layout_constraintBottom_toBottomOf="@id/monthTextView"
             app:layout_constraintStart_toEndOf="@id/yearTextView"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <ImageButton
             android:id="@+id/previousMonthButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/transparent"
             android:onClick="@{() -> viewModel.onPreviousClicked()}"
-            android:text="prev"
+            android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
             app:layout_constraintBottom_toBottomOf="@id/monthTextView"
             app:layout_constraintEnd_toStartOf="@id/nextMonthButton"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <ImageButton
             android:id="@+id/nextMonthButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/transparent"
             android:onClick="@{() -> viewModel.onNextClicked()}"
-            android:text="next"
+            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
             app:layout_constraintBottom_toBottomOf="@id/monthTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -70,6 +77,8 @@
             android:id="@+id/calendarGridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
             android:numColumns="7"
             app:layout_constraintTop_toBottomOf="@id/monthTextView"
             tools:listitem="@layout/item_view_calendar_day_cell" />

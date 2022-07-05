@@ -13,21 +13,23 @@ import java.util.Calendar
 import java.util.Date
 
 class CalendarViewModel : ViewModel() {
-    private val calendar = MutableLiveData(Calendar.getInstance())
 
-    val year = Transformations.map(calendar) {
-        it.get(Calendar.YEAR).toString()
+    val year by lazy {
+        Transformations.map(calendar) {
+            it.get(Calendar.YEAR).toString()
+        }
     }
-    val month = Transformations.map(calendar) {
-        Month.of(it.get(Calendar.MONTH) + MONTH_INDEX_ADJUSTER).name
+    val month by lazy {
+        Transformations.map(calendar) {
+            Month.of(it.get(Calendar.MONTH) + MONTH_INDEX_ADJUSTER).name
+        }
     }
 
-    private val startDate = Date(System.currentTimeMillis())
     val endDate = MutableLiveData<Date>()
 
     val calendarCells = MediatorLiveData<List<CalendarCell>>().apply {
         addSource(calendar) {
-            value = getCalendarCells(it.clone() as Calendar)
+            value = getCalendarCellsOfMonth(it.clone() as Calendar)
         }
         addSource(endDate) {
             val cells = this.value ?: return@addSource
@@ -35,77 +37,86 @@ class CalendarViewModel : ViewModel() {
         }
     }
 
-    private fun updateEndDate(cells: List<CalendarCell>, endDate: Date) = cells.map {
-        when (it) {
-            is HeaderCell -> {
-                it
-            }
-            is DayCell -> {
-                val isEndDay = isSameDay(endDate, it.date)
-                val isBetweenDay =
-                    !isEndDay && (it.date.after(startDate) && it.date.before(endDate))
-                it.copy(
-                    isEndDay = isEndDay,
-                    isBetweenDay = isBetweenDay
-                )
-            }
-        }
-    }
+    private val calendar = MutableLiveData(Calendar.getInstance())
+
+    private val startDate = Date(System.currentTimeMillis())
 
     fun onPreviousClicked() {
         val calendar = calendar.value ?: return
-        calendar.add(Calendar.MONTH, -1)
+        calendar.add(Calendar.MONTH, ONE_DAY_AGO)
         this.calendar.postValue(calendar)
     }
 
     fun onNextClicked() {
         val calendar = calendar.value ?: return
-        calendar.add(Calendar.MONTH, 1)
+        calendar.add(Calendar.MONTH, ONE_DAY_LATER)
         this.calendar.postValue(calendar)
     }
 
-    private fun getCalendarCells(calendar: Calendar): List<CalendarCell> {
-        calendar.set(Calendar.DAY_OF_MONTH, 1)
-        val monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK) - 1
-        calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell)
-
+    private fun getCalendarCellsOfMonth(calendar: Calendar): List<CalendarCell> {
+        calendar.set(Calendar.DAY_OF_MONTH, FIRST_DAY_OF_MONTH)
+        val monthStartCellOffset = calendar.get(Calendar.DAY_OF_WEEK) - DAY_OF_WEEK_OFFSET
+        calendar.add(Calendar.DAY_OF_MONTH, -monthStartCellOffset)
         val cells = mutableListOf<CalendarCell>().apply {
             addAll(HEADER_CELLS_LIST)
         }
         while (cells.size < HEADER_CELLS_SIZE + DAY_CELLS_OF_MONTH_MAX_SIZE) {
-            val date = calendar.time
-            val day = calendar.get(Calendar.DAY_OF_MONTH).toString()
-            val enabled = !date.before(startDate)
-            val isToday = DateUtils.isToday(date.time)
-            val isEndDay = endDate.value?.let {
-                isSameDay(it, date)
-            } ?: false
-            val isBetweenDay = endDate.value?.let { endDate ->
-                !isEndDay && (date.after(startDate) && date.before(endDate))
-            } ?: false
-            val onSelected = { _: View ->
-                if (date.after(startDate)) {
-                    onEndDateSelected(date)
-                }
-            }
-            cells.add(
-                DayCell(
-                    date,
-                    day,
-                    enabled,
-                    isToday,
-                    isEndDay,
-                    isBetweenDay,
-                    onSelected
-                )
-            )
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            cells.add(calendar.mapCurrentDateToDayCell(startDate, endDate.value))
+            calendar.add(Calendar.DAY_OF_MONTH, ONE_DAY_LATER)
         }
         return cells
     }
 
+    private fun Calendar.mapCurrentDateToDayCell(startDate: Date, endDate: Date?): DayCell {
+        val date = time
+        val dayOfMonth = get(Calendar.DAY_OF_MONTH).toString()
+        val enabled = !DateUtils.isToday(date.time) || date.after(startDate)
+        val isToday = DateUtils.isToday(date.time)
+        val isEndDay = endDate?.let {
+            date.isSameDay(endDate)
+        } ?: false
+        val isBetweenDay = endDate?.let {
+            date.isBetweenDay(startDate, endDate)
+        } ?: false
+        val isEndDaySelected = endDate != null
+        val onSelected = { _: View ->
+            if (date.after(startDate)) {
+                onEndDateSelected(date)
+            }
+        }
+        return DayCell(
+            date,
+            dayOfMonth,
+            enabled,
+            isToday,
+            isEndDay,
+            isBetweenDay,
+            isEndDaySelected,
+            onSelected
+        )
+    }
+
     private fun onEndDateSelected(endDate: Date) {
         this.endDate.postValue(endDate)
+    }
+
+    private fun updateEndDate(cells: List<CalendarCell>, endDate: Date?) = cells.map { cell ->
+        when (cell) {
+            is HeaderCell -> cell
+            is DayCell -> {
+                val isEndDay = endDate?.let { endDate ->
+                    cell.date.isSameDay(endDate)
+                } ?: false
+                val isBetweenDay = endDate?.let { endDate ->
+                    cell.date.isBetweenDay(startDate, endDate)
+                } ?: false
+                cell.copy(
+                    isEndDay = isEndDay,
+                    isBetweenDay = isBetweenDay,
+                    isEndDaySelected = endDate != null
+                )
+            }
+        }
     }
 
     companion object {
@@ -121,5 +132,9 @@ class CalendarViewModel : ViewModel() {
         const val HEADER_CELLS_SIZE = 7
         const val DAY_CELLS_OF_MONTH_MAX_SIZE = 42
         const val MONTH_INDEX_ADJUSTER = 1
+        const val ONE_DAY_AGO = -1
+        const val ONE_DAY_LATER = 1
+        const val FIRST_DAY_OF_MONTH = 1
+        const val DAY_OF_WEEK_OFFSET = 1
     }
 }

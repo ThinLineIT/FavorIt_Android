@@ -10,6 +10,7 @@ import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
 import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
 import com.thinlineit.favorit_android.android.ui.customview.calendar.laterThanTomorrow
+import com.thinlineit.favorit_android.android.ui.customview.calendar.toDateFormat
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
@@ -34,7 +35,7 @@ class CreateFundingViewModel @Inject constructor(
     val fundingDescription = MutableLiveData("")
     val fundingExpiredDate = MutableLiveData<Date?>(null)
     val fundingExpiredDateAsString = Transformations.map(fundingExpiredDate) {
-        fundingExpiredDate.toString()
+        fundingExpiredDate.value.toString()
     }
     val productLinkState: LiveData<InputState> = Transformations.map(productLink) {
         when {

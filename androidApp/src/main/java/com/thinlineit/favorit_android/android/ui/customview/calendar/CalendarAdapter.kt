@@ -59,20 +59,18 @@ class CalendarAdapter(
         }
 
         binding.dayCell = dayCell
-        if (dayCell.isToday) {
-            binding.dayTextView.background =
-                AppCompatResources.getDrawable(context, R.drawable.icon_circle_button)
-        } else if (dayCell.isEndDay) {
-            binding.dayTextView.background =
-                AppCompatResources.getDrawable(context, R.drawable.icon_circle_button_end)
-        } else if (dayCell.isBetweenDay) {
-            binding.dayTextView.background =
-                AppCompatResources.getDrawable(context, R.drawable.icon_circle_button_between)
-        } else {
-            binding.dayTextView.background = null
-        }
+        binding.apply {
+            val cellBackgroundImage = if (dayCell.isToday) {
+                AppCompatResources.getDrawable(context, R.drawable.icon_circle_today)
+            } else if (dayCell.isEndDay) {
+                AppCompatResources.getDrawable(context, R.drawable.icon_circle_end_day)
+            } else {
+                null
+            }
+            cellBackGround.setImageDrawable(cellBackgroundImage)
 
-        binding.root.setOnClickListener(dayCell.onSelected)
+            root.setOnClickListener(dayCell.onSelected)
+        }
 
         return binding.root
     }
