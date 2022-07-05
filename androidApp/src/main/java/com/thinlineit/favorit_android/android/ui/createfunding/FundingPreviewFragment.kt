@@ -11,7 +11,9 @@ class FundingPreviewFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = this@FundingPreviewFragment.viewModel
+            viewModel = this@FundingPreviewFragment.viewModel.also {
+                priceProgress.progress = 0
+            }
             previousButton.setOnClickListener {
                 navController.navigate(
                     FundingPreviewFragmentDirections
