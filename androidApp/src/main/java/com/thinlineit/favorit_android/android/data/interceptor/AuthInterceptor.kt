@@ -14,8 +14,7 @@ class AuthInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
-        val authRequest = if (isAuth(originalRequest)) originalRequest else
-            requestWithToken(originalRequest)
+        val authRequest = requestWithToken(originalRequest)
         val response = chain.proceed(authRequest)
         when (response.code) {
             401 -> {
@@ -58,9 +57,6 @@ class AuthInterceptor @Inject constructor(
             .url("${RetrofitModule.BASE_URL}auth/refresh_token")
             .post(body)
             .build()
-
-    private fun isAuth(originalRequest: Request) =
-        originalRequest.url.encodedPath.contains(AUTH)
 
     companion object {
         const val REFRESH_TOKEN = "refresh_token"

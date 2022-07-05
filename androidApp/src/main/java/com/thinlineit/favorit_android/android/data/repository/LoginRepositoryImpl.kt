@@ -19,15 +19,6 @@ class LoginRepositoryImpl @Inject constructor(
         false
     }
 
-    override suspend fun requestAccessToken(refreshToken: String): Boolean = try {
-        val data = authDataSource.postLogin(refreshToken)
-        saveTokens(data.accessToken, data.refreshToken)
-        true
-    } catch (e: Exception) {
-        Log.d(TAG, e.toString())
-        false
-    }
-
     override fun saveTokens(accessToken: String, refreshToken: String) {
         localPreferenceDataSource.setAccessToken(accessToken)
         localPreferenceDataSource.setRefreshToken(refreshToken)
