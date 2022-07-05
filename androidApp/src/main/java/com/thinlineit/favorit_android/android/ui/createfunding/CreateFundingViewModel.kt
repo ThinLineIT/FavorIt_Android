@@ -161,7 +161,7 @@ class CreateFundingViewModel @Inject constructor(
         !isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EMPTY
         isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EDITING
         isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
-        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
+        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.COMPLETE
         else -> throw Exception("Something is wrong")
     }
 
