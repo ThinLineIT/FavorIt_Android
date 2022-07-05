@@ -1,5 +1,6 @@
 package com.thinlineit.favorit_android.android.di
 
+import com.thinlineit.favorit_android.android.data.repository.FundingRepository
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCase
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
 import dagger.Module
@@ -13,7 +14,8 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @Singleton
-    fun providesCreateFundingUseCase(): CreateFundingUseCases = CreateFundingUseCases(
-        CreateFundingUseCase()
-    )
+    fun providesCreateFundingUseCase(fundingRepository: FundingRepository): CreateFundingUseCases =
+        CreateFundingUseCases(
+            CreateFundingUseCase(fundingRepository)
+        )
 }
