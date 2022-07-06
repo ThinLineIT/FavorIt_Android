@@ -14,6 +14,7 @@ class AuthRepositoryImpl @Inject constructor(
         return try {
             val tokens = authDataSource.login(kakaoToken) ?: return false
             saveTokens(tokens.accessToken, tokens.refreshToken)
+            Log.d(TAG, "Success to LogIn $tokens")
             true
         } catch (e: Exception) {
             Log.d(TAG, e.toString())

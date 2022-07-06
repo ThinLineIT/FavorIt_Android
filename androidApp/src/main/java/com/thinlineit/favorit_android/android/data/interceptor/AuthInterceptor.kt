@@ -9,7 +9,7 @@ import okhttp3.Request
 import okhttp3.Response
 
 class AuthInterceptor @Inject constructor(
-    private val authRepositoryProvider: Provider<AuthRepository>,
+    private val authRepositoryProvider: Provider<AuthRepository>
 ) : Interceptor {
     private val authRepository
         get() = authRepositoryProvider.get()
