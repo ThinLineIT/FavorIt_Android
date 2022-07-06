@@ -5,10 +5,10 @@ import com.thinlineit.favorit_android.android.data.local.LocalPreferenceDataSour
 import com.thinlineit.favorit_android.android.data.remote.AuthDataSource
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(
+class AuthRepositoryImpl @Inject constructor(
     private val localPreferenceDataSource: LocalPreferenceDataSource,
     private val authDataSource: AuthDataSource
-) : LoginRepository {
+) : AuthRepository {
 
     override suspend fun login(kakaoToken: String): Boolean = try {
         val data = authDataSource.postLogin(kakaoToken)

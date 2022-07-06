@@ -1,7 +1,7 @@
 package com.thinlineit.favorit_android.android.di
 
+import com.thinlineit.favorit_android.android.data.api.AuthApi
 import com.thinlineit.favorit_android.android.data.api.FundingApi
-import com.thinlineit.favorit_android.android.data.api.LoginApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ import retrofit2.Retrofit
 object ApiModule {
     @Provides
     @Singleton
-    fun providesLoginApi(retrofit: Retrofit): LoginApi =
-        retrofit.create(LoginApi::class.java)
+    fun providesAuthApi(retrofit: Retrofit): AuthApi =
+        retrofit.create(AuthApi::class.java)
 
     @Provides
     @Singleton

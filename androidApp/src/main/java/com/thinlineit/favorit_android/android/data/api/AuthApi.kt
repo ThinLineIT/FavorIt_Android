@@ -6,7 +6,7 @@ import com.thinlineit.favorit_android.android.data.entity.RefreshRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface LoginApi {
+interface AuthApi {
     @POST("auth/login")
     suspend fun kakaoLogin(
         @Body request: LoginRequest
