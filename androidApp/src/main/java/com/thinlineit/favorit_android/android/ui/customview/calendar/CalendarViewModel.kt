@@ -2,6 +2,7 @@ package com.thinlineit.favorit_android.android.ui.customview.calendar
 
 import android.text.format.DateUtils
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -27,7 +28,15 @@ class CalendarViewModel : ViewModel() {
 
     val endDate = MutableLiveData<Date>()
 
-    val calendarCells = MediatorLiveData<List<CalendarCell>>().apply {
+    val calendarCells: LiveData<List<CalendarCell>> by lazy {
+        _calendarCells
+    }
+
+    private val calendar by lazy {
+        MutableLiveData(Calendar.getInstance())
+    }
+
+    private val _calendarCells = MediatorLiveData<List<CalendarCell>>().apply {
         addSource(calendar) {
             value = getCalendarCellsOfMonth(it.clone() as Calendar)
         }
@@ -36,8 +45,6 @@ class CalendarViewModel : ViewModel() {
             value = updateEndDate(cells, it)
         }
     }
-
-    private val calendar = MutableLiveData(Calendar.getInstance())
 
     private val startDate = Date(System.currentTimeMillis())
 
