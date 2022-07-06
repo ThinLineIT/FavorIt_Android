@@ -5,6 +5,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -27,6 +28,13 @@ android {
         dataBinding = true
         viewBinding = true
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 fun getApiKey(propertyKey: String): String {
@@ -48,36 +56,36 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
 
-    //kakao login
+    // kakao login
     implementation("com.kakao.sdk:v2-user:2.10.0")
 
-    //viewModel & livedata
+    // viewModel & livedata
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$LIFECYCLE_VERSION")
 
-    //ktx
+    // ktx
     implementation("androidx.activity:activity-ktx:1.4.0")
 
-    //Retrofit2
+    // Retrofit2
     implementation("com.squareup.retrofit2:retrofit:$RETROFIT_VERSION")
     implementation("com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION")
 
-    //okhttp
+    // okhttp
     implementation("com.squareup.okhttp3:okhttp:$OKHTTP_VERSION")
     implementation("com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:$OKHTTP_VERSION")
 
-    //Coroutine
+    // Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
 
-    //gson
+    // gson
     implementation("com.google.code.gson:gson:2.8.9")
 
-    //Glide
+    // Glide
     implementation("com.github.bumptech.glide:glide:$GLIDE_VERSION")
     annotationProcessor("com.github.bumptech.glide:compiler:$GLIDE_VERSION")
 
-    //Hilt
+    // Hilt
     implementation("com.google.dagger:hilt-android:$HILT_VERSION")
     kapt("com.google.dagger:hilt-android-compiler:$HILT_VERSION")
     kapt("androidx.hilt:hilt-compiler:1.0.0")

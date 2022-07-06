@@ -1,6 +1,7 @@
 package com.thinlineit.favorit_android.android.data.repository
 
-interface LoginRepository {
+interface AuthRepository {
     suspend fun login(kakaoToken: String): Boolean
-    fun saveTokens(accessToken: String, refreshToken: String)
+    suspend fun refreshToken(): String?
+    suspend fun getAccessToken(): String?
 }

@@ -5,7 +5,7 @@ interface LocalPreferenceDataSource {
 
     fun setRefreshToken(refreshToken: String)
 
-    fun getAccessToken(): String
+    fun getAccessToken(): String?
 
-    fun getRefreshToken(): String
+    fun getRefreshToken(): String?
 }

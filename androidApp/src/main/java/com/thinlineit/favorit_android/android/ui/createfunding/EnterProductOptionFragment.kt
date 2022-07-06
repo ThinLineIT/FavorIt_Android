@@ -17,12 +17,16 @@ class EnterProductOptionFragment :
                 progressButtons.setProgressState(it.progressStateList)
             }
             previousButton.setOnClickListener {
-                navController.navigate(R.id.action_enterProductOptionFragment_to_enterProductLinkFragment)
+                navController.navigate(
+                    EnterProductOptionFragmentDirections
+                        .actionEnterProductOptionFragmentToEnterProductLinkFragment()
+                )
             }
             nextButton.setOnClickListener {
-                if (viewModel?.productOptionState?.value == CreateFundingViewModel.InputState.AVAILABLE) {
-                    navController.navigate(R.id.action_enterProductOptionFragment_to_enterFundingPriceFragment)
-                }
+                navController.navigate(
+                    EnterProductOptionFragmentDirections
+                        .actionEnterProductOptionFragmentToEnterFundingPriceFragment()
+                )
             }
         }
     }

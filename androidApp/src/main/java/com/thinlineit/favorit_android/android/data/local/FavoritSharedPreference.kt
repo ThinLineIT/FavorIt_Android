@@ -19,5 +19,5 @@ object FavoritSharedPreference {
         }
     }
 
-    fun getValue(key: String) = preferences.getString(key, DEFAULT_STRING_VALUE)
+    fun getValue(key: String): String? = preferences.getString(key, DEFAULT_STRING_VALUE)
 }

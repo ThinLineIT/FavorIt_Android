@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.ProgressButtonsBinding
@@ -56,5 +55,3 @@ class ProgressButtons @JvmOverloads constructor(
         EMPTY, EDITING, CORRECT_ENTERED, COMPLETE
     }
 }
-
-

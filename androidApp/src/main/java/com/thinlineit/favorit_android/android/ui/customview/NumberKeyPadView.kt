@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.thinlineit.favorit_android.android.databinding.NumberKeyPadBinding
 import com.thinlineit.favorit_android.android.util.longToast
@@ -14,7 +15,8 @@ class NumberKeyPadView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    var numberResult: MutableLiveData<Long>? = null
+    private val _numberResult = MutableLiveData(0)
+    val numberResult: LiveData<Int> = _numberResult
     val binding: NumberKeyPadBinding
 
     init {
@@ -57,29 +59,35 @@ class NumberKeyPadView @JvmOverloads constructor(
         }
     }
 
+    fun init(initialNumber: Int) {
+        updateNumberResult(initialNumber)
+    }
+
     private fun onNumberClick(enteredNumber: String) {
-        val currentNumber = numberResult?.value ?: return
+        val currentNumber = numberResult.value ?: return
         try {
-            val newNumber = (currentNumber.toString() + enteredNumber).toLong()
+            val newNumber = (currentNumber.toString() + enteredNumber).toInt()
             updateNumberResult(newNumber)
         } catch (exception: NumberFormatException) {
-            context.longToast(
-                """
-                    currentNumber: $currentNumber 
-                    enteredNumber: $enteredNumber newNumber: 
-                    ${currentNumber.toString() + enteredNumber}
-                """.trimMargin()
-            )
+            context.longToast("잘못된 숫자입니다. 어떻게 입력한거에요?")
         }
     }
 
     private fun onDeleteClick() {
-        val currentNumber = numberResult?.value ?: return
-        val newNumber = currentNumber / 10
+        val currentNumber = _numberResult.value ?: return
+        val newNumber =
+            currentNumber.toString().dropLast(1).takeIf { it.isNotEmpty() }?.toInt() ?: 0
         updateNumberResult(newNumber)
     }
 
-    private fun updateNumberResult(newNumber: Long) {
-        numberResult?.postValue(newNumber)
+    private fun updateNumberResult(newNumber: Int) {
+        if (newNumber > MAX_NUMBER) {
+            context.longToast("최대 10억까지만 설정이 가능해요 ㅠ")
+        }
+        _numberResult.postValue(newNumber)
+    }
+
+    companion object {
+        private const val MAX_NUMBER = 1000000000
     }
 }

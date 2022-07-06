@@ -1,6 +1,6 @@
 package com.thinlineit.favorit_android.android.di
 
-import android.content.SharedPreferences
+import com.thinlineit.favorit_android.android.data.local.FavoritSharedPreference
 import com.thinlineit.favorit_android.android.data.local.LocalPreferenceDataSource
 import com.thinlineit.favorit_android.android.data.local.LocalPreferenceDataSourceImpl
 import dagger.Module
@@ -14,6 +14,6 @@ import javax.inject.Singleton
 object LocalDataSourceModule {
     @Provides
     @Singleton
-    fun provideLocalPreferenceImpl(localPreference: SharedPreferences): LocalPreferenceDataSource =
-        LocalPreferenceDataSourceImpl(localPreference)
+    fun provideLocalPreferenceImpl(): LocalPreferenceDataSource =
+        LocalPreferenceDataSourceImpl(FavoritSharedPreference)
 }

@@ -1,44 +1,52 @@
 package com.thinlineit.favorit_android.android.ui.createfunding
 
 import android.view.View
+import android.webkit.URLUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.thinlineit.favorit_android.android.R
+import androidx.lifecycle.viewModelScope
+import com.thinlineit.favorit_android.android.data.Result
+import com.thinlineit.favorit_android.android.data.repository.CreateFundingRequest
+import com.thinlineit.favorit_android.android.data.repository.Product
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCases
 import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
 import com.thinlineit.favorit_android.android.ui.customview.calendar.laterThanTomorrow
+import com.thinlineit.favorit_android.android.ui.customview.calendar.toDateFormat
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CreateFundingViewModel @Inject constructor(
     private val createFundingUseCases: CreateFundingUseCases
 ) : ViewModel() {
+
     val productLink = MutableLiveData("")
     val productOption = MutableLiveData("")
-    val fundingPrice = MutableLiveData(0L)
+    val fundingPrice = MutableLiveData(0)
     val fundingPriceAsCurrency: LiveData<String> = Transformations.map(fundingPrice) {
-        if (it == 0L) ""
-        else NumberFormatter.asCurrency(it)
+        if (it == 0) ""
+        else NumberFormatter.asCurrency(it.toLong())
     }
     val fundingPriceAsNumerals: LiveData<String> = Transformations.map(fundingPrice) {
-        NumberFormatter.asNumerals(it)
+        NumberFormatter.asNumerals(it.toLong())
     }
     val fundingName = MutableLiveData("")
     val fundingDescription = MutableLiveData("")
     val fundingExpiredDate = MutableLiveData<Date?>(null)
     val fundingExpiredDateAsString = Transformations.map(fundingExpiredDate) {
-        fundingExpiredDate.toString()
+        fundingExpiredDate.value.toString()
     }
     val productLinkState: LiveData<InputState> = Transformations.map(productLink) {
         when {
             it.isEmpty() -> InputState.EMPTY
-            it.length > 10 -> InputState.AVAILABLE
+            URLUtil.isNetworkUrl(it) -> InputState.AVAILABLE
             else -> InputState.UNAVAILABLE
         }
     }
@@ -53,7 +61,7 @@ class CreateFundingViewModel @Inject constructor(
 
     val fundingPriceState: LiveData<InputState> = Transformations.map(fundingPrice) {
         when {
-            it == 0L -> InputState.EMPTY
+            it == 0 -> InputState.EMPTY
             it > 0 -> InputState.AVAILABLE
             else -> InputState.UNAVAILABLE
         }
@@ -83,11 +91,20 @@ class CreateFundingViewModel @Inject constructor(
         }
     }
 
-    fun onEndDateSelected(endDate: Date) {
-        fundingExpiredDate.postValue(endDate)
-    }
+    val createFundingResult = MutableLiveData<Result<CreateFundingResult>>(Result.Loading(false))
 
     val currentFragment = MutableLiveData(FragmentType.PRODUCT_LINK)
+
+    val progressStateList: List<MediatorLiveData<ProgressState>> by lazy {
+        listOf(
+            productLinkProgressState,
+            productOptionProgressState,
+            fundingPriceProgressState,
+            fundingNameProgressState,
+            fundingDescriptionProgressState,
+            fundingExpiredDateProgressState
+        )
+    }
 
     private val productLinkProgressState =
         createProgressStateMediatorLiveData(
@@ -130,6 +147,37 @@ class CreateFundingViewModel @Inject constructor(
             FragmentType.FUNDING_EXPIRED_DATE
         )
 
+    fun onEndDateSelected(endDate: Date) {
+        fundingExpiredDate.postValue(endDate)
+    }
+
+    fun createFunding() {
+        viewModelScope.launch(Dispatchers.IO) {
+            createFundingResult.postValue(Result.Loading(true))
+            val createFundingRequest = getCreateFundingRequest() ?: run {
+                createFundingResult.postValue(Result.Fail(Exception("Some value is null")))
+                return@launch
+            }
+            val result = createFundingUseCases.createFundingUseCase(createFundingRequest)
+            createFundingResult.postValue(result)
+        }
+    }
+
+    private fun getCreateFundingRequest(): CreateFundingRequest? {
+        val name = fundingName.value ?: return null
+        val description = fundingDescription.value ?: return null
+        val expiredDate = fundingExpiredDate.value ?: return null
+        val productLink = productLink.value ?: return null
+        val productOption = productOption.value ?: return null
+        val productPrice = fundingPrice.value?.toInt() ?: return null
+        return CreateFundingRequest(
+            name,
+            description,
+            expiredDate.toDateFormat(),
+            Product(productLink, productOption, productPrice)
+        )
+    }
+
     private fun createProgressStateMediatorLiveData(
         inputState: LiveData<InputState>,
         currentFragment: LiveData<FragmentType>,
@@ -143,15 +191,6 @@ class CreateFundingViewModel @Inject constructor(
         }
     }
 
-    val progressStateList: List<MediatorLiveData<ProgressState>> = listOf(
-        productLinkProgressState,
-        productOptionProgressState,
-        fundingPriceProgressState,
-        fundingNameProgressState,
-        fundingDescriptionProgressState,
-        fundingExpiredDateProgressState
-    )
-
     private fun createProgressState(
         inputState: InputState?,
         isCurrentFragment: Boolean
@@ -159,7 +198,7 @@ class CreateFundingViewModel @Inject constructor(
         !isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EMPTY
         isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EDITING
         isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
-        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
+        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.COMPLETE
         else -> throw Exception("Something is wrong")
     }
 
@@ -174,17 +213,13 @@ class CreateFundingViewModel @Inject constructor(
             View.GONE
         }
 
-        fun toVisibilityCursor() = if (this == EMPTY) {
+        fun toCursorVisibility() = if (this == EMPTY) {
             View.VISIBLE
         } else {
             View.GONE
         }
 
-        fun toColor(): Int = if (this == UNAVAILABLE) {
-            R.color.blue
-        } else {
-            R.color.lightGray
-        }
+        fun toEnabled(): Boolean = this == AVAILABLE
     }
 
     enum class FragmentType {

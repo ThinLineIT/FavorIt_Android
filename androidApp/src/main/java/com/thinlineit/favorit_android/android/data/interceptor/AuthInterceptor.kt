@@ -1,66 +1,43 @@
 package com.thinlineit.favorit_android.android.data.interceptor
 
-import com.google.gson.Gson
-import com.thinlineit.favorit_android.android.data.entity.LoginResponse
-import com.thinlineit.favorit_android.android.data.local.LocalPreferenceDataSource
-import com.thinlineit.favorit_android.android.di.RetrofitModule
-import okhttp3.*
+import com.thinlineit.favorit_android.android.data.repository.AuthRepository
 import javax.inject.Inject
+import javax.inject.Provider
+import kotlinx.coroutines.runBlocking
+import okhttp3.Interceptor
+import okhttp3.Request
+import okhttp3.Response
 
 class AuthInterceptor @Inject constructor(
-    private val localPreferenceDataSource: LocalPreferenceDataSource,
-    private val gson: Gson
+    private val authRepositoryProvider: Provider<AuthRepository>
 ) : Interceptor {
+    private val authRepository
+        get() = authRepositoryProvider.get()
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
-        val authRequest = requestWithToken(originalRequest)
-        val response = chain.proceed(authRequest)
-        when (response.code) {
-            401 -> {
-                val body = FormBody.Builder().add(
-                    REFRESH_TOKEN,
-                    localPreferenceDataSource.getRefreshToken()
-                ) as RequestBody
-                val refreshTokenRequest = requestRefreshToken(originalRequest, body)
-                val refreshTokenResponse = chain.proceed(refreshTokenRequest)
+        val accessToken =
+            runBlocking { authRepository.getAccessToken() ?: throw Exception("Please LogIn first") }
+        val requestWithToken = chain.request().appendToken(accessToken)
+        val response = chain.proceed(requestWithToken)
 
-                if (refreshTokenResponse.isSuccessful) {
-                    val refreshToken = gson.fromJson(
-                        refreshTokenResponse.body?.string(),
-                        LoginResponse::class.java
-                    )
-                    with(localPreferenceDataSource) {
-                        setAccessToken(refreshToken.data.accessToken)
-                        setRefreshToken(refreshToken.data.refreshToken)
-                    }
-                    val newRequest = requestWithToken(originalRequest)
-
-                    return chain.proceed(newRequest)
-                }
-            }
+        if (response.code == UNAUTHORIZED_CODE) {
+            val refreshedAccessToken = runBlocking { authRepository.refreshToken() }
+                ?: throw Exception("Please LogIn first")
+            val requestWithRefreshedToken = chain.request().appendToken(refreshedAccessToken)
+            return chain.proceed(requestWithRefreshedToken)
         }
         return response
     }
 
-    private fun requestWithToken(originalRequest: Request): Request =
-        originalRequest.newBuilder()
+    private fun Request.appendToken(accessToken: String): Request =
+        this.newBuilder()
             .addHeader(
                 "Authorization",
-                "Bearer${localPreferenceDataSource.getAccessToken()}"
+                "Bearer $accessToken"
             )
             .build()
 
-
-    private fun requestRefreshToken(originalRequest: Request, body: RequestBody): Request =
-        originalRequest.newBuilder().get()
-            .url("${RetrofitModule.BASE_URL}auth/refresh_token")
-            .post(body)
-            .build()
-
     companion object {
-        const val REFRESH_TOKEN = "refresh_token"
-        const val AUTH = "auth"
+        private const val UNAUTHORIZED_CODE = 401
     }
-
 }

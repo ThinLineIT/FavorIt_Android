@@ -3,39 +3,39 @@ package com.thinlineit.favorit_android.android.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thinlineit.favorit_android.android.data.interceptor.AuthInterceptor
+import com.thinlineit.favorit_android.android.data.repository.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Provider
+import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
-    const val BASE_URL = "http://3.35.218.213/api/"
+    private const val BASE_URL = "http://3.35.218.213/api/"
 
     @Provides
     @Singleton
-    fun providesAuthInterceptor(authInterceptor: AuthInterceptor): Interceptor = authInterceptor
+    fun providesAuthInterceptor(authRepositoryProvider: Provider<AuthRepository>): Interceptor =
+        AuthInterceptor(authRepositoryProvider)
 
     @Provides
     @Singleton
-    fun providesOkHttpInterceptor(
-        authInterceptor: Interceptor
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                }
-            )
-            .addInterceptor(authInterceptor)
-            .build()
+    fun providesOkhttpClient(authInterceptor: AuthInterceptor) = OkHttpClient.Builder()
+        .addInterceptor(
+            HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+        )
+        .addInterceptor(authInterceptor)
+        .build()
 
     @Provides
     @Singleton

@@ -6,14 +6,19 @@ import java.util.Date
 import java.util.Locale
 
 private val simpleDateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
 
-fun Date.isToday(): Boolean = DateUtils.isToday(this.time)
+fun Date.isSameDay(date: Date): Boolean =
+    simpleDateFormat.format(this).equals(simpleDateFormat.format(date))
 
-fun isSameDay(date1: Date, date2: Date): Boolean {
-    return simpleDateFormat.format(date1).equals(simpleDateFormat.format(date2))
-}
+fun Date.isBetweenDay(startDate: Date, endDate: Date): Boolean =
+    !isSameDay(startDate) && after(startDate) && before(endDate) && !isSameDay(endDate)
 
 fun Date.laterThanTomorrow(): Boolean {
     return DateUtils.isToday(this.time - DateUtils.DAY_IN_MILLIS) ||
         System.currentTimeMillis() < this.time - DateUtils.DAY_IN_MILLIS
+}
+
+fun Date.toDateFormat(): String {
+    return dateFormat.format(this)
 }

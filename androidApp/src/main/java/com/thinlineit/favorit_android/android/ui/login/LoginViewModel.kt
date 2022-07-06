@@ -6,15 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.model.OAuthToken
-import com.thinlineit.favorit_android.android.data.repository.LoginRepository
+import com.thinlineit.favorit_android.android.data.repository.AuthRepository
 import com.thinlineit.favorit_android.android.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _isLoginSuccess = MutableLiveData<Event<Boolean>>()
@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor(
     private fun tryLogin(kakaoToken: String) {
         viewModelScope.launch {
             try {
-                if (loginRepository.login(kakaoToken))
+                if (authRepository.login(kakaoToken))
                     initLoginState(true)
                 else
                     initLoginState(false)
@@ -48,5 +48,4 @@ class LoginViewModel @Inject constructor(
     private fun initLoginState(isSuccess: Boolean) {
         _isLoginSuccess.value = Event(isSuccess)
     }
-
 }
