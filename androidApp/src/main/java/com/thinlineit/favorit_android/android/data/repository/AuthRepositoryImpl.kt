@@ -10,16 +10,29 @@ class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource
 ) : AuthRepository {
 
-    override suspend fun login(kakaoToken: String): Boolean = try {
-        val data = authDataSource.postLogin(kakaoToken)
-        saveTokens(data.accessToken, data.refreshToken)
-        true
-    } catch (e: Exception) {
-        Log.d(TAG, e.toString())
-        false
+    override suspend fun login(kakaoToken: String): Boolean {
+        return try {
+            val tokens = authDataSource.login(kakaoToken) ?: return false
+            saveTokens(tokens.accessToken, tokens.refreshToken)
+            true
+        } catch (e: Exception) {
+            Log.d(TAG, e.toString())
+            false
+        }
     }
 
-    override fun saveTokens(accessToken: String, refreshToken: String) {
+    override suspend fun refreshToken(): String? {
+        val refreshToken = localPreferenceDataSource.getRefreshToken()
+        val tokens = authDataSource.refreshToken(refreshToken) ?: return null
+        saveTokens(tokens.accessToken, tokens.refreshToken)
+        return tokens.accessToken
+    }
+
+    override suspend fun getAccessToken(): String? {
+        return localPreferenceDataSource.getAccessToken()
+    }
+
+    private fun saveTokens(accessToken: String, refreshToken: String) {
         localPreferenceDataSource.setAccessToken(accessToken)
         localPreferenceDataSource.setRefreshToken(refreshToken)
     }
