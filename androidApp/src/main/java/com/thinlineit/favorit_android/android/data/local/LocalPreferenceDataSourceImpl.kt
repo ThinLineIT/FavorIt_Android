@@ -1,32 +1,26 @@
 package com.thinlineit.favorit_android.android.data.local
 
-import android.content.SharedPreferences
 import javax.inject.Inject
 
 class LocalPreferenceDataSourceImpl @Inject constructor(
-    private val localPreferences: SharedPreferences
+    private val localPreferences: FavoritSharedPreference
 ) : LocalPreferenceDataSource {
     override fun setAccessToken(accessToken: String) {
-        localPreferences.edit()
-            .putString(ACCESS_TOKEN, accessToken)
-            .apply()
+        localPreferences.setValue(ACCESS_TOKEN, accessToken)
     }
 
     override fun setRefreshToken(refreshToken: String) {
-        localPreferences.edit()
-            .putString(REFRESH_TOKEN, refreshToken)
-            .apply()
+        localPreferences.setValue(REFRESH_TOKEN, refreshToken)
     }
 
-    override fun getAccessToken() =
-        localPreferences.getString(ACCESS_TOKEN, DEFAULT_STRING_VALUE) ?: DEFAULT_STRING_VALUE
+    override fun getAccessToken(): String? =
+        localPreferences.getValue(ACCESS_TOKEN)?.takeIf { it.isNotEmpty() }
 
-    override fun getRefreshToken(): String =
-        localPreferences.getString(REFRESH_TOKEN, DEFAULT_STRING_VALUE) ?: DEFAULT_STRING_VALUE
+    override fun getRefreshToken(): String? =
+        localPreferences.getValue(REFRESH_TOKEN)?.takeIf { it.isNotEmpty() }
 
     companion object {
         const val ACCESS_TOKEN = "ACCESS_TOKEN"
         const val REFRESH_TOKEN = "REFRESH_TOKEN"
-        const val DEFAULT_STRING_VALUE = ""
     }
 }

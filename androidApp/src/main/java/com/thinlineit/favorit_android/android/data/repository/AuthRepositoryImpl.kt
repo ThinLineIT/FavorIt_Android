@@ -23,7 +23,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshToken(): String? {
-        val refreshToken = localPreferenceDataSource.getRefreshToken()
+        val refreshToken = localPreferenceDataSource.getRefreshToken() ?: return null
         val tokens = authDataSource.refreshToken(refreshToken) ?: return null
         saveTokens(tokens.accessToken, tokens.refreshToken)
         return tokens.accessToken
