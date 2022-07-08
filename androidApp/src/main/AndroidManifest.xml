@@ -11,6 +11,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".GiftActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.createfunding.CreateFundingActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
