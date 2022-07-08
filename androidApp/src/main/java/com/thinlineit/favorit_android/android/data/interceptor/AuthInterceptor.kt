@@ -15,15 +15,23 @@ class AuthInterceptor @Inject constructor(
         get() = authRepositoryProvider.get()
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val accessToken =
-            runBlocking { authRepository.getAccessToken() ?: throw Exception("Please LogIn first") }
-        val requestWithToken = chain.request().appendToken(accessToken)
-        val response = chain.proceed(requestWithToken)
+        val originalRequest = chain.request()
+        val request = if (isAccessTokenRequired(originalRequest)) {
+            val accessToken =
+                runBlocking {
+                    authRepository.getAccessToken() ?: throw Exception("Please LogIn first")
+                }
+            originalRequest.appendToken(accessToken)
+        } else {
+            originalRequest
+        }
+        val response = chain.proceed(request)
 
         if (response.code == UNAUTHORIZED_CODE) {
             val refreshedAccessToken = runBlocking { authRepository.refreshToken() }
                 ?: throw Exception("Please LogIn first")
             val requestWithRefreshedToken = chain.request().appendToken(refreshedAccessToken)
+            response.close()
             return chain.proceed(requestWithRefreshedToken)
         }
         return response
@@ -36,6 +44,9 @@ class AuthInterceptor @Inject constructor(
                 "Bearer $accessToken"
             )
             .build()
+
+    private fun isAccessTokenRequired(request: Request) =
+        !request.url.encodedPath.contains("auth")
 
     companion object {
         private const val UNAUTHORIZED_CODE = 401
