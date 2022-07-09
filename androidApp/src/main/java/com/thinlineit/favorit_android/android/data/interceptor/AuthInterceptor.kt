@@ -16,20 +16,12 @@ class AuthInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
-        val request = if (isAccessTokenRequired(originalRequest)) {
-            val accessToken =
-                runBlocking {
-                    authRepository.getAccessToken() ?: throw Exception("Please LogIn first")
-                }
-            originalRequest.appendToken(accessToken)
-        } else {
-            originalRequest
-        }
+        val request = originalRequest.takeIf { !isAccessTokenRequired(it) }
+            ?: originalRequest.appendToken(getAccessTokenOrThrow())
         val response = chain.proceed(request)
 
         if (response.code == UNAUTHORIZED_CODE) {
-            val refreshedAccessToken = runBlocking { authRepository.refreshToken() }
-                ?: throw Exception("Please LogIn first")
+            val refreshedAccessToken = getRefreshedAccessTokenOrThrow()
             val requestWithRefreshedToken = chain.request().appendToken(refreshedAccessToken)
             response.close()
             return chain.proceed(requestWithRefreshedToken)
@@ -37,8 +29,22 @@ class AuthInterceptor @Inject constructor(
         return response
     }
 
+    /**
+     * TODO: Extract this method as UseCase
+     */
+    private fun getAccessTokenOrThrow(): String = runBlocking {
+        authRepository.getAccessToken() ?: throw Exception("Please LogIn first")
+    }
+
+    /**
+     * TODO: Extract this method as UseCase
+     */
+    private fun getRefreshedAccessTokenOrThrow(): String = runBlocking {
+        authRepository.refreshToken() ?: throw Exception("Please LogIn first")
+    }
+
     private fun Request.appendToken(accessToken: String): Request =
-        this.newBuilder()
+        newBuilder()
             .addHeader(
                 "Authorization",
                 "Bearer $accessToken"
@@ -46,9 +52,11 @@ class AuthInterceptor @Inject constructor(
             .build()
 
     private fun isAccessTokenRequired(request: Request) =
-        !request.url.encodedPath.contains("auth")
+        request.headers[IS_ACCESS_TOKEN_REQUIRED] == null ||
+            request.headers[IS_ACCESS_TOKEN_REQUIRED] == "true"
 
     companion object {
         private const val UNAUTHORIZED_CODE = 401
+        const val IS_ACCESS_TOKEN_REQUIRED = "isAccessTokenRequired"
     }
 }
