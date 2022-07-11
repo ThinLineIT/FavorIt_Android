@@ -94,6 +94,6 @@
             app:argType="string" />
         <argument
             android:name="fundingID"
-            app:argType="string" />
+            app:argType="integer" />
     </activity>
 </navigation>

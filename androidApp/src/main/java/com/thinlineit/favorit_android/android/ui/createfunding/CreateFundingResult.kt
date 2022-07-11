@@ -6,5 +6,5 @@ data class CreateFundingResult(
     @SerializedName("product_link")
     val fundingLink: String,
     @SerializedName("funding_id")
-    val fundingID: String,
+    val fundingID: Int,
 )
