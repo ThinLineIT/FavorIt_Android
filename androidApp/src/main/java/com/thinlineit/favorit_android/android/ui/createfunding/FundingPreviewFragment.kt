@@ -1,5 +1,7 @@
 package com.thinlineit.favorit_android.android.ui.createfunding
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.thinlineit.favorit_android.android.R
@@ -16,17 +18,25 @@ class FundingPreviewFragment :
             viewModel = this@FundingPreviewFragment.viewModel.also {
                 priceProgress.progress = 0
             }
-            previousButton.setOnClickListener {
-                navController.navigate(
-                    FundingPreviewFragmentDirections
-                        .actionFundingPreviewFragmentToEnterFundingExpiredDateFragment()
-                )
-            }
-            nextButton.setOnClickListener {
-                this@FundingPreviewFragment.viewModel.createFunding()
-            }
         }
+        initView()
         initObserver()
+    }
+
+    private fun initView() {
+        binding.goToSeeProductTextView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.productLink.value))
+            startActivity(intent)
+        }
+        binding.previousButton.setOnClickListener {
+            navController.navigate(
+                FundingPreviewFragmentDirections
+                    .actionFundingPreviewFragmentToEnterFundingExpiredDateFragment()
+            )
+        }
+        binding.nextButton.setOnClickListener {
+            viewModel.createFunding()
+        }
     }
 
     private fun initObserver() {
