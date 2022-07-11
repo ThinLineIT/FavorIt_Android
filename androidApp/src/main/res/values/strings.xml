@@ -46,4 +46,15 @@
     <string name="label_funding_expired_date">언제까지 펀딩할까요?</string>
     <string name="label_copy_complete">복사 완료</string>
     <string name="label_funding_link">펀딩 링크</string>
+
+    <!-- fundingDetail -->
+    <string name="button_present">선물 하기</string>
+    <string name="button_close_funding">펀딩 마감</string>
+    <string name="button_already_closed_funding">마감된 펀딩입니다.</string>
+    <string name="button_left_arrow">←</string>
+    <string name="button_right_arrow">→</string>
+    <string name="button_keep_funding">계속 진행</string>
+    <string name="label_are_you_sure_to_close_funding">목표달성까지 00% 남았어요. \n 펀딩을 마감하시겠어요?</string>
+    <string name="label_funding_detail_dialog_text">펀딩 기간이 종료되었습니다. \n [펀딩 마감]을 눌러 펀딩을 마감해주세요</string>
+    <string name="label_funding_detail_dialog_edit">확인</string>
 </resources>
