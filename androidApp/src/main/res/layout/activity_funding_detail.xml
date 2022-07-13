@@ -1,9 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.detail.FundingDetailActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thinlineit.favorit_android.android.ui.detail.FundingDetailViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background"
+            tools:context=".ui.detail.FundingDetailActivity">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginStart="15dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/logo"
+                app:layout_constraintBaseline_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/contentLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/background_onlytop_round_white"
+                android:padding="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0">
+
+                <ImageView
+                    android:id="@+id/fundingPreviewImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/icon_present"
+                    app:layout_constraintBottom_toTopOf="@+id/fundingNameTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/fundingNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="@{viewModel.funding.name}"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toTopOf="@+id/goToSeeProductTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fundingPreviewImageView"
+                    tools:text="이거 가지고 싶어요" />
+
+                <TextView
+                    android:id="@+id/goToSeeProductTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/label_going_to_product"
+                    android:textColor="@color/yellow"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/fundingDescriptionTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fundingNameTextView" />
+
+                <TextView
+                    android:id="@+id/fundingDescriptionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:minHeight="50dp"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="28dp"
+                    android:text="@{viewModel.funding.description}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@id/dateProgressLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/goToSeeProductTextView"
+                    tools:text="제 작고 귀여운 노트북이 어도비를 힘들어합니다..일러스트레이터,애펙까지 돌리고 싶은데 노트북이 터지지 않을까 걱정입니다. 이김에 아이맥을 사고 싶은데요..도와주시면 감사하겠습니다" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dateProgressLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/background_round_shadow"
+                    android:minHeight="60dp"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toTopOf="@+id/fundingProgressLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fundingDescriptionTextView">
+
+                    <ProgressBar
+                        android:id="@+id/dateProgress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:max="100"
+                        android:progress="50"
+                        android:progressBackgroundTint="@color/blue"
+                        android:progressTint="@color/blue"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="@string/label_funding_aim_price"
+                        android:textColor="@color/blue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dateProgress"
+                        tools:text="22.07.08" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="@{viewModel.funding.expiredDate}"
+                        android:textColor="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dateProgress"
+                        tools:text="22.07.08" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fundingProgressLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/background_round_shadow"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toTopOf="@+id/fundingDetailActionLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/dateProgressLayout">
+
+                    <ProgressBar
+                        android:id="@+id/priceProgress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:max="100"
+                        android:progress="@{viewModel.funding.progressPercentage}"
+                        android:progressBackgroundTint="@color/blue"
+                        android:progressTint="@color/pink"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="@string/label_funding_aim_price"
+                        android:textColor="@color/pink"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/priceProgress"
+                        tools:text="@string/label_funding_aim_price" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="@{viewModel.fundingPriceAsCurrency}"
+                        android:textColor="@color/pink"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/priceProgress"
+                        tools:text="123456원" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fundingDetailActionLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fundingProgressLayout">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/detailActionLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible">
+
+                        <ImageButton
+                            android:id="@+id/fundingLinkButtonLayout"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/background_round_shadow"
+                            android:src="@drawable/ic_link"
+                            app:layout_constraintBottom_toTopOf="@id/askCloseFunding"
+                            app:layout_constraintEnd_toStartOf="@id/goToPresent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/goToPresent"
+                            android:layout_width="0dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/background_round_shadow"
+                            android:drawableEnd="@drawable/ic_pink_arrow"
+                            android:enabled="@{viewModel.goToPresentEnabled}"
+                            android:paddingEnd="10dp"
+                            android:text="@{viewModel.goToPresentText}"
+                            android:textColor="@color/pink_or_gray_color_selector"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/fundingLinkButtonLayout"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="@string/button_present" />
+
+                        <Button
+                            android:id="@+id/askCloseFunding"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/background_round_shadow"
+                            android:drawableEnd="@drawable/ic_pink_arrow"
+                            android:text="@string/button_close_funding"
+                            android:textColor="@color/pink"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:visibility="@{viewModel.askCloseFundingVisibility}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:layout_editor_absoluteX="25dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/detailActionLayoutWhenAskingClose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/fundingCloseTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="center"
+                            android:src="@drawable/ic_link"
+                            android:text="@string/label_are_you_sure_to_close_funding"
+                            app:layout_constraintBottom_toTopOf="@id/keepFundingOpenButton"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/keepFundingOpenButton"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/background_round_shadow"
+                            android:drawableStart="@drawable/ic_baseline_keyboard_arrow_left_24"
+                            android:text="@string/button_keep_funding"
+                            android:textColor="@color/pink"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/closeFundingButton"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fundingCloseTextView" />
+
+                        <Button
+                            android:id="@+id/closeFundingButton"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/background_round_shadow"
+                            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            android:text="@string/button_close_funding"
+                            android:textColor="@color/pink"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:visibility="@{viewModel.askCloseFundingVisibility}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/keepFundingOpenButton" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

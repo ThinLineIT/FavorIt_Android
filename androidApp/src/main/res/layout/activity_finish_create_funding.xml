@@ -17,6 +17,7 @@
             android:background="@android:color/transparent"
             android:src="@drawable/logo"
             app:layout_constraintBottom_toTopOf="@id/contentLayout"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />

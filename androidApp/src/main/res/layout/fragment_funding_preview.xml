@@ -44,14 +44,14 @@
                 android:text="@{viewModel.fundingName}"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                app:layout_constraintBottom_toTopOf="@+id/productLinkTextView"
+                app:layout_constraintBottom_toTopOf="@+id/goToSeeProductTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fundingPreviewImageView"
                 tools:text="이거 가지고 싶어요" />
 
             <TextView
-                android:id="@+id/productLinkTextView"
+                android:id="@+id/goToSeeProductTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_going_to_product"
@@ -75,7 +75,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/fundingExpiredDateTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/productLinkTextView"
+                app:layout_constraintTop_toBottomOf="@+id/goToSeeProductTextView"
                 tools:text="제 작고 귀여운 노트북이 어도비를 힘들어합니다..일러스트레이터,애펙까지 돌리고 싶은데 노트북이 터지지 않을까 걱정입니다. 이김에 아이맥을 사고 싶은데요..도와주시면 감사하겠습니다" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
