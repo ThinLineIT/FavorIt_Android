@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
-    private const val BASE_URL = "http://3.35.218.213/api/"
+    private const val BASE_URL = "https://dev.favorit-be.com/api/"
 
     @Provides
     @Singleton
