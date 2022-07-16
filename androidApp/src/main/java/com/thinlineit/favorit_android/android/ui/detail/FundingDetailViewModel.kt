@@ -3,6 +3,7 @@ package com.thinlineit.favorit_android.android.ui.detail
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,18 +11,19 @@ import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingState
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity.Companion.FUNDING_ID
 import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUseCase
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FundingDetailViewModel @Inject constructor(
     private val fundingDetailUseCase: FundingDetailUseCase,
+    state: SavedStateHandle
 ) : ViewModel() {
-    var fundingId: Int? = null
+    val fundingId: Int = state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")
     val funding: MutableLiveData<Funding?> = MutableLiveData(null)
     val fundingState: LiveData<FundingState> = Transformations.map(funding) {
         it?.state ?: FundingState.OPENED
@@ -49,21 +51,20 @@ class FundingDetailViewModel @Inject constructor(
     private val _closeFundingResult = MutableLiveData<Result<Unit>>()
     val closeFundingResult: LiveData<Result<Unit>> = _closeFundingResult
 
-    fun loadFundingDetail(fundingId: Int) {
-        this.fundingId = fundingId
+
+    init {
+        loadFundingDetail(fundingId)
+    }
+
+    private fun loadFundingDetail(fundingId: Int) {
         viewModelScope.launch {
-            funding.postValue(fundingRepository.getFunding(fundingId))
-            delay(2000)
-            funding.postValue(funding.value!!.copy(state = FundingState.EXPIRED))
+            funding.postValue(fundingDetailUseCase.getFunding(fundingId))
         }
     }
 
     fun closeFunding() {
         viewModelScope.launch {
-            val result = fundingId?.run {
-                fundingRepository.closeFunding(this)
-            } ?: Result.Fail(Exception("Funding Id is invalid"))
-            _closeFundingResult.postValue(result)
+            _closeFundingResult.postValue(fundingDetailUseCase.closeFunding(fundingId))
         }
     }
 
