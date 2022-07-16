@@ -19,7 +19,7 @@ data class Funding(
 )
 
 enum class FundingState {
-    OPENED, EXPIRED, CLOSED
+    OPENED, EXPIRED, CLOSED, COMPLETED
 }
 
 data class Product(
