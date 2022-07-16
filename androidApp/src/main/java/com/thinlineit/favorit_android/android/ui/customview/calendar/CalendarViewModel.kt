@@ -9,6 +9,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarCell.DayCell
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarCell.HeaderCell
+import com.thinlineit.favorit_android.android.util.isBetweenDay
+import com.thinlineit.favorit_android.android.util.isSameDay
 import java.time.Month
 import java.util.Calendar
 import java.util.Date

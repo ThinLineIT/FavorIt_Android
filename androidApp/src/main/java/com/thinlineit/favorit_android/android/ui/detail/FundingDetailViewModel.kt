@@ -14,6 +14,7 @@ import com.thinlineit.favorit_android.android.data.entity.FundingState
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity.Companion.FUNDING_ID
 import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUseCase
 import com.thinlineit.favorit_android.android.util.NumberFormatter
+import com.thinlineit.favorit_android.android.util.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -26,9 +27,18 @@ class FundingDetailViewModel @Inject constructor(
     val fundingId: Int = state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")
     val funding: MutableLiveData<Funding?> = MutableLiveData(null)
 
-    val fundingPriceAsCurrency: LiveData<String> = Transformations.map(funding) {
-        if (it == null) return@map ""
-        else NumberFormatter.asCurrency(it.product.price.toLong())
+    val fundingDateProgressPercentage: LiveData<Int> = Transformations.map(funding) { funding ->
+        if (funding == null) return@map 0
+        val startDateTime = funding.startDate.toDate()?.time ?: return@map 0
+        val endDateTime = funding.expiredDate.toDate()?.time ?: return@map 0
+        val currentTime = System.currentTimeMillis()
+        return@map ((currentTime - startDateTime) / (endDateTime - startDateTime).toFloat() * 100).toInt()
+            .takeIf { it <= 100 } ?: 100
+    }
+
+    val fundingPriceAsCurrency: LiveData<String> = Transformations.map(funding) { funding ->
+        if (funding == null) return@map ""
+        else NumberFormatter.asCurrency(funding.product.price.toLong())
     }
 
     val presentable: LiveData<Boolean> = Transformations.map(funding) { funding ->

@@ -13,9 +13,9 @@ import com.thinlineit.favorit_android.android.data.repository.CreateFundingReque
 import com.thinlineit.favorit_android.android.data.repository.Product
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCase
 import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
-import com.thinlineit.favorit_android.android.ui.customview.calendar.laterThanTomorrow
-import com.thinlineit.favorit_android.android.ui.customview.calendar.toDateFormat
 import com.thinlineit.favorit_android.android.util.NumberFormatter
+import com.thinlineit.favorit_android.android.util.laterThanTomorrow
+import com.thinlineit.favorit_android.android.util.toDateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject

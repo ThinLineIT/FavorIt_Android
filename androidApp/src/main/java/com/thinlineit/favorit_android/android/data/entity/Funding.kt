@@ -9,6 +9,8 @@ data class Funding(
     val state: FundingState,
     @SerializedName("is_maker")
     val isMaker: Boolean,
+    @SerializedName("creation_date")
+    val startDate: String,
     @SerializedName("due_date")
     val expiredDate: String,
     @SerializedName("progress_percent")
