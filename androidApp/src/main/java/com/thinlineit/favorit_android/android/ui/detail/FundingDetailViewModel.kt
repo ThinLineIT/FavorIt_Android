@@ -25,27 +25,30 @@ class FundingDetailViewModel @Inject constructor(
 ) : ViewModel() {
     val fundingId: Int = state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")
     val funding: MutableLiveData<Funding?> = MutableLiveData(null)
-    val fundingState: LiveData<FundingState> = Transformations.map(funding) {
-        it?.state ?: FundingState.OPENED
-    }
-
-    val goToPresentEnabled: LiveData<Boolean> = Transformations.map(funding) {
-        it?.state?.toEnabled() ?: true
-    }
-    val goToPresentText: LiveData<Int> = Transformations.map(goToPresentEnabled) {
-        if (it) R.string.button_present
-        else R.string.button_already_closed_funding
-    }
-    val askCloseFundingVisibility: LiveData<Int> = Transformations.map(funding) {
-        if (it == null) return@map View.GONE
-        val isClosable = it.state == FundingState.OPENED || it.state == FundingState.EXPIRED
-        if (it.isMaker && isClosable) View.VISIBLE
-        else View.GONE
-    }
 
     val fundingPriceAsCurrency: LiveData<String> = Transformations.map(funding) {
         if (it == null) return@map ""
         else NumberFormatter.asCurrency(it.product.price.toLong())
+    }
+
+    val presentable: LiveData<Boolean> = Transformations.map(funding) { funding ->
+        if (funding == null) return@map false
+        funding.state == FundingState.OPENED
+    }
+    val goToPresentText: LiveData<Int> = Transformations.map(presentable) { presentable ->
+        if (presentable) R.string.button_present
+        else R.string.button_already_closed_funding
+    }
+
+    private val closable: LiveData<Boolean> = Transformations.map(funding) { funding ->
+        if (funding == null) return@map false
+        val isClosable =
+            funding.state == FundingState.OPENED || funding.state == FundingState.EXPIRED
+        funding.isMaker && isClosable
+    }
+    val askCloseFundingVisibility: LiveData<Int> = Transformations.map(closable) { closable ->
+        if (closable) View.VISIBLE
+        else View.GONE
     }
 
     private val _closeFundingResult = MutableLiveData<Result<Unit>>()
@@ -75,10 +78,5 @@ class FundingDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _closeFundingResult.postValue(fundingDetailUseCase.closeFunding(fundingId))
         }
-    }
-
-    fun FundingState.toEnabled(): Boolean = when (this) {
-        FundingState.OPENED -> true
-        FundingState.EXPIRED, FundingState.CLOSED -> false
     }
 }

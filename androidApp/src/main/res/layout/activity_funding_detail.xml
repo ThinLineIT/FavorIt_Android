@@ -219,7 +219,7 @@
                             android:layout_marginStart="20dp"
                             android:background="@drawable/background_round_shadow"
                             android:drawableEnd="@drawable/ic_pink_arrow"
-                            android:enabled="@{viewModel.goToPresentEnabled}"
+                            android:enabled="@{viewModel.presentable}"
                             android:paddingEnd="10dp"
                             android:text="@{viewModel.goToPresentText}"
                             android:textColor="@color/pink_or_gray_color_selector"
