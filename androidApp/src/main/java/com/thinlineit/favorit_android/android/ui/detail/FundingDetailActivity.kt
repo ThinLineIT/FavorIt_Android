@@ -68,12 +68,12 @@ class FundingDetailActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.goToSeeProductTextView.setOnClickListener {
-            val link = viewModel.funding.value?.product?.link
+            val productLink = viewModel.funding.value?.product?.link
                 ?: run {
                     shortToast("ProductLink is invalid")
                     return@setOnClickListener
                 }
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(productLink))
             startActivity(intent)
         }
         binding.fundingLinkButtonLayout.setOnClickListener {
