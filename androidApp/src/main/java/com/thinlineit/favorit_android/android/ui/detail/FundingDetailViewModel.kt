@@ -10,7 +10,7 @@ import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingState
-import com.thinlineit.favorit_android.android.data.repository.FundingRepository
+import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUseCase
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FundingDetailViewModel @Inject constructor(
-    private val fundingRepository: FundingRepository
+    private val fundingDetailUseCase: FundingDetailUseCase,
 ) : ViewModel() {
     var fundingId: Int? = null
     val funding: MutableLiveData<Funding?> = MutableLiveData(null)
