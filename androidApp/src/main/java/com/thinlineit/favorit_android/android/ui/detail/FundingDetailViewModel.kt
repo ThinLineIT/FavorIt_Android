@@ -51,6 +51,15 @@ class FundingDetailViewModel @Inject constructor(
     private val _closeFundingResult = MutableLiveData<Result<Unit>>()
     val closeFundingResult: LiveData<Result<Unit>> = _closeFundingResult
 
+    val showExpiredAlertDialog = Transformations.map(funding) { funding ->
+        if (funding == null) return@map false
+        funding.state == FundingState.EXPIRED && funding.isMaker
+    }
+
+    val goToClosedFundingActivity = Transformations.map(funding) { funding ->
+        if (funding == null) return@map false
+        funding.state == FundingState.CLOSED && funding.isMaker
+    }
 
     init {
         loadFundingDetail(fundingId)

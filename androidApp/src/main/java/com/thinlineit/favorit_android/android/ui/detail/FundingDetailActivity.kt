@@ -52,9 +52,16 @@ class FundingDetailActivity : AppCompatActivity() {
                 }
             }
         }
-        viewModel.fundingState.observe(this) {
-            if (it == FundingState.EXPIRED) {
+
+        viewModel.showExpiredAlertDialog.observe(this) { showExpiredAlertDialog ->
+            if (showExpiredAlertDialog) {
                 ExpiredAlertDialog().show(supportFragmentManager, "ExpiredAlert")
+            }
+        }
+
+        viewModel.goToClosedFundingActivity.observe(this) { goToClosedFundingActivity ->
+            if (goToClosedFundingActivity) {
+                ClosedFundingActivity.start(this, viewModel.fundingId)
             }
         }
     }
@@ -101,6 +108,6 @@ class FundingDetailActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
 
-        private const val FUNDING_ID = "FUNDING_ID"
+        const val FUNDING_ID = "FUNDING_ID"
     }
 }
