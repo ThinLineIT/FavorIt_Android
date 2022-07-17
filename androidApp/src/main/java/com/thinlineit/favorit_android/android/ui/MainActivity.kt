@@ -38,8 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     override fun onResume() {
-        if (localPreferenceDataSource.getAccessToken() != null
-        ) {
+        if (localPreferenceDataSource.getAccessToken() != null) {
             binding.loginButton.setImageResource(R.drawable.icon_login_success)
         } else {
             binding.loginButton.setImageResource(R.drawable.icon_login)
