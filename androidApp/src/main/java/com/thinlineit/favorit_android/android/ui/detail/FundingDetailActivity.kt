@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
-import com.thinlineit.favorit_android.android.data.entity.FundingState
 import com.thinlineit.favorit_android.android.databinding.ActivityFundingDetailBinding
 import com.thinlineit.favorit_android.android.ui.present.PresentActivity
 import com.thinlineit.favorit_android.android.util.longToast
@@ -26,9 +25,6 @@ class FundingDetailActivity : AppCompatActivity() {
     val viewModel: FundingDetailViewModel by lazy {
         ViewModelProvider(this)[FundingDetailViewModel::class.java]
     }
-    val fundingId: Int by lazy {
-        intent.getIntExtra(FUNDING_ID, -1)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +33,6 @@ class FundingDetailActivity : AppCompatActivity() {
             lifecycleOwner = this@FundingDetailActivity
             viewModel = this@FundingDetailActivity.viewModel
         }
-        viewModel.loadFundingDetail(fundingId)
         initView()
         initObserver()
     }
@@ -52,27 +47,33 @@ class FundingDetailActivity : AppCompatActivity() {
                     shortToast("Fail to close funding")
                 }
                 is Result.Success -> {
-                    viewModel.loadFundingDetail(fundingId)
                     binding.detailActionLayout.visibility = View.VISIBLE
                     binding.detailActionLayoutWhenAskingClose.visibility = View.GONE
                 }
             }
         }
-        viewModel.fundingState.observe(this) {
-            if (it == FundingState.EXPIRED) {
+
+        viewModel.showExpiredAlertDialog.observe(this) { showExpiredAlertDialog ->
+            if (showExpiredAlertDialog) {
                 ExpiredAlertDialog().show(supportFragmentManager, "ExpiredAlert")
+            }
+        }
+
+        viewModel.goToClosedFundingActivity.observe(this) { goToClosedFundingActivity ->
+            if (goToClosedFundingActivity) {
+                ClosedFundingActivity.start(this, viewModel.fundingId)
             }
         }
     }
 
     private fun initView() {
         binding.goToSeeProductTextView.setOnClickListener {
-            val link = viewModel.funding.value?.product?.link
+            val productLink = viewModel.funding.value?.product?.link
                 ?: run {
                     shortToast("ProductLink is invalid")
                     return@setOnClickListener
                 }
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(productLink))
             startActivity(intent)
         }
         binding.fundingLinkButtonLayout.setOnClickListener {
@@ -84,7 +85,7 @@ class FundingDetailActivity : AppCompatActivity() {
             longToast(getString(R.string.label_copy_complete))
         }
         binding.goToPresent.setOnClickListener {
-            PresentActivity.start(this, fundingId)
+            PresentActivity.start(this, viewModel.fundingId)
         }
         binding.askCloseFunding.setOnClickListener {
             binding.detailActionLayout.visibility = View.GONE
@@ -107,6 +108,6 @@ class FundingDetailActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
 
-        private const val FUNDING_ID = "FUNDING_ID"
+        const val FUNDING_ID = "FUNDING_ID"
     }
 }

@@ -119,29 +119,32 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:max="100"
-                        android:progress="50"
+                        android:progress="@{viewModel.fundingDateProgressPercentage}"
                         android:progressBackgroundTint="@color/blue"
                         android:progressTint="@color/blue"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:progress="50" />
 
                     <TextView
+                        android:id="@+id/startDate"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="@string/label_funding_aim_price"
+                        android:text="@{viewModel.funding.startDate}"
                         android:textColor="@color/blue"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/dateProgress"
                         tools:text="22.07.08" />
 
                     <TextView
+                        android:id="@+id/endDate"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:text="@{viewModel.funding.expiredDate}"
                         android:textColor="@color/blue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/dateProgress"
-                        tools:text="22.07.08" />
+                        tools:text="22.07.15" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -219,7 +222,7 @@
                             android:layout_marginStart="20dp"
                             android:background="@drawable/background_round_shadow"
                             android:drawableEnd="@drawable/ic_pink_arrow"
-                            android:enabled="@{viewModel.goToPresentEnabled}"
+                            android:enabled="@{viewModel.presentable}"
                             android:paddingEnd="10dp"
                             android:text="@{viewModel.goToPresentText}"
                             android:textColor="@color/pink_or_gray_color_selector"
