@@ -1,4 +1,4 @@
-package com.thinlineit.favorit_android.android.ui.customview.calendar
+package com.thinlineit.favorit_android.android.util
 
 import android.text.format.DateUtils
 import java.text.SimpleDateFormat
@@ -7,6 +7,8 @@ import java.util.Locale
 
 private val simpleDateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
 private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+
+fun String.toDate(): Date? = dateFormat.parse(this)
 
 fun Date.isSameDay(date: Date): Boolean =
     simpleDateFormat.format(this).equals(simpleDateFormat.format(date))
