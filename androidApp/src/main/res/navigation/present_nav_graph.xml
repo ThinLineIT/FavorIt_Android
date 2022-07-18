@@ -27,6 +27,6 @@
 
     <fragment
         android:id="@+id/finishPresentFragment"
-        android:name="com.thinlineit.favorit_android.android.ui.present.EnterPresentConfirmFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.present.FinishPresentFragment"
         android:label="EnterPresentConfirmFragment" />
 </navigation>
