@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/present_nav_graph"
+    app:startDestination="@id/enterPresentPriceFragment">
+
+    <fragment
+        android:id="@+id/enterPresentPriceFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.present.EnterPresentPriceFragment"
+        android:label="EnterPresentPriceFragment">
+        <action
+            android:id="@+id/action_enterPresentPriceFragment_to_enterPresentConfirmFragment"
+            app:destination="@id/enterPresentConfirmFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enterPresentConfirmFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.present.EnterPresentConfirmFragment"
+        android:label="EnterPresentConfirmFragment">
+        <action
+            android:id="@+id/action_enterPresentConfirmFragment_to_finishPresentFragment"
+            app:destination="@id/finishPresentFragment" />
+        <action
+            android:id="@+id/action_enterPresentConfirmFragment_to_enterPresentPriceFragment"
+            app:destination="@id/enterPresentPriceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/finishPresentFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.present.EnterPresentConfirmFragment"
+        android:label="EnterPresentConfirmFragment" />
+</navigation>
