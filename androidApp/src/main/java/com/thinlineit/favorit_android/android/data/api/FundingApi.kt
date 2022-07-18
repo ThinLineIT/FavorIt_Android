@@ -1,6 +1,8 @@
 package com.thinlineit.favorit_android.android.data.api
 
 import com.thinlineit.favorit_android.android.data.entity.Funding
+import com.thinlineit.favorit_android.android.data.entity.PresentRequest
+import com.thinlineit.favorit_android.android.data.entity.PresentResult
 import com.thinlineit.favorit_android.android.data.entity.ResponseBody
 import com.thinlineit.favorit_android.android.data.repository.CreateFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResult
@@ -25,4 +27,10 @@ interface FundingApi {
     suspend fun closeFunding(
         @Path("funding_id") fundingId: Int
     ): Response<ResponseBody<Unit>>
+
+    @POST("funding/{funding_id}/present")
+    suspend fun presentFunding(
+        @Path("funding_id") fundingId: Int,
+        @Body request: PresentRequest
+    ): Response<ResponseBody<PresentResult>>
 }
