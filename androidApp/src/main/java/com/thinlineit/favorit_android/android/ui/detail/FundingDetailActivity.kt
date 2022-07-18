@@ -85,12 +85,8 @@ class FundingDetailActivity : AppCompatActivity() {
             longToast(getString(R.string.label_copy_complete))
         }
         binding.goToPresent.setOnClickListener {
-<<<<<<< HEAD
             val fundingTitle = viewModel.funding.value?.name ?: return@setOnClickListener
-            PresentActivity.start(this, fundingId, fundingTitle)
-=======
-            PresentActivity.start(this, viewModel.fundingId)
->>>>>>> main
+            PresentActivity.start(this, viewModel.fundingId, fundingTitle)
         }
         binding.askCloseFunding.setOnClickListener {
             binding.detailActionLayout.visibility = View.GONE
