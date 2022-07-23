@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="loginViewModel"
-            type="com.thinlineit.favorit_android.android.ui.login.LoginViewModel" />
+            name="mainViewModel"
+            type="com.thinlineit.favorit_android.android.ui.landing.MainViewModel" />
     </data>
 
 

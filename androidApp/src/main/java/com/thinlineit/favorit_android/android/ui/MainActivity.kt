@@ -1,26 +1,33 @@
 package com.thinlineit.favorit_android.android.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.R
-import com.thinlineit.favorit_android.android.data.local.LocalPreferenceDataSource
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
+import com.thinlineit.favorit_android.android.ui.landing.MainViewModel
 import com.thinlineit.favorit_android.android.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    @Inject
-    lateinit var localPreferenceDataSource: LocalPreferenceDataSource
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        binding.apply {
+            lifecycleOwner = this@MainActivity
+            this.mainViewModel = viewModel
+        }
+
         initButtonClickListener()
     }
 
@@ -38,10 +45,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
     override fun onResume() {
-        if (localPreferenceDataSource.getAccessToken() != null) {
-            binding.loginButton.setImageResource(R.drawable.icon_login_success)
-        } else {
-            binding.loginButton.setImageResource(R.drawable.icon_login)
+        viewModel.checkAccessToken()
+        viewModel.isLoggedIn.observe(this){
+            if(it){
+                Log.d("main login1",it.toString())
+                binding.loginButton.setImageResource(R.drawable.icon_login_profile)
+            }else{
+                Log.d("main login11",it.toString())
+                binding.loginButton.setImageResource(R.drawable.icon_login)
+            }
         }
         super.onResume()
     }
