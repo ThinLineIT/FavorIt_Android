@@ -48,10 +48,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.checkAccessToken()
         viewModel.isLoggedIn.observe(this){
             if(it){
-                Log.d("main login1",it.toString())
                 binding.loginButton.setImageResource(R.drawable.icon_login_profile)
             }else{
-                Log.d("main login11",it.toString())
                 binding.loginButton.setImageResource(R.drawable.icon_login)
             }
         }
