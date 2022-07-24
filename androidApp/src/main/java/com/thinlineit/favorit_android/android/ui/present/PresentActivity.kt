@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.util.shortToast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PresentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,14 +20,16 @@ class PresentActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context, fundingId: Int) {
+        fun start(context: Context, fundingId: Int, fundingTitle: String) {
             val intent = Intent(context, PresentActivity::class.java).apply {
                 putExtra(FUNDING_ID, fundingId)
+                putExtra(FUNDING_TITLE, fundingTitle)
             }
             context.startActivity(intent)
         }
 
-        private const val FUNDING_ID = "FUNDING_ID"
+        const val FUNDING_ID = "FUNDING_ID"
+        const val FUNDING_TITLE = "FUNDING_TITLE"
         private const val INVALID_FUNDING_ID = -1
     }
 }
