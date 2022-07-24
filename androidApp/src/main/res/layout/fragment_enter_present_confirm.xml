@@ -110,12 +110,6 @@
                 android:textSize="17sp"
                 app:layout_constraintBottom_toTopOf="@id/numberKeyPad"
                 app:layout_constraintEnd_toEndOf="parent" />
-
-            <com.thinlineit.favorit_android.android.ui.customview.NumberKeyPadView
-                android:id="@+id/numberKeyPad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
