@@ -1,18 +1,15 @@
 package com.thinlineit.favorit_android.android.data.interceptor
 
-import com.thinlineit.favorit_android.android.data.repository.AuthRepository
+import com.thinlineit.favorit_android.android.data.interceptor.usecase.AuthInterceptorUseCase
 import javax.inject.Inject
-import javax.inject.Provider
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
 class AuthInterceptor @Inject constructor(
-    private val authRepositoryProvider: Provider<AuthRepository>
+    private val authInterceptorUseCase: AuthInterceptorUseCase
 ) : Interceptor {
-    private val authRepository
-        get() = authRepositoryProvider.get()
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
@@ -29,18 +26,12 @@ class AuthInterceptor @Inject constructor(
         return response
     }
 
-    /**
-     * TODO: Extract this method as UseCase
-     */
     private fun getAccessTokenOrThrow(): String = runBlocking {
-        authRepository.getAccessToken() ?: throw Exception("Please LogIn first")
+        authInterceptorUseCase.getAccessTokenOrThrow()
     }
 
-    /**
-     * TODO: Extract this method as UseCase
-     */
     private fun getRefreshedAccessTokenOrThrow(): String = runBlocking {
-        authRepository.refreshToken() ?: throw Exception("Please LogIn first")
+        authInterceptorUseCase.getRefreshedAccessTokenOrThrow()
     }
 
     private fun Request.appendToken(accessToken: String): Request =

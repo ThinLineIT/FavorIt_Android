@@ -3,18 +3,17 @@ package com.thinlineit.favorit_android.android.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thinlineit.favorit_android.android.data.interceptor.AuthInterceptor
-import com.thinlineit.favorit_android.android.data.repository.AuthRepository
+import com.thinlineit.favorit_android.android.data.interceptor.usecase.AuthInterceptorUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Provider
-import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -23,8 +22,8 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun providesAuthInterceptor(authRepositoryProvider: Provider<AuthRepository>): Interceptor =
-        AuthInterceptor(authRepositoryProvider)
+    fun providesAuthInterceptor(authInterceptorUseCase: AuthInterceptorUseCase): Interceptor =
+        AuthInterceptor(authInterceptorUseCase)
 
     @Provides
     @Singleton
