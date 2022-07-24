@@ -1,5 +1,7 @@
 package com.thinlineit.favorit_android.android.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -27,10 +29,10 @@ class MainActivity : AppCompatActivity() {
             this.mainViewModel = viewModel
         }
 
-        viewModel.isLoggedIn.observe(this){
-            if(it){
+        viewModel.isLoggedIn.observe(this) {
+            if (it) {
                 binding.loginButton.setImageResource(R.drawable.icon_login_profile)
-            }else{
+            } else {
                 binding.loginButton.setImageResource(R.drawable.icon_login)
             }
         }
@@ -51,8 +53,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onResume() {
         viewModel.checkIsLoggedIn()
         super.onResume()
+    }
+
+    companion object {
+        fun start(context: Context) {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }
