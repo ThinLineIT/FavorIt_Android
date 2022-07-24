@@ -27,6 +27,8 @@ class CreateFundingViewModel @Inject constructor(
     private val createFundingUseCase: CreateFundingUseCase
 ) : ViewModel() {
 
+    val toastMessage: MutableLiveData<String> = MutableLiveData("")
+
     val productLink = MutableLiveData("")
     val productOption = MutableLiveData("")
     val fundingPrice = MutableLiveData(0)
@@ -105,6 +107,11 @@ class CreateFundingViewModel @Inject constructor(
             fundingExpiredDateProgressState
         )
     }
+
+    val fundingPriceOnNumberClickListener = FundingPriceOnNumberClickListener(
+        fundingPrice,
+        toastMessage
+    )
 
     private val productLinkProgressState =
         createProgressStateMediatorLiveData(

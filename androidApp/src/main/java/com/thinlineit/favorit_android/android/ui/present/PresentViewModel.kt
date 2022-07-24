@@ -13,26 +13,31 @@ import com.thinlineit.favorit_android.android.data.entity.PresentResult
 import com.thinlineit.favorit_android.android.ui.present.usecase.PresentUseCase
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class PresentViewModel @Inject constructor(
     private val presentUseCase: PresentUseCase,
     state: SavedStateHandle
 ) : ViewModel() {
-    val fundingId: Int =
-        state.get<Int>(PresentActivity.FUNDING_ID)
-            ?: throw Exception("Funding id is invalid")
-    val fundingTitle: String =
-        state.get<String>(PresentActivity.FUNDING_TITLE)
-            ?: throw Exception("Funding title is invalid")
+
+    val toastMessage: MutableLiveData<String> = MutableLiveData("")
+
+    val fundingId: Int = state.get<Int>(PresentActivity.FUNDING_ID)
+        ?: throw Exception("Funding id is invalid")
+
+    val fundingTitle: String = state.get<String>(PresentActivity.FUNDING_TITLE)
+        ?: throw Exception("Funding title is invalid")
+
     val presentPrice = MutableLiveData(0)
+
     val presentPriceAsCurrency: LiveData<String> = Transformations.map(presentPrice) {
         if (it == 0) ""
         else NumberFormatter.asCurrency(it.toLong())
     }
+
     val presentPriceAsNumerals: LiveData<String> = Transformations.map(presentPrice) {
         NumberFormatter.asNumerals(it.toLong())
     }
@@ -47,6 +52,11 @@ class PresentViewModel @Inject constructor(
         }
 
     val presentResult = MutableLiveData<Result<PresentResult>>(Result.Loading(false))
+
+    val presentPriceOnNumberClickListener = PresentPriceOnNumberClickListener(
+        presentPrice,
+        toastMessage
+    )
 
     fun presentFunding() {
         viewModelScope.launch(Dispatchers.IO) {
