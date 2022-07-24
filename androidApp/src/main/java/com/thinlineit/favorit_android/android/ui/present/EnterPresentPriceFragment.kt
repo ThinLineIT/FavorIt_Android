@@ -5,7 +5,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.FragmentEnterPresentPriceBinding
-import com.thinlineit.favorit_android.android.ui.customview.NumberKeyPadView
+import com.thinlineit.favorit_android.android.ui.customview.numberkeypad.NumberKeyPadView
 
 class EnterPresentPriceFragment :
     PresentBaseFragment<FragmentEnterPresentPriceBinding>(R.layout.fragment_enter_present_price) {
@@ -33,12 +33,7 @@ class EnterPresentPriceFragment :
     }
 
     private fun initNumberKeyPadView(numberKeyPad: NumberKeyPadView) {
-        viewModel.presentPrice.value?.let { initialPrice ->
-            binding.numberKeyPad.init(initialPrice)
-        }
-        numberKeyPad.numberResult.observe(viewLifecycleOwner) { newPrice ->
-            viewModel.presentPrice.postValue(newPrice)
-        }
+        numberKeyPad.init(viewModel.presentPriceOnNumberClickListener)
     }
 
     private fun initPriceCursorAnimation(priceCursor: View) {
