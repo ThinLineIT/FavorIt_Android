@@ -1,11 +1,11 @@
 package com.thinlineit.favorit_android.android.data.interceptor
 
 import com.thinlineit.favorit_android.android.data.interceptor.usecase.AuthInterceptorUseCase
-import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
     private val authInterceptorUseCase: AuthInterceptorUseCase
@@ -17,7 +17,7 @@ class AuthInterceptor @Inject constructor(
             ?: originalRequest.appendToken(getAccessTokenOrThrow())
         val response = chain.proceed(request)
 
-        if (response.code == UNAUTHORIZED_CODE) {
+        if (response.code == UNAUTHORIZED_CODE && !isAuth(originalRequest)) {
             val refreshedAccessToken = getRefreshedAccessTokenOrThrow()
             val requestWithRefreshedToken = chain.request().appendToken(refreshedAccessToken)
             response.close()
@@ -44,7 +44,10 @@ class AuthInterceptor @Inject constructor(
 
     private fun isAccessTokenRequired(request: Request) =
         request.headers[IS_ACCESS_TOKEN_REQUIRED] == null ||
-            request.headers[IS_ACCESS_TOKEN_REQUIRED] == "true"
+                request.headers[IS_ACCESS_TOKEN_REQUIRED] == "true"
+
+    private fun isAuth(originalRequest: Request) =
+        originalRequest.url.encodedPath.contains("auth")
 
     companion object {
         private const val UNAUTHORIZED_CODE = 401

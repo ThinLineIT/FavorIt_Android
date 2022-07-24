@@ -17,9 +17,9 @@ class MainViewModel @Inject constructor(
     val isLoggedIn: LiveData<Boolean>
         get() = _isLoggedIn
 
-    fun checkIsLoggedIn(){
+    fun checkIsLoggedIn() {
         viewModelScope.launch {
-            _isLoggedIn.value = authRepository.getAccessToken() != null
+            _isLoggedIn.value = !authRepository.refreshToken().isNullOrEmpty()
         }
     }
 }
