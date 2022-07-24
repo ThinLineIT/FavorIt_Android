@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settle_funding_nav_graph"
+    app:startDestination="@id/selectBankFragment">
+
+    <fragment
+        android:id="@+id/selectBankFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.settlefunding.SelectBankFragment"
+        android:label="fragment_select_bank"
+        tools:layout="@layout/fragment_select_bank">
+        <action
+            android:id="@+id/action_selectBankFragment_to_enterBankAccountFragment"
+            app:destination="@id/enterBankAccountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enterBankAccountFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.settlefunding.EnterBankAccountFragment"
+        android:label="fragment_enter_bank_account"
+        tools:layout="@layout/fragment_enter_bank_account">
+        <action
+            android:id="@+id/action_enterBankAccountFragment_to_confirmBankAccountFragment"
+            app:destination="@id/confirmBankAccountFragment" />
+        <action
+            android:id="@+id/action_enterBankAccountFragment_to_selectBankFragment2"
+            app:destination="@id/selectBankFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmBankAccountFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.settlefunding.ConfirmBankAccountFragment"
+        android:label="fragment_confirm_bank_account"
+        tools:layout="@layout/fragment_confirm_bank_account">
+        <action
+            android:id="@+id/action_confirmBankAccountFragment_to_finishSettleFundingFragment"
+            app:destination="@id/finishSettleFundingFragment" />
+        <action
+            android:id="@+id/action_confirmBankAccountFragment_to_selectBankFragment"
+            app:destination="@id/selectBankFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finishSettleFundingFragment"
+        android:name="com.thinlineit.favorit_android.android.ui.settlefunding.FinishSettleFundingFragment"
+        android:label="fragment_finish_settle_funding"
+        tools:layout="@layout/fragment_finish_settle_funding" />
+
+
+</navigation>
