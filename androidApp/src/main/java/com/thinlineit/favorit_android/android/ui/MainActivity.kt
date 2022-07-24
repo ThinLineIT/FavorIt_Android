@@ -27,6 +27,14 @@ class MainActivity : AppCompatActivity() {
             this.mainViewModel = viewModel
         }
 
+        viewModel.isLoggedIn.observe(this){
+            if(it){
+                binding.loginButton.setImageResource(R.drawable.icon_login_profile)
+            }else{
+                binding.loginButton.setImageResource(R.drawable.icon_login)
+            }
+        }
+
         initButtonClickListener()
     }
 
@@ -44,14 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     override fun onResume() {
-        viewModel.checkAccessToken()
-        viewModel.isLoggedIn.observe(this){
-            if(it){
-                binding.loginButton.setImageResource(R.drawable.icon_login_profile)
-            }else{
-                binding.loginButton.setImageResource(R.drawable.icon_login)
-            }
-        }
+        viewModel.checkIsLoggedIn()
         super.onResume()
     }
 }

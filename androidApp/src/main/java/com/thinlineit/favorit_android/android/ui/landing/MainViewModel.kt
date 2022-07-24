@@ -13,24 +13,13 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
-    private val accessToken = MutableLiveData<String>()
-
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn: LiveData<Boolean>
         get() = _isLoggedIn
 
-    fun checkAccessToken(){
+    fun checkIsLoggedIn(){
         viewModelScope.launch {
-            try {
-                accessToken.value = authRepository.getAccessToken()
-                _isLoggedIn.value = accessToken.value != null
-            } catch (e: Exception){
-
-            }
+            _isLoggedIn.value = authRepository.getAccessToken() != null
         }
-    }
-
-    init {
-        checkAccessToken()
     }
 }
