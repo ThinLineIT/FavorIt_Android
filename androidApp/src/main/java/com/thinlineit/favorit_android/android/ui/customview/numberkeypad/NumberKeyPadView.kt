@@ -1,13 +1,10 @@
-package com.thinlineit.favorit_android.android.ui.customview
+package com.thinlineit.favorit_android.android.ui.customview.numberkeypad
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.thinlineit.favorit_android.android.databinding.NumberKeyPadBinding
-import com.thinlineit.favorit_android.android.util.longToast
 
 class NumberKeyPadView @JvmOverloads constructor(
     context: Context,
@@ -15,9 +12,8 @@ class NumberKeyPadView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val _numberResult = MutableLiveData(0)
-    val numberResult: LiveData<Int> = _numberResult
     val binding: NumberKeyPadBinding
+    lateinit var onNumberClickListener: OnNumberClickListener
 
     init {
         this.binding = NumberKeyPadBinding.inflate(LayoutInflater.from(context), this, true)
@@ -59,35 +55,20 @@ class NumberKeyPadView @JvmOverloads constructor(
         }
     }
 
-    fun init(initialNumber: Int) {
-        updateNumberResult(initialNumber)
+    fun init(onNumberClickListener: OnNumberClickListener) {
+        this.onNumberClickListener = onNumberClickListener
     }
 
-    private fun onNumberClick(enteredNumber: String) {
-        val currentNumber = numberResult.value ?: return
-        try {
-            val newNumber = (currentNumber.toString() + enteredNumber).toInt()
-            updateNumberResult(newNumber)
-        } catch (exception: NumberFormatException) {
-            context.longToast("잘못된 숫자입니다. 어떻게 입력한거에요?")
-        }
+    private fun onNumberClick(clickedNumber: String) {
+        onNumberClickListener.onNumberClick(clickedNumber)
     }
 
     private fun onDeleteClick() {
-        val currentNumber = _numberResult.value ?: return
-        val newNumber =
-            currentNumber.toString().dropLast(1).takeIf { it.isNotEmpty() }?.toInt() ?: 0
-        updateNumberResult(newNumber)
+        onNumberClickListener.onDeleteClick()
     }
 
-    private fun updateNumberResult(newNumber: Int) {
-        if (newNumber > MAX_NUMBER) {
-            context.longToast("최대 10억까지만 설정이 가능해요 ㅠ")
-        }
-        _numberResult.postValue(newNumber)
-    }
-
-    companion object {
-        private const val MAX_NUMBER = 1000000000
+    interface OnNumberClickListener {
+        fun onNumberClick(clickedNumber: String)
+        fun onDeleteClick()
     }
 }
