@@ -57,4 +57,10 @@
     <string name="label_are_you_sure_to_close_funding">목표달성까지 00% 남았어요. \n 펀딩을 마감하시겠어요?</string>
     <string name="label_funding_detail_dialog_text">펀딩 기간이 종료되었습니다. \n [펀딩 마감]을 눌러 펀딩을 마감해주세요</string>
     <string name="label_funding_detail_dialog_edit">확인</string>
+
+    <!-- present -->
+    <string name="hint_present_price">선물할 금액을 입력해주세요!</string>
+    <string name="label_present_to">에 선물하기</string>
+    <string name="label_are_you_sure_to_present">원을 선물할까요?</string>
+    <string name="button_share_funding">&#032;&#032;펀딩&#032;공유</string>
 </resources>

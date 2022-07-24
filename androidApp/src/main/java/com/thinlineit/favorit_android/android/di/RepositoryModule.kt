@@ -7,6 +7,8 @@ import com.thinlineit.favorit_android.android.data.repository.AuthRepository
 import com.thinlineit.favorit_android.android.data.repository.AuthRepositoryImpl
 import com.thinlineit.favorit_android.android.data.repository.FundingRepository
 import com.thinlineit.favorit_android.android.data.repository.FundingRepositoryImpl
+import com.thinlineit.favorit_android.android.data.repository.PresentRepository
+import com.thinlineit.favorit_android.android.data.repository.PresentRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +30,10 @@ object RepositoryModule {
     fun providesFundingRepository(
         fundingApi: FundingApi
     ): FundingRepository = FundingRepositoryImpl(fundingApi)
+
+    @Provides
+    @Singleton
+    fun providesPresentRepository(
+        fundingApi: FundingApi
+    ): PresentRepository = PresentRepositoryImpl(fundingApi)
 }
