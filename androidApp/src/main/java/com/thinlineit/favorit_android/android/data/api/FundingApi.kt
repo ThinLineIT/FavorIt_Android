@@ -1,9 +1,6 @@
 package com.thinlineit.favorit_android.android.data.api
 
-import com.thinlineit.favorit_android.android.data.entity.Funding
-import com.thinlineit.favorit_android.android.data.entity.PresentRequest
-import com.thinlineit.favorit_android.android.data.entity.PresentResult
-import com.thinlineit.favorit_android.android.data.entity.ResponseBody
+import com.thinlineit.favorit_android.android.data.entity.*
 import com.thinlineit.favorit_android.android.data.repository.CreateFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResult
 import retrofit2.Response
@@ -33,4 +30,12 @@ interface FundingApi {
         @Path("funding_id") fundingId: Int,
         @Body request: PresentRequest
     ): Response<ResponseBody<PresentResult>>
+
+    @POST("funding/options/bank")
+    suspend fun getBankList(): List<Bank>
+
+    @POST("funding/verification/bank-account")
+    suspend fun checkBankAccount(
+        @Body request: AccountRequest
+    ): Response<ResponseBody<Account>>
 }
