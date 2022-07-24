@@ -23,7 +23,29 @@ class FundingDetailActivity : AppCompatActivity() {
         ActivityFundingDetailBinding.inflate(layoutInflater)
     }
     val viewModel: FundingDetailViewModel by lazy {
-        ViewModelProvider(this)[FundingDetailViewModel::class.java]
+        ViewModelProvider(this)[FundingDetailViewModel::class.java].apply {
+            val fundingId =
+                parseFundingId(intent).takeIf { it != INVALID_FUNDING_ID } ?: return@apply
+            loadFundingDetail(fundingId)
+        }
+    }
+
+    private fun parseFundingId(intent: Intent): Int {
+        return if (intent.action == Intent.ACTION_VIEW) {
+            try {
+                intent.data?.lastPathSegment?.toInt() ?: INVALID_FUNDING_ID
+            } catch (e: Exception) {
+                INVALID_FUNDING_ID
+            }
+        } else {
+            intent.getIntExtra(FUNDING_ID, INVALID_FUNDING_ID)
+        }.takeIf {
+            it != INVALID_FUNDING_ID
+        } ?: this@FundingDetailActivity.run {
+            shortToast("Funding ID is invalid")
+            finish()
+            return INVALID_FUNDING_ID
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,5 +132,6 @@ class FundingDetailActivity : AppCompatActivity() {
         }
 
         const val FUNDING_ID = "FUNDING_ID"
+        const val INVALID_FUNDING_ID = -1
     }
 }
