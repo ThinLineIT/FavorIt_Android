@@ -99,6 +99,13 @@ class FundingDetailActivity : AppCompatActivity() {
         binding.closeFundingButton.setOnClickListener {
             viewModel.closeFunding()
         }
+        binding.askCloseFunding.setOnClickListener {
+            val fragment = CloseFundingFragment()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragmentLayout, fragment)
+                .commit()
+        }
     }
 
     companion object {
