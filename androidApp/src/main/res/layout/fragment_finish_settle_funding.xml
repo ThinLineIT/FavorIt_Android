@@ -1,0 +1,88 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thinlineit.favorit_android.android.ui.settlefunding.SettleFundingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        tools:context=".ui.settlefunding.SelectBankFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_onlytop_round_white"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/fundingPreviewImageView"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/icon_celebrate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fundingNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@{viewModel.fundingName}"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/fundingIsOverTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fundingPreviewImageView"
+                tools:text="이거 가지고 싶어요" />
+
+            <TextView
+                android:id="@+id/fundingIsOverTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/label_settlement_is_over"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fundingNameTextView" />
+
+            <Button
+                android:id="@+id/goToMain"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/background_round_shadow"
+                android:drawableEnd="@drawable/ic_pink_arrow"
+                android:paddingEnd="10dp"
+                android:text="@string/button_go_new_funding"
+                android:textColor="@color/pink"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
