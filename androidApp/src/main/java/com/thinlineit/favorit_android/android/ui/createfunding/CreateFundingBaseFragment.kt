@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.thinlineit.favorit_android.android.util.longToast
 
 open class CreateFundingBaseFragment<T : ViewDataBinding>(
     @LayoutRes private val contentLayoutId: Int
@@ -29,7 +30,15 @@ open class CreateFundingBaseFragment<T : ViewDataBinding>(
         binding = DataBindingUtil.inflate<T>(inflater, contentLayoutId, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
         }
+        initToast()
         return binding.root
+    }
+
+    private fun initToast() {
+        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
+            if (message.isEmpty()) return@observe
+            requireContext().longToast(message)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
