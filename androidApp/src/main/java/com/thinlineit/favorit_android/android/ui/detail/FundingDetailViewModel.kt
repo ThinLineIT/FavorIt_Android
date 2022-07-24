@@ -23,6 +23,16 @@ class FundingDetailViewModel @Inject constructor(
 ) : ViewModel() {
     var fundingId: Int = 0
 
+    private val _loadFundingResult = MutableLiveData<Result<Funding>>(Result.Loading(false))
+    val loadFundingResult: LiveData<Result<Funding>> = _loadFundingResult
+
+    val funding: LiveData<Funding?> = Transformations.map(loadFundingResult) {
+        when (it) {
+            is Result.Loading -> null
+            is Result.Fail -> null
+            is Result.Success -> it.data
+        }
+    }
 
     val fundingDateProgressPercentage: LiveData<Int> = Transformations.map(funding) { funding ->
         if (funding == null) return@map 0
@@ -71,13 +81,12 @@ class FundingDetailViewModel @Inject constructor(
         funding.state == FundingState.CLOSED && funding.isMaker
     }
 
-    init {
-        loadFundingDetail(fundingId)
-    }
+    fun loadFundingDetail(fundingId: Int) {
+        this.fundingId = fundingId
 
-    private fun loadFundingDetail(fundingId: Int) {
         viewModelScope.launch {
-            funding.postValue(fundingDetailUseCase.getFunding(fundingId))
+            _loadFundingResult.postValue(Result.Loading(true))
+            _loadFundingResult.postValue(fundingDetailUseCase.getFunding(fundingId))
         }
     }
 

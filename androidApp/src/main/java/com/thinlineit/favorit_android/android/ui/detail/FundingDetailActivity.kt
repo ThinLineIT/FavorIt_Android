@@ -60,6 +60,21 @@ class FundingDetailActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
+        viewModel.loadFundingResult.observe(this) {
+            when (it) {
+                is Result.Loading -> {
+                    // nothing to do
+                }
+                is Result.Fail -> {
+                    shortToast("Fail to load funding")
+                    finish()
+                }
+                is Result.Success -> {
+                    // nothing to do
+                }
+            }
+        }
+
         viewModel.closeFundingResult.observe(this) {
             when (it) {
                 is Result.Loading -> {
