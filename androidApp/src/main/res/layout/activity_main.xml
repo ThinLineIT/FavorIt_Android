@@ -29,6 +29,17 @@
             android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/icon_login"
+            app:layout_constraintBottom_toBottomOf="@id/loginButtonBackground"
+            app:layout_constraintEnd_toEndOf="@id/loginButtonBackground"
+            app:layout_constraintStart_toStartOf="@id/loginButtonBackground"
+            app:layout_constraintTop_toTopOf="@id/loginButtonBackground" />
+
+        <ImageView
+            android:id="@+id/profileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_login_profile"
             app:layout_constraintBottom_toBottomOf="@id/loginButtonBackground"
             app:layout_constraintEnd_toEndOf="@id/loginButtonBackground"
             app:layout_constraintStart_toStartOf="@id/loginButtonBackground"
