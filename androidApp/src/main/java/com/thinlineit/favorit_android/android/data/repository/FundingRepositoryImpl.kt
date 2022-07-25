@@ -23,13 +23,13 @@ class FundingRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getFunding(fundingId: Int): Funding {
+    override suspend fun getFunding(fundingId: Int): Result<Funding> {
         val response = fundingApi.getFunding(fundingId)
         val body = response.body()
         return if (response.isSuccessful && body != null) {
-            body.data
+            Result.Success(body.data)
         } else {
-            throw Exception(response.message())
+            Result.Fail(Exception(response.message()))
         }
     }
 

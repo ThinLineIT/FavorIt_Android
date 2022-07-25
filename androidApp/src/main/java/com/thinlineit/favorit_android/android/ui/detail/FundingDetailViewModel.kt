@@ -3,7 +3,6 @@ package com.thinlineit.favorit_android.android.ui.detail
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,6 @@ import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingState
-import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity.Companion.FUNDING_ID
 import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUseCase
 import com.thinlineit.favorit_android.android.util.NumberFormatter
 import com.thinlineit.favorit_android.android.util.toDate
@@ -22,10 +20,19 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class FundingDetailViewModel @Inject constructor(
     private val fundingDetailUseCase: FundingDetailUseCase,
-    state: SavedStateHandle
 ) : ViewModel() {
-    val fundingId: Int = state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")
-    val funding: MutableLiveData<Funding?> = MutableLiveData(null)
+    var fundingId: Int = 0
+
+    private val _loadFundingResult = MutableLiveData<Result<Funding>>(Result.Loading(false))
+    val loadFundingResult: LiveData<Result<Funding>> = _loadFundingResult
+
+    val funding: LiveData<Funding?> = Transformations.map(loadFundingResult) {
+        when (it) {
+            is Result.Loading -> null
+            is Result.Fail -> null
+            is Result.Success -> it.data
+        }
+    }
 
     val fundingDateProgressPercentage: LiveData<Int> = Transformations.map(funding) { funding ->
         if (funding == null) return@map 0
@@ -74,13 +81,12 @@ class FundingDetailViewModel @Inject constructor(
         funding.state == FundingState.CLOSED && funding.isMaker
     }
 
-    init {
-        loadFundingDetail(fundingId)
-    }
+    fun loadFundingDetail(fundingId: Int) {
+        this.fundingId = fundingId
 
-    private fun loadFundingDetail(fundingId: Int) {
         viewModelScope.launch {
-            funding.postValue(fundingDetailUseCase.getFunding(fundingId))
+            _loadFundingResult.postValue(Result.Loading(true))
+            _loadFundingResult.postValue(fundingDetailUseCase.getFunding(fundingId))
         }
     }
 

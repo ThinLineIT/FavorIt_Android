@@ -8,7 +8,7 @@ import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResu
 
 interface FundingRepository {
     suspend fun create(request: CreateFundingRequest): Result<CreateFundingResult>
-    suspend fun getFunding(fundingId: Int): Funding
+    suspend fun getFunding(fundingId: Int): Result<Funding>
     suspend fun closeFunding(fundingId: Int): Result<Unit>
     suspend fun getBankList(): List<Bank>
     suspend fun checkBankAccount(bankCode: String, bankAccount: String): Result<Account>
