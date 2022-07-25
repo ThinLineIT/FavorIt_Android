@@ -23,9 +23,3 @@ data class Funding(
 enum class FundingState {
     OPENED, EXPIRED, CLOSED, COMPLETED
 }
-
-data class Product(
-    val link: String,
-    val option: String,
-    val price: Int,
-)
