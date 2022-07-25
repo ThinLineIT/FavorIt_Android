@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
@@ -13,6 +14,13 @@ import com.thinlineit.favorit_android.android.util.longToast
 
 class FinishPresentFragment :
     PresentBaseFragment<FragmentFinishPresentBinding>(R.layout.fragment_finish_present) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
