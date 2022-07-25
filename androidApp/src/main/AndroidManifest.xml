@@ -25,7 +25,22 @@
             android:exported="false" />
         <activity
             android:name=".ui.detail.FundingDetailActivity"
-            android:exported="false" />
+            android:exported="true">
+
+            <intent-filter
+                android:autoVerify="true"
+                android:label="filterViewFundingDetail">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.favor-it.com"
+                    android:pathPrefix="/funding"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false" />
