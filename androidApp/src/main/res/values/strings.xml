@@ -54,6 +54,7 @@
     <string name="button_left_arrow">←</string>
     <string name="button_right_arrow">→</string>
     <string name="button_keep_funding">계속 진행</string>
+    <string name="button_go_to_adjustment">펀딩 정산 받기</string>
     <string name="label_are_you_sure_to_close_funding">목표달성까지 00% 남았어요. \n 펀딩을 마감하시겠어요?</string>
     <string name="label_funding_detail_dialog_text">펀딩 기간이 종료되었습니다. \n [펀딩 마감]을 눌러 펀딩을 마감해주세요</string>
     <string name="label_funding_detail_dialog_edit">확인</string>
@@ -63,4 +64,28 @@
     <string name="label_present_to">에 선물하기</string>
     <string name="label_are_you_sure_to_present">원을 선물할까요?</string>
     <string name="button_share_funding">&#032;&#032;펀딩&#032;공유</string>
+
+    <string name="label_funding_is_over">펀딩이 완료되었어요!</string>
+    <string name="title_activity_close_funding">CloseFundingActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!--settle funding-->
+    <string name="label_what_is_ur_account">어디로 받을까요?</string>
+    <string name="label_select_bank">은행을 선택해주세요!</string>
+    <string name="hint_enter_bank_account">계좌번호를 입력해주세요</string>
+    <string name="label_recipient">받으시는 분이</string>
+    <string name="label_account">계좌번호</string>
+    <string name="label_recipient_is_right">님이 맞으신가요?</string>
+    <string name="button_enter_account_again">다시 입력</string>
+    <string name="button_get_settlement">정산 받기</string>
+    <string name="button_go_new_funding">새로운 펀딩 만들기</string>
+    <string name="label_settlement_is_over">정산 완료되었습니다! \n 좋은 선물 사세요 :)</string>
+
 </resources>

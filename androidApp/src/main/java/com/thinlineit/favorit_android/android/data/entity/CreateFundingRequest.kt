@@ -1,4 +1,4 @@
-package com.thinlineit.favorit_android.android.data.repository
+package com.thinlineit.favorit_android.android.data.entity
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,10 +9,4 @@ data class CreateFundingRequest(
     @SerializedName("due_date")
     val expiredDate: String,
     val product: Product
-)
-
-data class Product(
-    val link: String,
-    val option: String,
-    val price: Int
 )

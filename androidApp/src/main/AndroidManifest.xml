@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.detail.ClosedFundingActivity"
+            android:name=".ui.settlefunding.SettleFundingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.present.PresentActivity"
@@ -36,7 +36,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.favor-it.com"
+                    android:host="www.favor-it.me"
                     android:pathPrefix="/funding"
                     android:scheme="https" />
             </intent-filter>
