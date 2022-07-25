@@ -60,6 +60,9 @@ class EnterBankAccountFragment :
                             .actionEnterBankAccountFragmentToConfirmBankAccountFragment()
                     )
                 }
+                is Result.Loading -> {
+                    // nothing to do
+                }
             }
         }
     }

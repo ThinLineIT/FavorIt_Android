@@ -1,15 +1,22 @@
 package com.thinlineit.favorit_android.android.ui.settlefunding
 
 import android.view.View
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Account
 import com.thinlineit.favorit_android.android.data.entity.Bank
+import com.thinlineit.favorit_android.android.data.entity.SettleFundingRequest
 import com.thinlineit.favorit_android.android.data.repository.FundingRepository
+import com.thinlineit.favorit_android.android.ui.settlefunding.SettleFundingActivity.Companion.FUNDING_ID
 import com.thinlineit.favorit_android.android.ui.settlefunding.SettleFundingActivity.Companion.FUNDING_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettleFundingViewModel @Inject constructor(
@@ -38,8 +45,8 @@ class SettleFundingViewModel @Inject constructor(
         get() = _bankList
 
     val fundingAccountState: LiveData<InputState> = Transformations.map(bankAccount) {
-        when {
-            it == "" -> InputState.EMPTY
+        when (it) {
+            "" -> InputState.EMPTY
             else -> InputState.AVAILABLE
         }
     }

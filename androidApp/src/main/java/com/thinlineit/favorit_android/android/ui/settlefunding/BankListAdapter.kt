@@ -55,5 +55,4 @@ class BankListAdapter(private val clickListener: (Bank) -> Unit) :
         bankList = data
         notifyDataSetChanged()
     }
-
 }
