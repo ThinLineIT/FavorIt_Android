@@ -13,6 +13,7 @@ import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.databinding.ActivityFundingDetailBinding
 import com.thinlineit.favorit_android.android.ui.present.PresentActivity
+import com.thinlineit.favorit_android.android.ui.settlefunding.SettleFundingActivity
 import com.thinlineit.favorit_android.android.util.longToast
 import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,6 +87,8 @@ class FundingDetailActivity : AppCompatActivity() {
                 is Result.Success -> {
                     binding.detailActionLayout.visibility = View.VISIBLE
                     binding.detailActionLayoutWhenAskingClose.visibility = View.GONE
+                    val fundingName = viewModel.funding.value?.name ?: return@observe
+                    SettleFundingActivity.start(this, viewModel.fundingId, fundingName)
                 }
             }
         }
@@ -98,7 +101,8 @@ class FundingDetailActivity : AppCompatActivity() {
 
         viewModel.goToClosedFundingActivity.observe(this) { goToClosedFundingActivity ->
             if (goToClosedFundingActivity) {
-                ClosedFundingActivity.start(this, viewModel.fundingId)
+                val fundingName = viewModel.funding.value?.name ?: return@observe
+                SettleFundingActivity.start(this, viewModel.fundingId, fundingName)
             }
         }
     }
@@ -135,13 +139,6 @@ class FundingDetailActivity : AppCompatActivity() {
         }
         binding.closeFundingButton.setOnClickListener {
             viewModel.closeFunding()
-        }
-        binding.askCloseFunding.setOnClickListener {
-            val fragment = CloseFundingFragment()
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragmentLayout, fragment)
-                .commit()
         }
     }
 

@@ -11,9 +11,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.detail.ClosedFundingActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.settlefunding.SettleFundingActivity"
             android:exported="false" />
         <activity
