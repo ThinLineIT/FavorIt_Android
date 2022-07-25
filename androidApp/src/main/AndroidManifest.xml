@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.favor-it.com"
+                    android:host="www.favor-it.me"
                     android:pathPrefix="/funding"
                     android:scheme="https" />
             </intent-filter>
