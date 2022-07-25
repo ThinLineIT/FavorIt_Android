@@ -9,8 +9,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thinlineit.favorit_android.android.data.Result
-import com.thinlineit.favorit_android.android.data.repository.CreateFundingRequest
-import com.thinlineit.favorit_android.android.data.repository.Product
+import com.thinlineit.favorit_android.android.data.entity.CreateFundingRequest
+import com.thinlineit.favorit_android.android.data.entity.Product
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCase
 import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
 import com.thinlineit.favorit_android.android.util.NumberFormatter
@@ -41,9 +41,10 @@ class CreateFundingViewModel @Inject constructor(
     }
     val fundingName = MutableLiveData("")
     val fundingDescription = MutableLiveData("")
+    val fundingStartDateAsString = Date(System.currentTimeMillis()).toDateFormat()
     val fundingExpiredDate = MutableLiveData<Date?>(null)
     val fundingExpiredDateAsString = Transformations.map(fundingExpiredDate) {
-        fundingExpiredDate.value.toString()
+        it?.toDateFormat() ?: ""
     }
     val productLinkState: LiveData<InputState> = Transformations.map(productLink) {
         when {

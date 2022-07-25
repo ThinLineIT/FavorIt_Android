@@ -21,7 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background_onlytop_round_white"
+            android:padding="25dp"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -44,7 +46,7 @@
                 android:text="@{viewModel.fundingName}"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                app:layout_constraintBottom_toTopOf="@+id/fundingIsOverTextView"
+                app:layout_constraintBottom_toTopOf="@+id/goToSeeProductTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fundingPreviewImageView"
@@ -72,53 +74,70 @@
                 android:text="@{viewModel.fundingDescription}"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/fundingExpiredDateTextView"
+                app:layout_constraintBottom_toTopOf="@+id/dateProgressLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/goToSeeProductTextView"
                 tools:text="제 작고 귀여운 노트북이 어도비를 힘들어합니다..일러스트레이터,애펙까지 돌리고 싶은데 노트북이 터지지 않을까 걱정입니다. 이김에 아이맥을 사고 싶은데요..도와주시면 감사하겠습니다" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/fundingExpiredDateTextView"
+                android:id="@+id/dateProgressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/background_round_shadow"
-                android:minHeight="30dp"
-                android:padding="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/fundingPriceTextView"
+                android:minHeight="60dp"
+                android:padding="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/fundingProgressLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fundingDescriptionTextView">
 
-                <TextView
+                <ProgressBar
+                    android:id="@+id/dateProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@{viewModel.fundingExpiredDateAsString}" />
-                <!-- <ProgressBar
-                     android:id="@+id/expiredDateProgress"
-                     style="?android:attr/progressBarStyleHorizontal"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:max="100"
-                     android:progressBackgroundTint="@color/lightBlue"
-                     android:progressTint="@color/blue" />-->
+                    android:max="100"
+                    android:progress="10"
+                    android:progressBackgroundTint="@color/blue"
+                    android:progressTint="@color/blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/startDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@{viewModel.fundingStartDateAsString}"
+                    android:textColor="@color/blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dateProgress"
+                    tools:text="22.07.08" />
+
+                <TextView
+                    android:id="@+id/endDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@{viewModel.fundingExpiredDateAsString}"
+                    android:textColor="@color/blue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dateProgress"
+                    tools:text="22.07.15" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/fundingPriceTextView"
+                android:id="@+id/fundingProgressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
                 android:background="@drawable/background_round_shadow"
                 android:minHeight="30dp"
                 android:padding="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/previousButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fundingExpiredDateTextView">
+                app:layout_constraintTop_toBottomOf="@+id/dateProgressLayout">
 
                 <ProgressBar
                     android:id="@+id/priceProgress"
@@ -126,6 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:max="100"
+                    android:progress="70"
                     android:progressBackgroundTint="@color/blue"
                     android:progressTint="@color/pink"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -153,8 +173,7 @@
                 android:id="@+id/previousButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/background_round_shadow"
                 android:gravity="center"
                 android:padding="15dp"
@@ -165,13 +184,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/nextButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fundingPriceTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/fundingProgressLayout" />
 
             <TextView
                 android:id="@+id/nextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/background_round_shadow"
                 android:clickable="true"
                 android:gravity="center"
@@ -183,7 +202,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/previousButton"
-                app:layout_constraintTop_toBottomOf="@+id/fundingPriceTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/fundingProgressLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
