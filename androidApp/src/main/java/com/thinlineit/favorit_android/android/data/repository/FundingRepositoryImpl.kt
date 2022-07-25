@@ -3,9 +3,11 @@ package com.thinlineit.favorit_android.android.data.repository
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.api.FundingApi
 import com.thinlineit.favorit_android.android.data.entity.Account
-import com.thinlineit.favorit_android.android.data.entity.AccountRequest
 import com.thinlineit.favorit_android.android.data.entity.Bank
+import com.thinlineit.favorit_android.android.data.entity.CheckBankAccountRequest
+import com.thinlineit.favorit_android.android.data.entity.CreateFundingRequest
 import com.thinlineit.favorit_android.android.data.entity.Funding
+import com.thinlineit.favorit_android.android.data.entity.SettleFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResult
 import javax.inject.Inject
 
@@ -50,7 +52,7 @@ class FundingRepositoryImpl @Inject constructor(
         bankCode: String,
         bankAccount: String
     ): Result<Account> {
-        val response = fundingApi.checkBankAccount(AccountRequest(bankCode, bankAccount))
+        val response = fundingApi.checkBankAccount(CheckBankAccountRequest(bankCode, bankAccount))
         val body = response.body()
         return if (response.isSuccessful && body != null) {
             Result.Success(body.data)
@@ -59,4 +61,13 @@ class FundingRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun settleFunding(settleFundingRequest: SettleFundingRequest): Result<Unit> {
+        val response = fundingApi.settleFunding(settleFundingRequest)
+        val body = response.body()
+        return if (response.isSuccessful && body != null) {
+            Result.Success(body.data)
+        } else {
+            throw Exception(response.message())
+        }
+    }
 }

@@ -16,8 +16,10 @@ class SettleFundingViewModel @Inject constructor(
     private val fundingRepository: FundingRepository,
     state: SavedStateHandle
 ) : ViewModel() {
+    val fundingId: Int =
+        state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")
     val fundingName: String =
-        state.get<String>(FUNDING_NAME) ?: throw Exception("Funding id is invalid")
+        state.get<String>(FUNDING_NAME) ?: throw Exception("Funding name is invalid")
     val selectedBankValue = MutableLiveData("")
     val selectedBankText = MutableLiveData("")
     val bankAccount = MutableLiveData("")
@@ -41,6 +43,8 @@ class SettleFundingViewModel @Inject constructor(
             else -> InputState.AVAILABLE
         }
     }
+
+    val settleFundingResult = MutableLiveData<Result<Unit>>()
 
     fun loadBankList() {
         viewModelScope.launch {
@@ -66,6 +70,29 @@ class SettleFundingViewModel @Inject constructor(
         }
     }
 
+    fun settleFunding() {
+        viewModelScope.launch {
+            settleFundingResult.postValue(Result.Loading(true))
+            val settleFundingRequest = getSettleFunding() ?: run {
+                settleFundingResult.postValue(Result.Fail(Exception("Some value is null")))
+                return@launch
+            }
+            val result = fundingRepository.settleFunding(settleFundingRequest)
+            settleFundingResult.postValue(result)
+        }
+    }
+
+    private fun getSettleFunding(): SettleFundingRequest? {
+        val bankCode = selectedBankValue.value ?: return null
+        val fullName = accountOwnerName.value ?: return null
+        val bankAccount = bankAccount.value ?: return null
+        return SettleFundingRequest(
+            fundingId,
+            bankCode,
+            fullName,
+            bankAccount
+        )
+    }
 
     sealed class InputState {
         object EMPTY : InputState()
@@ -77,6 +104,5 @@ class SettleFundingViewModel @Inject constructor(
         } else {
             View.GONE
         }
-
     }
 }

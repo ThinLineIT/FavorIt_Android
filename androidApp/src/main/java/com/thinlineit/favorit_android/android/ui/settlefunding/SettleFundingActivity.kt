@@ -15,10 +15,12 @@ class SettleFundingActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val FUNDING_NAME = "funding"
+        const val FUNDING_ID = "fundingId"
+        const val FUNDING_NAME = "fundingName"
 
-        fun start(context: Context, fundingName: String) {
+        fun start(context: Context, fundingId: Int, fundingName: String) {
             val intent = Intent(context, SettleFundingActivity::class.java).apply {
+                putExtra(FUNDING_ID, fundingId)
                 putExtra(FUNDING_NAME, fundingName)
             }
             context.startActivity(intent)
