@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
