@@ -25,15 +25,12 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.scrollView.setOnTouchListener { v, event -> true }
-
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (!isStartedAnim) {
             val left = binding.imageBack.left
-            val right = binding.imageBack.right
-            val width = binding.scrollView.width
             isStartedAnim = true
 
             binding.scrollView.scrollTo(left, 0)
@@ -53,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    fun moveCenter() {
+    private fun moveCenter() {
         val left = binding.imageBack.left
         val right = binding.imageBack.right
         val width = binding.scrollView.width
@@ -64,7 +61,7 @@ class SplashActivity : AppCompatActivity() {
         ani.start()
     }
 
-    fun moveRight() {
+    private fun moveRight() {
         val right = binding.imageBack.right
         val ani = ObjectAnimator
             .ofInt(binding.scrollView, "scrollX", (right))

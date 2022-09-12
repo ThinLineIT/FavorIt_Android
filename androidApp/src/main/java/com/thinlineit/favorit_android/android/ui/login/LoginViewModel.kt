@@ -9,8 +9,8 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.thinlineit.favorit_android.android.data.repository.AuthRepository
 import com.thinlineit.favorit_android.android.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
