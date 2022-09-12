@@ -9,8 +9,8 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.thinlineit.favorit_android.android.data.repository.AuthRepository
 import com.thinlineit.favorit_android.android.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -20,6 +20,10 @@ class LoginViewModel @Inject constructor(
     private val _isLoginSuccess = MutableLiveData<Event<Boolean>>()
     val isLoginSuccess: LiveData<Event<Boolean>>
         get() = _isLoginSuccess
+
+    private val _isLoggedIn = MutableLiveData<Boolean>()
+    val isLoggedIn: LiveData<Boolean>
+        get() = _isLoggedIn
 
     val kakaoLoginCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (token != null) {
@@ -47,5 +51,12 @@ class LoginViewModel @Inject constructor(
 
     private fun initLoginState(isSuccess: Boolean) {
         _isLoginSuccess.value = Event(isSuccess)
+    }
+
+    fun checkIsLoggedIn() {
+        viewModelScope.launch {
+            val isValidToken = !authRepository.refreshToken().isNullOrEmpty()
+            _isLoggedIn.value = isValidToken
+        }
     }
 }
