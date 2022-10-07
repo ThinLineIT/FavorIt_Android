@@ -4,7 +4,8 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.ActivitySplashBinding
@@ -37,11 +38,11 @@ class SplashActivity : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.Main).launch {
                 launch {
-                    delay(2000)
+                    delay(1200)
                     moveRight()
-                    delay(500)
+                    delay(1000)
                     moveCenter()
-                    delay(2000)
+                    delay(1600)
                     MainActivity.start(this@SplashActivity)
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout)
                     finish()
@@ -57,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
         val ani = ObjectAnimator
             .ofInt(binding.scrollView, "scrollX", (right + left - width) / 2)
             .setDuration(500)
-        ani.interpolator = AccelerateDecelerateInterpolator()
+        ani.interpolator = AccelerateInterpolator(1.0f)
         ani.start()
     }
 
@@ -65,8 +66,8 @@ class SplashActivity : AppCompatActivity() {
         val right = binding.imageBack.right
         val ani = ObjectAnimator
             .ofInt(binding.scrollView, "scrollX", (right))
-            .setDuration(1000)
-        ani.interpolator = AccelerateDecelerateInterpolator()
+            .setDuration(800)
+        ani.interpolator = DecelerateInterpolator(0.5f)
         ani.start()
     }
 
