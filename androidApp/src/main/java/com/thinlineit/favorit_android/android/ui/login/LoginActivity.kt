@@ -86,15 +86,20 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initIsLoggedInObserver() {
         viewModel.isLoggedIn.observe(this) {
-            if (it) {
-                startSplash()
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(500)
+                if (it) {
+                    startSplash()
+                } else {
+                    binding.kakaoLoginButton.visibility = View.VISIBLE
+                }
             }
         }
     }
 
     private fun startSplash() {
-        binding.root.setBackgroundResource(R.drawable.background_door)
         binding.kakaoLoginButton.visibility = View.GONE
+        binding.root.setBackgroundResource(R.drawable.background_door)
         CoroutineScope(Dispatchers.Main).launch {
             delay(1000)
             SplashActivity.start(this@LoginActivity)
