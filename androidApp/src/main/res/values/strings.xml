@@ -87,5 +87,6 @@
     <string name="button_get_settlement">정산 받기</string>
     <string name="button_go_new_funding">새로운 펀딩 만들기</string>
     <string name="label_settlement_is_over">정산 완료되었습니다! \n 좋은 선물 사세요 :)</string>
+    <string name="title_activity_funding_list">FundingListActivity</string>
 
 </resources>

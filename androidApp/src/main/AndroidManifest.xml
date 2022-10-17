@@ -11,6 +11,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.fundingList.FundingListActivity"
+            android:exported="false"
+            android:label="@string/title_activity_funding_list"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".ui.settlefunding.SettleFundingActivity"
             android:exported="false" />
         <activity
@@ -26,7 +31,6 @@
         <activity
             android:name=".ui.detail.FundingDetailActivity"
             android:exported="true">
-
             <intent-filter
                 android:autoVerify="true"
                 android:label="filterViewFundingDetail">
