@@ -5,6 +5,7 @@ import com.thinlineit.favorit_android.android.data.entity.Bank
 import com.thinlineit.favorit_android.android.data.entity.CheckBankAccountRequest
 import com.thinlineit.favorit_android.android.data.entity.CreateFundingRequest
 import com.thinlineit.favorit_android.android.data.entity.Funding
+import com.thinlineit.favorit_android.android.data.entity.FundingLists
 import com.thinlineit.favorit_android.android.data.entity.PresentRequest
 import com.thinlineit.favorit_android.android.data.entity.PresentResult
 import com.thinlineit.favorit_android.android.data.entity.ResponseBody
@@ -26,6 +27,9 @@ interface FundingApi {
     suspend fun getFunding(
         @Path("funding_id") fundingId: Int
     ): Response<ResponseBody<Funding>>
+
+    @GET("fundings")
+    suspend fun getFundingList(): Response<ResponseBody<FundingLists>>
 
     @POST("funding/{funding_id}/close")
     suspend fun closeFunding(

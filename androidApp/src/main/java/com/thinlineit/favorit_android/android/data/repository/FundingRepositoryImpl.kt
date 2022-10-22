@@ -7,6 +7,7 @@ import com.thinlineit.favorit_android.android.data.entity.Bank
 import com.thinlineit.favorit_android.android.data.entity.CheckBankAccountRequest
 import com.thinlineit.favorit_android.android.data.entity.CreateFundingRequest
 import com.thinlineit.favorit_android.android.data.entity.Funding
+import com.thinlineit.favorit_android.android.data.entity.FundingLists
 import com.thinlineit.favorit_android.android.data.entity.SettleFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResult
 import javax.inject.Inject
@@ -63,6 +64,16 @@ class FundingRepositoryImpl @Inject constructor(
 
     override suspend fun settleFunding(settleFundingRequest: SettleFundingRequest): Result<Unit> {
         val response = fundingApi.settleFunding(settleFundingRequest)
+        val body = response.body()
+        return if (response.isSuccessful && body != null) {
+            Result.Success(body.data)
+        } else {
+            throw Exception(response.message())
+        }
+    }
+
+    override suspend fun getFundingList(): Result<FundingLists> {
+        val response = fundingApi.getFundingList()
         val body = response.body()
         return if (response.isSuccessful && body != null) {
             Result.Success(body.data)
