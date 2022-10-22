@@ -7,13 +7,13 @@ data class FundingInfo(
     val fundingID: Int,
     @SerializedName("name")
     val name: String,
-    @SerializedName("due_data")
+    @SerializedName("due_date")
     val dueDate: String,
     @SerializedName("image")
     val image: String
 )
 
-data class FundingList(
+data class FundingLists(
     @SerializedName("my_fundings")
     val myFundings: List<FundingInfo>,
     @SerializedName("friends_fundings")

@@ -81,7 +81,7 @@ dependencies {
     // viewModel & livedata
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$LIFECYCLE_VERSION")
-
+    implementation("androidx.compose.runtime:runtime-livedata:${rootProject.extra["compose_version"]}")
     // ktx
     implementation("androidx.activity:activity-ktx:1.4.0")
 
