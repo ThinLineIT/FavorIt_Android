@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:src="@drawable/ic_icon_polaroid"
+            android:scaleType="fitXY"
+            android:src="@drawable/pictures"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:src="@drawable/icon_box"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/box"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cameraButton" />
@@ -47,8 +49,8 @@
             android:id="@+id/createFundingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/icon_note"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/note"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goToFundingDetailButton" />
 
@@ -56,17 +58,29 @@
             android:id="@+id/cameraButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_camera"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/camera"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goToFundingDetailButton" />
 
         <ImageView
-            android:id="@+id/pencilButton"
+            android:id="@+id/pencil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/icon_pencil"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/boxButton" />
+
+        <ImageView
+            android:id="@+id/ribbon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ribbon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/boxButton" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
