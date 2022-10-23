@@ -34,16 +34,14 @@ class SplashActivity : AppCompatActivity() {
             binding.scrollView.scrollTo(left, 0)
 
             CoroutineScope(Dispatchers.Main).launch {
-                launch {
-                    delay(1200)
-                    moveRight()
-                    delay(1000)
-                    moveCenter()
-                    delay(1600)
-                    MainActivity.start(this@SplashActivity)
-                    overridePendingTransition(R.anim.fadein, R.anim.fadeout)
-                    finish()
-                }
+                delay(1200)
+                moveRight()
+                delay(1000)
+                moveCenter()
+                delay(1600)
+                MainActivity.start(this@SplashActivity)
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+                finish()
             }
         }
     }
