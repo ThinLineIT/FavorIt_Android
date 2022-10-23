@@ -105,7 +105,7 @@ fun ExitButton() {
             Spacer(modifier = Modifier.width(16.dp))
             Image(painter = painterResource(id = R.drawable.icon_exit),
                 contentDescription = "",
-                modifier = Modifier.clickable {
+                modifier = Modifier.size(32.dp).clickable {
                     activity?.finish()
                 })
         }
@@ -120,7 +120,8 @@ fun MyFundingList(fundingList: List<FundingInfo>?) {
         Box(modifier = Modifier.rotate(3f)) {
             Image(
                 painter = painterResource(id = R.drawable.icon_my_funding),
-                contentDescription = ""
+                contentDescription = "",
+                modifier = Modifier.width(216.dp).height(57.dp)
             )
             Row(modifier = Modifier.align(Alignment.CenterStart)) {
                 Spacer(modifier = Modifier.width(20.dp))
@@ -165,7 +166,8 @@ fun FriendFundingList(fundingList: List<FundingInfo>?) {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_friend_funding),
-                contentDescription = ""
+                contentDescription = "",
+                modifier = Modifier.width(219.dp).height(58.dp)
             )
             Row(modifier = Modifier.align(Alignment.CenterStart)) {
                 Spacer(modifier = Modifier.width(40.dp))
@@ -208,7 +210,8 @@ fun FundingItem(funding: FundingInfo, modifier: Modifier) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.icon_funding_item),
-            contentDescription = ""
+            contentDescription = "",
+            modifier = Modifier.width(168.dp).height(242.dp)
         )
         Column(
             modifier = Modifier
@@ -228,12 +231,12 @@ fun FundingItem(funding: FundingInfo, modifier: Modifier) {
                 Image(
                     painter = painterResource(id = R.drawable.icon_green_tape),
                     contentDescription = "",
-                    modifier = Modifier.align(Alignment.TopEnd)
+                    modifier = Modifier.width(43.dp).height(39.dp).align(Alignment.TopEnd)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.icon_green_tape),
                     contentDescription = "",
-                    modifier = Modifier.align(Alignment.BottomStart)
+                    modifier = Modifier.width(43.dp).height(39.dp).align(Alignment.BottomStart)
                 )
                 Text(text = funding.name, modifier = Modifier.align(Alignment.BottomCenter))
             }
@@ -248,7 +251,7 @@ fun CreateFunding() {
     Image(
         painter = painterResource(id = R.drawable.icon_create_funding),
         contentDescription = "",
-        modifier = Modifier.clickable {
+        modifier = Modifier.width(173.dp).height(242.dp).clickable {
             CreateFundingActivity.start(mContext)
         })
 }
