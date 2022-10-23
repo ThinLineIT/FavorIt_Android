@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import com.skydoves.landscapist.glide.GlideImage
+import com.thinlineit.favorit_android.android.ui.fundingList.ui.theme.FundingListBackgroundColor
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.FundingInfo
@@ -83,7 +84,7 @@ fun Main(viewModel: FundingListViewModel) {
     val friendFundingList by viewModel.friendFundingList.observeAsState(emptyList())
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = com.thinlineit.favorit_android.android.ui.fundingList.ui.theme.FundingListBackgroundColor
+        color = FundingListBackgroundColor
     ) {
         Column {
             ExitButton()
@@ -142,7 +143,7 @@ fun MyFundingList(fundingList: List<FundingInfo>?) {
                     if (index % 2 == 0)
                         FundingItem(funding = item, modifier = Modifier.rotate(10f))
                     else
-                        FundingItem(funding = item, modifier = Modifier.rotate(350f))
+                        FundingItem(funding = item, modifier = Modifier.rotate(-10f))
                     if (index == fundingList.lastIndex) {
                         Spacer(modifier = Modifier.width(30.dp))
                         CreateFunding()
@@ -186,7 +187,7 @@ fun FriendFundingList(fundingList: List<FundingInfo>?) {
                     if (index % 2 == 0)
                         FundingItem(funding = item, modifier = Modifier.rotate(10f))
                     else
-                        FundingItem(funding = item, modifier = Modifier.rotate(350f))
+                        FundingItem(funding = item, modifier = Modifier.rotate(-10f))
                     Spacer(modifier = Modifier.width(20.dp))
                 }
             }

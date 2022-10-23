@@ -78,7 +78,7 @@ class FundingRepositoryImpl @Inject constructor(
         return if (response.isSuccessful && body != null) {
             Result.Success(body.data)
         } else {
-            throw Exception(response.message())
+            Result.Fail(Exception(response.message()))
         }
     }
 }
