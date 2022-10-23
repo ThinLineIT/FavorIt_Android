@@ -29,12 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import com.skydoves.landscapist.glide.GlideImage
-import com.thinlineit.favorit_android.android.ui.fundingList.ui.theme.FundingListBackgroundColor
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.FundingInfo
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
+import com.thinlineit.favorit_android.android.ui.fundingList.ui.theme.FundingListBackgroundColor
 import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
