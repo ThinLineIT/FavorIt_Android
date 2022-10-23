@@ -11,10 +11,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+<<<<<<< HEAD
             android:name=".ui.fundingList.FundingListActivity"
             android:exported="false"
             android:label="@string/title_activity_funding_list"
             android:theme="@style/AppTheme" />
+=======
+            android:name=".ui.splash.SplashActivity"
+            android:exported="false" />
+>>>>>>> main
         <activity
             android:name=".ui.settlefunding.SettleFundingActivity"
             android:exported="false" />
@@ -47,9 +52,6 @@
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,6 +59,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true"
