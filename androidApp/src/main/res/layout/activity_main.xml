@@ -13,69 +13,73 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/loginButtonBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/background_landing" />
+
+        <ImageView
+            android:id="@+id/goToFundingListButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:src="@drawable/icon_login_background"
+            android:layout_marginBottom="40dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_pictures"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/loginButton"
+            android:id="@+id/boxButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_login"
-            app:layout_constraintBottom_toBottomOf="@id/loginButtonBackground"
-            app:layout_constraintEnd_toEndOf="@id/loginButtonBackground"
-            app:layout_constraintStart_toStartOf="@id/loginButtonBackground"
-            app:layout_constraintTop_toTopOf="@id/loginButtonBackground" />
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/icon_box"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cameraButton" />
 
         <ImageView
-            android:id="@+id/profileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_login_profile"
-            app:layout_constraintBottom_toBottomOf="@id/loginButtonBackground"
-            app:layout_constraintEnd_toEndOf="@id/loginButtonBackground"
-            app:layout_constraintStart_toStartOf="@id/loginButtonBackground"
-            app:layout_constraintTop_toTopOf="@id/loginButtonBackground" />
-
-        <Button
-            android:id="@+id/goToFundingDetailButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="펀딩 상세 임시 버튼"
-            app:layout_constraintBottom_toTopOf="@+id/mainLogo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/mainLogo"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/icon_main_logo"
-            app:layout_constraintBottom_toTopOf="@id/createFundingButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
             android:id="@+id/createFundingButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/icon_round_button_create_funding"
-            android:text="@string/button_create_funding"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/icon_note"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/goToFundingListButton" />
+
+        <ImageView
+            android:id="@+id/cameraButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/icon_camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goToFundingListButton" />
+
+        <ImageView
+            android:id="@+id/pencil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/icon_pencil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/boxButton" />
+
+        <ImageView
+            android:id="@+id/ribbon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/icon_ribbon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/boxButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

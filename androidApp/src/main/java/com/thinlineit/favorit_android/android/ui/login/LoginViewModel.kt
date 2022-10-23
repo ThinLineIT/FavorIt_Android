@@ -21,6 +21,10 @@ class LoginViewModel @Inject constructor(
     val isLoginSuccess: LiveData<Event<Boolean>>
         get() = _isLoginSuccess
 
+    private val _isLoggedIn = MutableLiveData<Boolean>()
+    val isLoggedIn: LiveData<Boolean>
+        get() = _isLoggedIn
+
     val kakaoLoginCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (token != null) {
             Log.d("kakaoLogin", "카카오계정 로그인 성공")
@@ -47,5 +51,12 @@ class LoginViewModel @Inject constructor(
 
     private fun initLoginState(isSuccess: Boolean) {
         _isLoginSuccess.value = Event(isSuccess)
+    }
+
+    fun checkIsLoggedIn() {
+        viewModelScope.launch {
+            val isValidToken = !authRepository.refreshToken().isNullOrEmpty()
+            _isLoggedIn.value = isValidToken
+        }
     }
 }
