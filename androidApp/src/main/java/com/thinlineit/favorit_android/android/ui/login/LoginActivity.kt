@@ -12,6 +12,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.ActivityLoginBinding
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.ui.splash.SplashActivity
 import com.thinlineit.favorit_android.android.util.observeIfNotHandled
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,21 @@ class LoginActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
     lateinit var viewModel: LoginViewModel
+    val fundingId: Int by lazy {
+        parseFundingId(intent)
+    }
+
+    private fun parseFundingId(intent: Intent): Int {
+        return if (intent.action == Intent.ACTION_VIEW) {
+            try {
+                intent.data?.lastPathSegment?.toInt() ?: FundingDetailActivity.INVALID_FUNDING_ID
+            } catch (e: Exception) {
+                FundingDetailActivity.INVALID_FUNDING_ID
+            }
+        } else {
+            FundingDetailActivity.INVALID_FUNDING_ID
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
         binding.root.setBackgroundResource(R.drawable.background_door)
         CoroutineScope(Dispatchers.Main).launch {
             delay(1000)
-            SplashActivity.start(this@LoginActivity)
+            SplashActivity.start(this@LoginActivity, fundingId)
             overridePendingTransition(R.anim.fadein, R.anim.fadeout)
             finish()
         }

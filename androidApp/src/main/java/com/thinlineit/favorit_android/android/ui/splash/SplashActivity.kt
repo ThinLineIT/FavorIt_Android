@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.ActivitySplashBinding
 import com.thinlineit.favorit_android.android.ui.MainActivity
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity.Companion.FUNDING_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -18,6 +20,9 @@ import kotlinx.coroutines.launch
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private var isStartedAnim = false
+    val fundingId: Int by lazy {
+        intent.getIntExtra(FUNDING_ID, FundingDetailActivity.INVALID_FUNDING_ID)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
                 delay(1000)
                 moveCenter()
                 delay(1600)
-                MainActivity.start(this@SplashActivity)
+                MainActivity.start(this@SplashActivity, fundingId)
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout)
                 finish()
             }
@@ -67,8 +72,10 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, SplashActivity::class.java)
+        fun start(context: Context, fundingId: Int) {
+            val intent = Intent(context, SplashActivity::class.java).apply {
+                putExtra(FUNDING_ID, fundingId)
+            }
             context.startActivity(intent)
         }
     }

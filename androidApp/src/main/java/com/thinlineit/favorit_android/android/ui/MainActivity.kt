@@ -18,10 +18,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val fundingId = intent.getIntExtra(
+            FundingDetailActivity.FUNDING_ID,
+            FundingDetailActivity.INVALID_FUNDING_ID
+        )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.lifecycleOwner = this@MainActivity
         initButtonClickListener()
+        goFundingDetailIfValid(fundingId)
+    }
+
+    private fun goFundingDetailIfValid(fundingId: Int) {
+        if (fundingId != FundingDetailActivity.INVALID_FUNDING_ID) {
+            FundingDetailActivity.start(this, fundingId)
+        }
     }
 
     private fun initButtonClickListener() {
@@ -45,8 +56,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, MainActivity::class.java)
+        fun start(context: Context, fundingId: Int) {
+            val intent = Intent(context, MainActivity::class.java).apply {
+                putExtra(FundingDetailActivity.FUNDING_ID, fundingId)
+            }
             context.startActivity(intent)
         }
     }
