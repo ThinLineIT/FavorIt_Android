@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     id("com.android.application")
@@ -9,12 +10,12 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         manifestPlaceholders += mapOf()
         applicationId = "com.thinlineit.favorit_android.android"
         minSdk = 26
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
         buildConfigField("String", "KAKAO_API_KEY", "\"${getApiKey("KAKAO_API_KEY")}\"")
@@ -67,12 +68,13 @@ dependencies {
     val LIFECYCLE_VERSION = "2.5.0-rc01"
     val RETROFIT_VERSION = "2.9.0"
     val OKHTTP_VERSION = "4.9.1"
-    val GLIDE_VERSION = "4.13.0"
+    val GLIDE_VERSION = "4.14.1"
     val HILT_VERSION = "2.42"
 
     implementation(project(":shared"))
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.activity:activity:1.6.0-rc01")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
 
     // kakao login
@@ -82,6 +84,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$LIFECYCLE_VERSION")
     implementation("androidx.compose.runtime:runtime-livedata:${rootProject.extra["compose_version"]}")
+    kapt("androidx.lifecycle:lifecycle-compiler:$LIFECYCLE_VERSION")
+
     // ktx
     implementation("androidx.activity:activity-ktx:1.4.0")
 
@@ -105,6 +109,8 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:$GLIDE_VERSION")
     implementation("com.github.skydoves:landscapist-glide:1.4.7")
     implementation("com.github.skydoves:landscapist-coil:1.4.7")
+    implementation( "com.github.bumptech.glide:okhttp3-integration:$GLIDE_VERSION")
+    kapt("com.github.bumptech.glide:compiler:$GLIDE_VERSION")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:$HILT_VERSION")

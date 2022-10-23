@@ -1,6 +1,12 @@
 package com.thinlineit.favorit_android.android.ui.present
 
+import android.app.Application
+import android.content.ContentResolver
+import android.content.Context
+import android.net.Uri
 import android.view.View
+import androidx.core.content.ContentResolverCompat
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -12,56 +18,87 @@ import com.thinlineit.favorit_android.android.data.entity.PresentRequest
 import com.thinlineit.favorit_android.android.data.entity.PresentResult
 import com.thinlineit.favorit_android.android.ui.present.usecase.PresentUseCase
 import com.thinlineit.favorit_android.android.util.NumberFormatter
+import com.thinlineit.favorit_android.android.util.fileFromContentUri
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import javax.inject.Inject
 
 @HiltViewModel
 class PresentViewModel @Inject constructor(
     private val presentUseCase: PresentUseCase,
-    state: SavedStateHandle
+    state: SavedStateHandle,
 ) : ViewModel() {
 
     val toastMessage: MutableLiveData<String> = MutableLiveData("")
 
     val fundingId: Int = state.get<Int>(PresentActivity.FUNDING_ID)
         ?: throw Exception("Funding id is invalid")
-
-    val fundingTitle: String = state.get<String>(PresentActivity.FUNDING_TITLE)
-        ?: throw Exception("Funding title is invalid")
-
-    val presentPrice = MutableLiveData(0)
-
-    val presentPriceAsCurrency: LiveData<String> = Transformations.map(presentPrice) {
+    val presentPhoto = MutableLiveData<Uri>(null)
+    val makerNickName = MutableLiveData("")
+    val presentMessage = MutableLiveData("")
+    val supporterNickName = MutableLiveData("")
+    val presentAmount = MutableLiveData(0)
+    val presentAmountAsCurrency: LiveData<String> = Transformations.map(presentAmount) {
         if (it == 0) ""
         else NumberFormatter.asCurrency(it.toLong())
     }
-
-    val presentPriceAsNumerals: LiveData<String> = Transformations.map(presentPrice) {
+    val presentPriceAsNumerals: LiveData<String> = Transformations.map(presentAmount) {
         NumberFormatter.asNumerals(it.toLong())
     }
 
-    val presentPriceState: LiveData<InputState> =
-        Transformations.map(presentPrice) {
-            when {
-                it == 0 -> InputState.EMPTY
-                it > 0 -> InputState.AVAILABLE
-                else -> InputState.UNAVAILABLE
-            }
+    val isPhotoSelected: LiveData<Int> = Transformations.map(presentPhoto) {
+        return@map if (it == null) View.VISIBLE else View.GONE
+    }
+
+    val makerNickNameState: LiveData<InputState> = Transformations.map(makerNickName) {
+        when {
+            it.isEmpty() -> InputState.EMPTY
+            it.length < 10 -> InputState.AVAILABLE
+            else -> InputState.UNAVAILABLE
         }
+    }
+    val presentMessageState: LiveData<InputState> = Transformations.map(presentMessage) {
+        when {
+            it.isEmpty() -> InputState.EMPTY
+            it.length < 100 -> InputState.AVAILABLE
+            else -> InputState.UNAVAILABLE
+        }
+    }
+    val supporterNickNameState: LiveData<InputState> = Transformations.map(supporterNickName) {
+        when {
+            it.isEmpty() -> InputState.EMPTY
+            it.length < 10 -> InputState.AVAILABLE
+            else -> InputState.UNAVAILABLE
+        }
+    }
+
+    val presentAmountState: LiveData<InputState> = Transformations.map(presentAmount) {
+        when {
+            it == 0 -> InputState.EMPTY
+            it > 0 -> InputState.AVAILABLE
+            else -> InputState.UNAVAILABLE
+        }
+    }
 
     val presentResult = MutableLiveData<Result<PresentResult>>(Result.Loading(false))
 
-    val presentPriceOnNumberClickListener = PresentPriceOnNumberClickListener(
-        presentPrice,
+    val presentAmountOnNumberClickListener = PresentPriceOnNumberClickListener(
+        presentAmount,
         toastMessage
     )
 
-    fun presentFunding() {
+    fun onImageSelected(uri: Uri?) {
+        if (uri != null) {
+            presentPhoto.postValue(uri)
+        }
+    }
+
+    fun presentFunding(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             presentResult.postValue(Result.Loading(true))
-            val presentRequest = getPresentRequest() ?: run {
+            val presentRequest = getPresentRequest(context) ?: run {
                 presentResult.postValue(Result.Fail(Exception("presentPrice value is null")))
                 return@launch
             }
@@ -70,10 +107,13 @@ class PresentViewModel @Inject constructor(
         }
     }
 
-    private fun getPresentRequest(): PresentRequest? {
-        val presentPrice = presentPrice.value?.toInt() ?: return null
+    private fun getPresentRequest(context: Context): PresentRequest? {
         return PresentRequest(
-            presentPrice
+            makerNickName.value ?: return null,
+            supporterNickName.value ?: return null,
+            presentMessage.value ?: return null,
+            presentAmount.value ?: return null,
+            fileFromContentUri(context, presentPhoto.value?: return null)
         )
     }
 
