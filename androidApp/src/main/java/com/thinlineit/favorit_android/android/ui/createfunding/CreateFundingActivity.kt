@@ -3,16 +3,167 @@ package com.thinlineit.favorit_android.android.ui.createfunding
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.MimeTypeFilter
+import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.R
+import com.thinlineit.favorit_android.android.data.Result
+import com.thinlineit.favorit_android.android.databinding.ActivityCreateFundingBinding
+import com.thinlineit.favorit_android.android.ui.MainActivity
+import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarView
+import com.thinlineit.favorit_android.android.ui.customview.numberkeypad.NumberKeyPadView
+import com.thinlineit.favorit_android.android.util.Uri.getName
+import com.thinlineit.favorit_android.android.util.checkPermission
+import com.thinlineit.favorit_android.android.util.copyUri
+import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateFundingActivity : AppCompatActivity() {
+    var imm: InputMethodManager? = null
+    private val binding: ActivityCreateFundingBinding by lazy {
+        ActivityCreateFundingBinding.inflate(layoutInflater)
+    }
+    val viewModel: CreateFundingViewModel by lazy {
+        ViewModelProvider(this)[CreateFundingViewModel::class.java]
+    }
+
+    private val calendarOnBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            if (binding.calendarDatePicker.visibility == View.VISIBLE) {
+                isEnabled = false
+                binding.calendarDatePicker.visibility = View.GONE
+            }
+        }
+    }
+
+
+    private val numberKeyPadOnBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            if (binding.numberKeyPad.visibility == View.VISIBLE) {
+                isEnabled = false
+                binding.numberKeyPad.visibility = View.GONE
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_funding)
+        setContentView(binding.root)
         checkPermission(this)
+        onBackPressedDispatcher.addCallback(calendarOnBackPressedCallback)
+        onBackPressedDispatcher.addCallback(numberKeyPadOnBackPressedCallback)
+        imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        binding.apply {
+            lifecycleOwner = this@CreateFundingActivity
+            viewModel = this@CreateFundingActivity.viewModel
+            initCalendarDatePicker(binding.calendarDatePicker)
+            initNumberKeyPadView(binding.numberKeyPad)
+            initObserver()
+            initView()
+        }.also {
+            it.fundingDate.setOnClickListener {
+                numberKeypadVisible(false)
+                datePickerVisible(true)
+            }
+
+            it.fundingName.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    datePickerVisible(false)
+                    numberKeypadVisible(false)
+                }
+            }
+
+            it.content.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    datePickerVisible(false)
+                    numberKeypadVisible(false)
+                }
+            }
+
+            it.linkText.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    datePickerVisible(false)
+                    numberKeypadVisible(false)
+                }
+            }
+
+            it.price.setOnClickListener {
+                numberKeypadVisible(true)
+                datePickerVisible(false)
+            }
+
+            it.addImageButton.setOnClickListener {
+                attachImage()
+            }
+
+            it.createButton.setOnClickListener {
+                CreateFundingClickListener(
+                    this,
+                    this@CreateFundingActivity.viewModel
+                ).onCreateTopic()
+            }
+
+            it.goToBackButton.setOnClickListener {
+                MainActivity.start(this)
+            }
+        }
+    }
+
+    private fun initView() {
+        binding.root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            binding.scrollView.scrollTo(0, binding.scrollView.bottom)
+        }
+    }
+
+    private fun initNumberKeyPadView(numberKeyPad: NumberKeyPadView) {
+        numberKeyPad.init(viewModel.fundingPriceOnNumberClickListener)
+    }
+
+    private fun initCalendarDatePicker(calendarDatePicker: CalendarView) {
+        calendarDatePicker.setEndDate(viewModel.fundingExpiredDate.value)
+        calendarDatePicker.onEndDateUpdated = {
+            viewModel.onEndDateSelected(it)
+        }
+    }
+
+    private fun datePickerVisible(value: Boolean) {
+        if (value) {
+            imm?.hideSoftInputFromWindow(binding.fundingName.windowToken, 0)
+            imm?.hideSoftInputFromWindow(binding.content.windowToken, 0)
+            imm?.hideSoftInputFromWindow(binding.linkText.windowToken, 0)
+            binding.fundingName.clearFocus()
+            binding.content.clearFocus()
+            binding.linkText.clearFocus()
+            binding.calendarDatePicker.visibility = View.VISIBLE
+            calendarOnBackPressedCallback.isEnabled = true
+        } else {
+            binding.calendarDatePicker.visibility = View.GONE
+        }
+    }
+
+    private fun numberKeypadVisible(value: Boolean) {
+        if (value) {
+            imm?.hideSoftInputFromWindow(binding.fundingName.windowToken, 0)
+            imm?.hideSoftInputFromWindow(binding.content.windowToken, 0)
+            imm?.hideSoftInputFromWindow(binding.linkText.windowToken, 0)
+            binding.fundingName.clearFocus()
+            binding.content.clearFocus()
+            binding.linkText.clearFocus()
+            binding.numberKeyPad.visibility = View.VISIBLE
+            numberKeyPadOnBackPressedCallback.isEnabled = true
+        } else {
+            binding.numberKeyPad.visibility = View.GONE
+        }
+    }
+
     private fun attachImage() {
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = MediaStore.Images.Media.CONTENT_TYPE
