@@ -5,6 +5,7 @@ import android.view.View
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.FragmentFinishSettleFundingBinding
 import com.thinlineit.favorit_android.android.ui.MainActivity
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 
 class FinishSettleFundingFragment :
     SettleFundingBaseFragment<FragmentFinishSettleFundingBinding>(R.layout.fragment_finish_settle_funding) {
@@ -19,7 +20,7 @@ class FinishSettleFundingFragment :
 
     private fun initView() {
         binding.goToMain.setOnClickListener {
-            MainActivity.start(requireActivity())
+            MainActivity.start(requireActivity(), FundingDetailActivity.INVALID_FUNDING_ID)
         }
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.ui.fundingList.FundingListActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,10 +16,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val fundingId = intent.getIntExtra(
+            FundingDetailActivity.FUNDING_ID,
+            FundingDetailActivity.INVALID_FUNDING_ID
+        )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.lifecycleOwner = this@MainActivity
         initButtonClickListener()
+        goFundingDetailIfValid(fundingId)
+    }
+
+    private fun goFundingDetailIfValid(fundingId: Int) {
+        if (fundingId != FundingDetailActivity.INVALID_FUNDING_ID) {
+            FundingDetailActivity.start(this, fundingId)
+        }
     }
 
     private fun initButtonClickListener() {
@@ -33,8 +45,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, MainActivity::class.java)
+        fun start(context: Context, fundingId: Int) {
+            val intent = Intent(context, MainActivity::class.java).apply {
+                putExtra(FundingDetailActivity.FUNDING_ID, fundingId)
+            }
             context.startActivity(intent)
         }
     }
