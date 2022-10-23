@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.ui.fundingList.FundingListActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity() {
             }
             goToFundingListButton.setOnClickListener {
                 FundingListActivity.start(this@MainActivity)
+            }
+            goToFundingDetailButton.setOnClickListener {
+                FundingDetailActivity.start(this@MainActivity, 3)
             }
         }
     }
