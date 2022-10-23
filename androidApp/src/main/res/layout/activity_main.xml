@@ -80,6 +80,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <Button
+                android:id="@+id/goToPresentButton"
+                android:text="go to present"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
                 android:id="@+id/goToFundingDetailButton"
                 android:text="go to funding detail"
                 android:layout_width="wrap_content"

@@ -3,6 +3,7 @@
     package="com.thinlineit.favorit_android.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".FavoritApplication"
@@ -23,7 +24,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.present.PresentActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.createfunding.CreateFundingActivity"
             android:exported="false"

@@ -1,34 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginStart="15dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/logo"
-        app:layout_constraintBaseline_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/navFragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <data>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navFragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/logo"
-        app:navGraph="@navigation/present_nav_graph"
-        tools:layout="@layout/fragment_enter_present_price" />
+        <variable
+            name="viewModel"
+            type="com.thinlineit.favorit_android.android.ui.present.PresentViewModel" />
+    </data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/presentRootScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/background"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@id/numberKeyPad"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/polaroidFrame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/background_round_white"
+                    android:padding="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/presentButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed">
+
+                    <ImageButton
+                        android:id="@+id/backButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="#00000000"
+                        android:src="@drawable/ic_arrow_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/photoImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/background_round_sky_blue"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toTopOf="@id/makerNickNameTitle"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/backButton" />
+
+                    <ImageView
+                        android:id="@+id/photoAddButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_plus_circle"
+                        android:visibility="@{viewModel.isPhotoSelected}"
+                        app:layout_constraintBottom_toBottomOf="@id/photoImageView"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="@id/photoImageView"
+                        app:layout_constraintStart_toStartOf="@id/photoImageView"
+                        app:layout_constraintTop_toTopOf="@id/photoImageView" />
+
+                    <TextView
+                        android:id="@+id/photoDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="친구와의 추억이 담긴 사진을 넣어주세요!"
+                        android:textColor="@color/white"
+                        android:visibility="@{viewModel.isPhotoSelected}"
+                        app:layout_constraintEnd_toEndOf="@id/photoImageView"
+                        app:layout_constraintStart_toStartOf="@id/photoImageView"
+                        app:layout_constraintTop_toBottomOf="@id/photoAddButton" />
+
+                    <ImageView
+                        android:id="@+id/makerNickNameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_to_text"
+                        app:layout_constraintBottom_toTopOf="@id/presentMessageEditText"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/photoImageView" />
+
+                    <EditText
+                        android:id="@+id/makerNickNameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@null"
+                        android:hint="친구를 10자 이내로 표현해주세요"
+                        android:text="@={viewModel.makerNickName}"
+                        app:layout_constraintBaseline_toBottomOf="@id/makerNickNameTitle"
+                        app:layout_constraintBottom_toTopOf="@id/presentMessageEditText"
+                        app:layout_constraintStart_toEndOf="@+id/makerNickNameTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/photoImageView" />
+
+                    <EditText
+                        android:id="@+id/presentMessageEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:background="@null"
+                        android:hint="선물과 함께 보낼 메시지를 적어보세요"
+                        android:text="@={viewModel.presentMessage}"
+                        app:layout_constraintBottom_toTopOf="@id/supporterNameTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/makerNickNameEditText" />
+
+                    <ImageView
+                        android:id="@+id/supporterNameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_from_text"
+                        app:layout_constraintBottom_toTopOf="@id/presentAmountTitle"
+                        app:layout_constraintEnd_toStartOf="@+id/supporterNameEditText"
+                        app:layout_constraintTop_toBottomOf="@+id/presentMessageEditText" />
+
+                    <EditText
+                        android:id="@+id/supporterNameEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="친구에게 보여질 이름이에요"
+                        android:text="@={viewModel.supporterNickName}"
+                        app:layout_constraintBaseline_toBottomOf="@id/supporterNameTitle"
+                        app:layout_constraintBottom_toTopOf="@id/presentAmountTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/presentMessageEditText" />
+
+                    <ImageView
+                        android:id="@+id/presentAmountTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_present_amount_text"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/presentAmountTextView"
+                        app:layout_constraintTop_toBottomOf="@id/supporterNameTitle" />
+
+                    <TextView
+                        android:id="@+id/presentAmountTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="얼마를 선물할까요?"
+                        android:text="@{viewModel.presentPriceAsNumerals}"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@id/presentAmountTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/presentAmountTitle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/presentButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_round_white"
+                    android:text="선물하기"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/polaroidFrame" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.thinlineit.favorit_android.android.ui.customview.numberkeypad.NumberKeyPadView
+            android:id="@+id/numberKeyPad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/presentRootScrollView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

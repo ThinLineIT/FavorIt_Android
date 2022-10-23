@@ -6,15 +6,18 @@ import com.thinlineit.favorit_android.android.data.entity.CheckBankAccountReques
 import com.thinlineit.favorit_android.android.data.entity.CreateFundingRequest
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingLists
-import com.thinlineit.favorit_android.android.data.entity.PresentRequest
 import com.thinlineit.favorit_android.android.data.entity.PresentResult
 import com.thinlineit.favorit_android.android.data.entity.ResponseBody
 import com.thinlineit.favorit_android.android.data.entity.SettleFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResult
+import com.thinlineit.favorit_android.android.ui.present.list.Present
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface FundingApi {
@@ -36,10 +39,15 @@ interface FundingApi {
         @Path("funding_id") fundingId: Int
     ): Response<ResponseBody<Unit>>
 
-    @POST("funding/{funding_id}/present")
+    @Multipart
+    @POST("v2/funding/{funding_id}/present")
     suspend fun presentFunding(
         @Path("funding_id") fundingId: Int,
-        @Body request: PresentRequest
+        @Part from_name: MultipartBody.Part,
+        @Part to_name: MultipartBody.Part,
+        @Part amount: MultipartBody.Part,
+        @Part contents: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
     ): Response<ResponseBody<PresentResult>>
 
     @POST("funding/options/bank")
