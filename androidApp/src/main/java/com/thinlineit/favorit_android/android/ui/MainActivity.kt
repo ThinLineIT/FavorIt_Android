@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
-import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
-import com.thinlineit.favorit_android.android.ui.landing.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -16,13 +16,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivitySplashBinding
     private var isStartedAnim = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.scrollView.setOnTouchListener { v, event -> true }
@@ -33,7 +31,6 @@ class SplashActivity : AppCompatActivity() {
         if (!isStartedAnim) {
             val left = binding.imageBack.left
             isStartedAnim = true
-
             binding.scrollView.scrollTo(left, 0)
 
             CoroutineScope(Dispatchers.Main).launch {
