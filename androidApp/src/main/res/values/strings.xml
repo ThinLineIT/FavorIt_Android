@@ -5,7 +5,7 @@
     <string name="label_kakao_login">카카오 계정으로 간편하게 로그인하세요</string>
 
     <!-- landing -->
-    <string name="button_create_funding">+ 펀딩 만들기</string>
+    <string name="button_create_funding"> 펀딩만들기</string>
     <string name="button_login">로그인</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -18,19 +18,18 @@
     <string name="button_go_to_funding_detail">&#032;&#032;펀딩&#032;보기</string>
     <string name="label_going_to_product">상품 보러 가기</string>
     <string name="label_funding_aim_price">목표금액</string>
-    <string name="tooltip_please_enter_available_product_link">올바른 상품 링크를 입력해주세요.</string>
+    <string name="tooltip_please_enter_available_product_link">유효한 상품링크를 입력해주세요</string>
     <string name="hint_product_link">상품 링크를 입력해주세요!</string>
     <string name="hint_funding_name">펀딩의 이름을 지어주세요!</string>
-    <string name="hint_product_description">펀딩 내용을 담아주세요!\n\n
-        <font size="15">• 60자 이내</font></string>
+    <string name="hint_product_description">펀딩 내용을 담아주세요!</string>
     <string name="hint_product_price">펀딩 목표액을 입력해주세요 </string>
     <string name="hint_product_price_cursor">ㅣ&#032;</string>
     <string name="hint_product_option">상품 옵션을 입력해주세요!\n\n
        <font size="15">• 60자 이내 \n • 단일 상품이라면 작성하지 않으셔도 됩니다. </font>  </string>
     <string name="label_finish_creating_funding">펀딩이 시작되었습니다.\n 링크를 공유하여 펀딩을 받으세요!</string>
     <string name="tooltip_please_enter_available_product_option">60자 이내로 작성해주세요.</string>
-    <string name="tooltip_please_enter_available_funding_name">20자 이내로 작성해주세요.</string>
-    <string name="tooltip_please_enter_available_funding_description">100자 이내로 작성해주세요.</string>
+    <string name="tooltip_please_enter_available_funding_name">펀딩 이름은 20자까지 입력 가능해요</string>
+    <string name="tooltip_please_enter_available_funding_description">펀딩 내용은 100자 까지 입력 가능해요</string>
     <string name="number_key_pad_one">1</string>
     <string name="number_key_pad_two">2</string>
     <string name="number_key_pad_three">3</string>
@@ -46,6 +45,15 @@
     <string name="label_funding_expired_date">언제까지 펀딩할까요?</string>
     <string name="label_copy_complete">복사 완료</string>
     <string name="label_funding_link">펀딩 링크</string>
+
+    <!-- create funding -->
+    <string name="notice_no_img_selected">이미지를 선택하지 않았습니다.</string>
+    <string name="label_check_fill_content">내용을 다 입력하셨나요?</string>
+    <string name="label_check_create_funding">펀딩을 시작할까요?</string>
+    <string name="button_confirm_create_funding">네, 시작할게요!</string>
+    <string name="button_modify_funding">수정하고 싶어요!</string>
+    <string name="label_error">에러가 났어요!</string>
+
 
     <!-- fundingDetail -->
     <string name="button_present">선물 하기</string>
