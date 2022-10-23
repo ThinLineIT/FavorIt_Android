@@ -1,26 +1,21 @@
 package com.thinlineit.favorit_android.android.ui.createfunding
 
+import android.net.Uri
 import android.view.View
 import android.webkit.URLUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.CreateFundingRequest
-import com.thinlineit.favorit_android.android.data.entity.Product
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCase
-import com.thinlineit.favorit_android.android.ui.customview.ProgressButtons.ProgressState
 import com.thinlineit.favorit_android.android.util.NumberFormatter
+import com.thinlineit.favorit_android.android.util.addSourceList
 import com.thinlineit.favorit_android.android.util.laterThanTomorrow
 import com.thinlineit.favorit_android.android.util.toDateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.Date
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
 @HiltViewModel
 class CreateFundingViewModel @Inject constructor(
@@ -102,6 +97,18 @@ class CreateFundingViewModel @Inject constructor(
             else -> InputState.UNAVAILABLE
         }
     }
+    val createFundingState = MediatorLiveData<Boolean>().apply {
+        addSourceList(
+            fundingImageState,
+            fundingExpiredDateState,
+            productLinkState,
+            fundingPriceState,
+            fundingNameState,
+            fundingDescriptionState
+        ) {
+            value = isCreateValid()
+        }
+    }
 
     val createFundingResult = MutableLiveData<Result<CreateFundingResult>>(Result.Loading(false))
 
@@ -140,39 +147,23 @@ class CreateFundingViewModel @Inject constructor(
         val description = fundingDescription.value ?: return null
         val expiredDate = fundingExpiredDate.value ?: return null
         val productLink = productLink.value ?: return null
-        val productOption = productOption.value ?: return null
         val productPrice = fundingPrice.value?.toInt() ?: return null
         return CreateFundingRequest(
             name,
             description,
             expiredDate.toDateFormat(),
-            Product(productLink, productOption, productPrice)
+            productLink,
+            productPrice
         )
     }
 
-    private fun createProgressStateMediatorLiveData(
-        inputState: LiveData<InputState>,
-        currentFragment: LiveData<FragmentType>,
-        fragmentType: FragmentType
-    ): MediatorLiveData<ProgressState> = MediatorLiveData<ProgressState>().apply {
-        addSource(inputState) {
-            value = createProgressState(it, currentFragment.value == fragmentType)
-        }
-        addSource(currentFragment) {
-            value = createProgressState(inputState.value, currentFragment.value == fragmentType)
-        }
-    }
-
-    private fun createProgressState(
-        inputState: InputState?,
-        isCurrentFragment: Boolean
-    ): ProgressState = when {
-        !isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EMPTY
-        isCurrentFragment && inputState != InputState.AVAILABLE -> ProgressState.EDITING
-        isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.CORRECT_ENTERED
-        !isCurrentFragment && inputState == InputState.AVAILABLE -> ProgressState.COMPLETE
-        else -> throw Exception("Something is wrong")
-    }
+    private fun isCreateValid(): Boolean =
+        fundingImageState.value == InputState.AVAILABLE &&
+                fundingExpiredDateState.value == InputState.AVAILABLE &&
+                productLinkState.value == InputState.AVAILABLE &&
+                fundingPriceState.value == InputState.AVAILABLE &&
+                fundingNameState.value == InputState.AVAILABLE &&
+                fundingDescriptionState.value == InputState.AVAILABLE
 
     sealed class InputState {
         object EMPTY : InputState()
@@ -192,10 +183,5 @@ class CreateFundingViewModel @Inject constructor(
         }
 
         fun toEnabled(): Boolean = this == AVAILABLE
-    }
-
-    enum class FragmentType {
-        PRODUCT_LINK, PRODUCT_OPTION, FUNDING_PRICE,
-        FUNDING_NAME, FUNDING_DESCRIPTION, FUNDING_EXPIRED_DATE
     }
 }
