@@ -10,6 +10,7 @@ import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.ui.fundingList.FundingListActivity
 import com.thinlineit.favorit_android.android.ui.present.PresentActivity
 import com.thinlineit.favorit_android.android.ui.present.list.PresentListActivity
+import com.thinlineit.favorit_android.android.ui.settlefunding.SettleFundingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,6 +52,9 @@ class MainActivity : AppCompatActivity() {
             }
             goToPresentListButton.setOnClickListener {
                 PresentListActivity.start(this@MainActivity, 95)
+            }
+            goToFundingSettleButton.setOnClickListener {
+                SettleFundingActivity.start(this@MainActivity, 3, "minki")
             }
         }
     }
