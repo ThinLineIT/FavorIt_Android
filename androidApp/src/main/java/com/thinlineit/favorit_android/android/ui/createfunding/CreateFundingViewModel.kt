@@ -28,9 +28,8 @@ class CreateFundingViewModel @Inject constructor(
 ) : ViewModel() {
 
     val toastMessage: MutableLiveData<String> = MutableLiveData("")
-
+    val errorMessage: MutableLiveData<String> = MutableLiveData("")
     val productLink = MutableLiveData("")
-    val productOption = MutableLiveData("")
     val fundingPrice = MutableLiveData(0)
     val fundingPriceAsCurrency: LiveData<String> = Transformations.map(fundingPrice) {
         if (it == 0) ""
@@ -43,21 +42,31 @@ class CreateFundingViewModel @Inject constructor(
     val fundingDescription = MutableLiveData("")
     val fundingStartDateAsString = Date(System.currentTimeMillis()).toDateFormat()
     val fundingExpiredDate = MutableLiveData<Date?>(null)
+    val imageUri = MutableLiveData<Uri>()
+    val imageName = MutableLiveData("")
+
+    private val _url = MutableLiveData<String>()
+    val url: LiveData<String>
+        get() = _url
+
+    private val _fileName = MutableLiveData<String>()
+    val fileName: LiveData<String>
+        get() = _fileName
+
+    val fundingImageState: LiveData<InputState> = Transformations.map(imageUri) {
+        when (it) {
+            null -> InputState.EMPTY
+            else -> InputState.AVAILABLE
+        }
+    }
     val fundingExpiredDateAsString = Transformations.map(fundingExpiredDate) {
-        it?.toDateFormat() ?: ""
+        if (it?.toDateFormat() == null) ""
+        else (fundingStartDateAsString + "~" + it.toDateFormat()) ?: ""
     }
     val productLinkState: LiveData<InputState> = Transformations.map(productLink) {
         when {
             it.isEmpty() -> InputState.EMPTY
             URLUtil.isNetworkUrl(it) -> InputState.AVAILABLE
-            else -> InputState.UNAVAILABLE
-        }
-    }
-
-    val productOptionState: LiveData<InputState> = Transformations.map(productOption) {
-        when {
-            it.isEmpty() -> InputState.EMPTY
-            it.length <= 60 -> InputState.AVAILABLE
             else -> InputState.UNAVAILABLE
         }
     }
@@ -96,77 +105,32 @@ class CreateFundingViewModel @Inject constructor(
 
     val createFundingResult = MutableLiveData<Result<CreateFundingResult>>(Result.Loading(false))
 
-    val currentFragment = MutableLiveData(FragmentType.PRODUCT_LINK)
-
-    val progressStateList: List<MediatorLiveData<ProgressState>> by lazy {
-        listOf(
-            productLinkProgressState,
-            productOptionProgressState,
-            fundingPriceProgressState,
-            fundingNameProgressState,
-            fundingDescriptionProgressState,
-            fundingExpiredDateProgressState
-        )
-    }
-
     val fundingPriceOnNumberClickListener = FundingPriceOnNumberClickListener(
         fundingPrice,
         toastMessage
     )
 
-    private val productLinkProgressState =
-        createProgressStateMediatorLiveData(
-            productLinkState,
-            currentFragment,
-            FragmentType.PRODUCT_LINK
-        )
-
-    private val productOptionProgressState =
-        createProgressStateMediatorLiveData(
-            productOptionState,
-            currentFragment,
-            FragmentType.PRODUCT_OPTION
-        )
-
-    private val fundingPriceProgressState =
-        createProgressStateMediatorLiveData(
-            fundingPriceState,
-            currentFragment,
-            FragmentType.FUNDING_PRICE
-        )
-    private val fundingNameProgressState =
-        createProgressStateMediatorLiveData(
-            fundingNameState,
-            currentFragment,
-            FragmentType.FUNDING_NAME
-        )
-
-    private val fundingDescriptionProgressState =
-        createProgressStateMediatorLiveData(
-            fundingDescriptionState,
-            currentFragment,
-            FragmentType.FUNDING_DESCRIPTION
-        )
-
-    private val fundingExpiredDateProgressState =
-        createProgressStateMediatorLiveData(
-            fundingExpiredDateState,
-            currentFragment,
-            FragmentType.FUNDING_EXPIRED_DATE
-        )
-
     fun onEndDateSelected(endDate: Date) {
         fundingExpiredDate.postValue(endDate)
     }
 
-    fun createFunding() {
+    fun loadImageUrl(uri: Uri, name: String) {
+        imageUri.value = uri
+        imageName.value = name
+    }
+
+    suspend fun createFunding() {
         viewModelScope.launch(Dispatchers.IO) {
             createFundingResult.postValue(Result.Loading(true))
             val createFundingRequest = getCreateFundingRequest() ?: run {
                 createFundingResult.postValue(Result.Fail(Exception("Some value is null")))
                 return@launch
             }
-            val result = createFundingUseCase.createFunding(createFundingRequest)
+            val result = createFundingUseCase.createFunding(
+                createFundingRequest,
+                imageUri.value ?: return@launch,
+                imageName.value ?: return@launch
+            )
             createFundingResult.postValue(result)
         }
     }
