@@ -6,6 +6,7 @@ import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.api.FundingApi
 import com.thinlineit.favorit_android.android.data.entity.PresentRequest
 import com.thinlineit.favorit_android.android.data.entity.PresentResult
+import com.thinlineit.favorit_android.android.ui.present.list.Present
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -45,6 +46,16 @@ class PresentRepositoryImpl @Inject constructor(
             Result.Success(body.data)
         } else {
             Result.Fail(Exception(presentResponse.message()))
+        }
+    }
+
+    override suspend fun listPresent(fundingId: Int): Result<List<Present>> {
+        val response = fundingApi.listPresent(fundingId)
+        val body = response.body()
+        return if (response.isSuccessful && body != null) {
+            Result.Success(body.data)
+        } else {
+            Result.Fail(Exception(response.message()))
         }
     }
 }

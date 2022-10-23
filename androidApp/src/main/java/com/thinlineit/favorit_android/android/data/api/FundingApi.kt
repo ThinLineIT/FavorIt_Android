@@ -62,4 +62,9 @@ interface FundingApi {
     suspend fun settleFunding(
         @Body request: SettleFundingRequest
     ): Response<ResponseBody<Unit>>
+
+    @GET("funding/{funding_id}/presents")
+    suspend fun listPresent(
+        @Path("funding_id") fundingId: Int
+    ): Response<ResponseBody<List<Present>>>
 }

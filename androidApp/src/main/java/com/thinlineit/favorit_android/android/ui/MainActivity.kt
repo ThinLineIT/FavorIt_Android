@@ -9,6 +9,7 @@ import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActi
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.ui.fundingList.FundingListActivity
 import com.thinlineit.favorit_android.android.ui.present.PresentActivity
+import com.thinlineit.favorit_android.android.ui.present.list.PresentListActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +37,9 @@ class MainActivity : AppCompatActivity() {
             }
             goToPresentButton.setOnClickListener {
                 PresentActivity.start(this@MainActivity, 95)
+            }
+            goToPresentListButton.setOnClickListener {
+                PresentListActivity.start(this@MainActivity, 95)
             }
         }
     }

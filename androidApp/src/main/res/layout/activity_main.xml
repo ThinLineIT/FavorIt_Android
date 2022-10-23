@@ -85,6 +85,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <Button
+                android:id="@+id/goToPresentListButton"
+                android:text="go to present list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
                 android:id="@+id/goToFundingDetailButton"
                 android:text="go to funding detail"
                 android:layout_width="wrap_content"
