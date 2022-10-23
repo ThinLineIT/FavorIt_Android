@@ -16,4 +16,8 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="underlineTextView">
+        <item name="android:background">@drawable/background_underline_textview</item>
+    </style>
 </resources>

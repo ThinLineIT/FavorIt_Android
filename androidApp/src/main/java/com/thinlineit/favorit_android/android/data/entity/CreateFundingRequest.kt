@@ -8,5 +8,6 @@ data class CreateFundingRequest(
     val description: String,
     @SerializedName("due_date")
     val expiredDate: String,
-    val product: Product
+    val link: String,
+    val price: Int,
 )
