@@ -27,7 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateFundingActivity : AppCompatActivity() {
-    var imm: InputMethodManager? = null
+    private val imm: InputMethodManager by lazy {
+        getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    }
     private val binding: ActivityCreateFundingBinding by lazy {
         ActivityCreateFundingBinding.inflate(layoutInflater)
     }
@@ -60,7 +62,6 @@ class CreateFundingActivity : AppCompatActivity() {
         checkPermission(this)
         onBackPressedDispatcher.addCallback(calendarOnBackPressedCallback)
         onBackPressedDispatcher.addCallback(numberKeyPadOnBackPressedCallback)
-        imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         binding.apply {
             lifecycleOwner = this@CreateFundingActivity
             viewModel = this@CreateFundingActivity.viewModel
