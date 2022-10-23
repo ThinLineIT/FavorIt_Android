@@ -1,11 +1,23 @@
 package com.thinlineit.favorit_android.android.data.api
 
-import com.thinlineit.favorit_android.android.data.entity.*
+import com.thinlineit.favorit_android.android.data.entity.Account
+import com.thinlineit.favorit_android.android.data.entity.Bank
+import com.thinlineit.favorit_android.android.data.entity.CheckBankAccountRequest
+import com.thinlineit.favorit_android.android.data.entity.Funding
+import com.thinlineit.favorit_android.android.data.entity.FundingLists
+import com.thinlineit.favorit_android.android.data.entity.PresentResult
+import com.thinlineit.favorit_android.android.data.entity.ResponseBody
+import com.thinlineit.favorit_android.android.data.entity.SettleFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResult
 import com.thinlineit.favorit_android.android.ui.present.list.Present
 import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface FundingApi {
     @Multipart

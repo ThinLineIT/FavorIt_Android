@@ -3,7 +3,12 @@ package com.thinlineit.favorit_android.android.ui.createfunding
 import android.net.Uri
 import android.view.View
 import android.webkit.URLUtil
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.CreateFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.usecase.CreateFundingUseCase
@@ -14,7 +19,7 @@ import com.thinlineit.favorit_android.android.util.toDateFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
