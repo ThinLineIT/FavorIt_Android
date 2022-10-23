@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".ui.createfunding.FinishCreateFundingActivity">
+    android:padding="20dp">
 
 
     <ImageView
@@ -13,24 +12,24 @@
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintVertical_chainStyle="packed"
         android:src="@drawable/icon_celebrate"
         app:layout_constraintBottom_toTopOf="@+id/presentFinishFundingNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/presentFinishFundingNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="이거 가지고 싶어요!"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/presentFinishTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/presentFinishImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/presentFinishImageView"
+        tools:text="이거 가지고 싶어요!" />
 
 
     <TextView
@@ -40,11 +39,11 @@
         android:text="@string/label_success_to_present"
         android:textColor="@color/black"
         android:textSize="18sp"
-        tools:text="100,000원을 선물했어요."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/presentFinishFundingNameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/presentFinishFundingNameTextView"
+        tools:text="100,000원을 선물했어요." />
 
     <Button
         android:id="@+id/goToFundingDetailButton"

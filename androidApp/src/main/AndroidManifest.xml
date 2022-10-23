@@ -37,9 +37,6 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.createfunding.FinishCreateFundingActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.detail.FundingDetailActivity"
             android:exported="true">
             <intent-filter
