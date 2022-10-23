@@ -8,13 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
-<<<<<<< HEAD
-import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.ui.fundingList.FundingListActivity
-import com.thinlineit.favorit_android.android.ui.landing.MainViewModel
-import com.thinlineit.favorit_android.android.ui.login.LoginActivity
-=======
->>>>>>> main
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
