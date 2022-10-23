@@ -11,6 +11,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.fundingList.FundingListActivity"
+            android:exported="false"
+            android:label="@string/title_activity_funding_list"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="false" />
         <activity
