@@ -3,17 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settle_funding_nav_graph"
-    app:startDestination="@id/detailFundingSettleFragment">
+    app:startDestination="@id/closedFundingFragment">
 
-    <fragment
-        android:id="@+id/detailFundingSettleFragment"
-        android:name="com.thinlineit.favorit_android.android.ui.settlefunding.DetailSettleFundingFrgment"
-        android:label="fragment_detail_funding_settle"
-        tools:layout="@layout/fragment_finish_settle_funding_detail">
-        <action
-            android:id="@+id/action_DetailFundingSettleFragment_to_closedFundingFragment"
-            app:destination="@id/closedFundingFragment" />
-    </fragment>
     <fragment
         android:id="@+id/closedFundingFragment"
         android:name="com.thinlineit.favorit_android.android.ui.settlefunding.ClosedFundingFragment"
