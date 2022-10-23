@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
             createFundingButton.setOnClickListener {
                 CreateFundingActivity.start(this@MainActivity)
             }
-            goToFundingDetailButton.setOnClickListener {
-                FundingDetailActivity.start(this@MainActivity, 3)
+            goToFundingListButton.setOnClickListener {
+                //ToDo : go to FundingList
             }
         }
     }

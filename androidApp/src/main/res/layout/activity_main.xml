@@ -23,7 +23,7 @@
             android:src="@drawable/background_landing" />
 
         <ImageView
-            android:id="@+id/goToFundingDetailButton"
+            android:id="@+id/goToFundingListButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
@@ -52,7 +52,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/note"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goToFundingDetailButton" />
+            app:layout_constraintTop_toBottomOf="@+id/goToFundingListButton" />
 
         <ImageView
             android:id="@+id/cameraButton"
@@ -61,7 +61,7 @@
             android:layout_marginLeft="6dp"
             android:background="@drawable/camera"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goToFundingDetailButton" />
+            app:layout_constraintTop_toBottomOf="@+id/goToFundingListButton" />
 
         <ImageView
             android:id="@+id/pencil"
