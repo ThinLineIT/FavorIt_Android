@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.MimeTypeFilter
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
@@ -19,9 +20,8 @@ import com.thinlineit.favorit_android.android.databinding.ActivityCreateFundingB
 import com.thinlineit.favorit_android.android.ui.MainActivity
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarView
 import com.thinlineit.favorit_android.android.ui.customview.numberkeypad.NumberKeyPadView
-import com.thinlineit.favorit_android.android.util.Uri.getName
 import com.thinlineit.favorit_android.android.util.checkPermission
-import com.thinlineit.favorit_android.android.util.copyUri
+import com.thinlineit.favorit_android.android.util.fileFromContentUri
 import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -190,13 +190,10 @@ class CreateFundingActivity : AppCompatActivity() {
             val mimeType = this.contentResolver.getType(imageUri)
 
             if (mimeType !== null && MimeTypeFilter.matches(mimeType, IMAGE_MIME_TYPE)) {
+                val file = fileFromContentUri(this, imageUri)
                 viewModel.loadImageUrl(
-                    copyUri(
-                        this,
-                        imageUri,
-                        mimeType
-                    ),
-                    getName(this, imageUri)
+                    file.toUri(),
+                    file.name
                 )
             }
         }
