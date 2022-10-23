@@ -13,6 +13,7 @@ import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUse
 import com.thinlineit.favorit_android.android.ui.detail.usecase.GetFunding
 import com.thinlineit.favorit_android.android.ui.fundingList.usecase.FundingListUseCase
 import com.thinlineit.favorit_android.android.ui.fundingList.usecase.GetFundingList
+import com.thinlineit.favorit_android.android.ui.present.usecase.GetPresentList
 import com.thinlineit.favorit_android.android.ui.present.usecase.PresentFunding
 import com.thinlineit.favorit_android.android.ui.present.usecase.PresentUseCase
 import dagger.Module
@@ -63,4 +64,9 @@ object UseCaseModule {
         FundingListUseCase(
             GetFundingList(fundingRepository)
         )
+
+    @Provides
+    @Singleton
+    fun providesPresentListUseCase(presentRepository: PresentRepository): GetPresentList =
+        GetPresentList(presentRepository)
 }

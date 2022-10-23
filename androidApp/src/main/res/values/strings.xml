@@ -63,6 +63,7 @@
     <string name="hint_present_price">선물할 금액을 입력해주세요!</string>
     <string name="label_present_to">에 선물하기</string>
     <string name="label_are_you_sure_to_present">원을 선물할까요?</string>
+    <string name="label_success_to_present">%1$s원을 선물했어요!</string>
     <string name="button_share_funding">&#032;&#032;펀딩&#032;공유</string>
 
     <string name="label_funding_is_over">펀딩이 완료되었어요!</string>
