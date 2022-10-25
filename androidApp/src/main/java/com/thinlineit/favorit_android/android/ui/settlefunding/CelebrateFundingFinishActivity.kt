@@ -17,7 +17,7 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
         const val FUNDING_NAME = "fundingName"
 
         fun start(context: Context, fundingId: Int, fundingName: String) {
-            val intent = Intent(context, SettleFundingActivity::class.java).apply {
+            val intent = Intent(context, CelebrateFundingFinishActivity::class.java).apply {
                 putExtra(FUNDING_ID, fundingId)
                 putExtra(FUNDING_NAME, fundingName)
             }
