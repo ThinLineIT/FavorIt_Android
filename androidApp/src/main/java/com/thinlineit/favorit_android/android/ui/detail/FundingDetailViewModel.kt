@@ -1,12 +1,11 @@
 package com.thinlineit.favorit_android.android.ui.detail
 
-import android.view.View
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingState
@@ -25,6 +24,8 @@ class FundingDetailViewModel @Inject constructor(
 
     private val _loadFundingResult = MutableLiveData<Result<Funding>>(Result.Loading(false))
     val loadFundingResult: LiveData<Result<Funding>> = _loadFundingResult
+
+    val intentLiveData = MutableLiveData<Intent>()
 
     val funding: LiveData<Funding?> = Transformations.map(loadFundingResult) {
         when (it) {
@@ -52,33 +53,12 @@ class FundingDetailViewModel @Inject constructor(
         if (funding == null) return@map false
         funding.state == FundingState.OPENED
     }
-    val goToPresentText: LiveData<Int> = Transformations.map(presentable) { presentable ->
-        if (presentable) R.string.button_present
-        else R.string.button_already_closed_funding
-    }
 
     private val closable: LiveData<Boolean> = Transformations.map(funding) { funding ->
         if (funding == null) return@map false
         val isClosable =
             funding.state == FundingState.OPENED || funding.state == FundingState.EXPIRED
         funding.isMaker && isClosable
-    }
-    val askCloseFundingVisibility: LiveData<Int> = Transformations.map(closable) { closable ->
-        if (closable) View.VISIBLE
-        else View.GONE
-    }
-
-    private val _closeFundingResult = MutableLiveData<Result<Unit>>()
-    val closeFundingResult: LiveData<Result<Unit>> = _closeFundingResult
-
-    val showExpiredAlertDialog = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        funding.state == FundingState.EXPIRED && funding.isMaker
-    }
-
-    val goToClosedFundingActivity = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        funding.state == FundingState.CLOSED && funding.isMaker
     }
 
     fun loadFundingDetail(fundingId: Int) {
@@ -90,9 +70,17 @@ class FundingDetailViewModel @Inject constructor(
         }
     }
 
-    fun closeFunding() {
+    fun present() {
+        TODO("Not yet implemented")
+    }
+
+    fun close() {
         viewModelScope.launch {
-            _closeFundingResult.postValue(fundingDetailUseCase.closeFunding(fundingId))
+            fundingDetailUseCase.closeFunding(fundingId)
         }
+    }
+
+    fun settle() {
+        TODO("Not yet implemented")
     }
 }
