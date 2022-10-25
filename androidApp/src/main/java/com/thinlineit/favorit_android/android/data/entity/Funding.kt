@@ -9,8 +9,6 @@ data class Funding(
     val state: FundingState,
     @SerializedName("is_maker")
     val isMaker: Boolean,
-    @SerializedName("creation_date")
-    val startDate: String,
     @SerializedName("due_date")
     val expiredDate: String,
     @SerializedName("progress_percent")
@@ -18,6 +16,7 @@ data class Funding(
     @SerializedName("link_for_sharing")
     val fundingLink: String,
     val product: Product,
+    val image: String,
 )
 
 enum class FundingState {

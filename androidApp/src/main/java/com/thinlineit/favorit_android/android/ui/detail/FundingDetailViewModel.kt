@@ -35,15 +35,6 @@ class FundingDetailViewModel @Inject constructor(
         }
     }
 
-    val fundingDateProgressPercentage: LiveData<Int> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map 0
-        val startDateTime = funding.startDate.toDate()?.time ?: return@map 0
-        val endDateTime = funding.expiredDate.toDate()?.time ?: return@map 0
-        val currentTime = System.currentTimeMillis()
-        return@map ((currentTime - startDateTime) / (endDateTime - startDateTime).toFloat() * 100).toInt()
-            .takeIf { it <= 100 } ?: 100
-    }
-
     val fundingPriceAsCurrency: LiveData<String> = Transformations.map(funding) { funding ->
         if (funding == null) return@map ""
         else NumberFormatter.asCurrency(funding.product.price.toLong())

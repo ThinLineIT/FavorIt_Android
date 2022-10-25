@@ -58,7 +58,10 @@ class FundingDetailActivity : AppCompatActivity() {
             }
         }
         binding.fundingInfoButton.setOnClickListener {
-            // TODO: show funding info dialog
+            val funding = viewModel.funding.value ?: return@setOnClickListener
+            FundingInfoDialog(binding.root.context, funding).apply {
+                show()
+            }
         }
         binding.copyFundingLinkButton.setOnClickListener {
             val fundingLink = viewModel.funding.value?.fundingLink
