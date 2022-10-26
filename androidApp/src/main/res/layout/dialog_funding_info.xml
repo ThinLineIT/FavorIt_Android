@@ -7,284 +7,247 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_create_funding">
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/backgroundNotebook"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp"
+        android:background="@drawable/background_notebook"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <ImageView
+            android:id="@+id/backgroundImage"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/ic_image_rectangle"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backgroundNotebook"/>
+
+        <ImageView
+            android:id="@+id/imageTapeUpper"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_marginRight="-20dp"
+            android:background="@drawable/ic_image_tape"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundImage"
+            app:layout_constraintTop_toTopOf="@id/backgroundImage" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/backgroundNotebook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="30dp"
-                android:background="@drawable/background_notebook"
-                app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/imageTapeLower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-20dp"
+            android:layout_marginBottom="-20dp"
+            android:background="@drawable/ic_image_tape"
+            app:layout_constraintBottom_toBottomOf="@id/backgroundImage"
+            app:layout_constraintStart_toStartOf="@+id/backgroundImage" />
 
-                <ImageButton
-                    android:id="@+id/goToBackButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="-23dp"
-                    android:layout_marginTop="70dp"
-                    android:background="@color/transparent"
-                    android:src="@drawable/icon_arrowright"
-                    app:layout_constraintBottom_toTopOf="@+id/backgroundImage"
-                    app:layout_constraintStart_toStartOf="@+id/backgroundImage"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/addImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundImage"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundImage"
+            app:layout_constraintStart_toStartOf="@+id/backgroundImage"
+            app:layout_constraintTop_toTopOf="@+id/backgroundImage" />
 
-                <ImageView
-                    android:id="@+id/backgroundImage"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/ic_image_rectangle"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/goToBackButton" />
+        <View
+            android:id="@+id/line"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/darkBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageTapeLower" />
 
-                <ImageView
-                    android:id="@+id/imageTapeUpper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-20dp"
-                    android:layout_marginRight="-20dp"
-                    android:background="@drawable/ic_image_tape"
-                    app:layout_constraintEnd_toEndOf="@+id/backgroundImage"
-                    app:layout_constraintTop_toTopOf="@id/backgroundImage" />
+        <View
+            android:id="@+id/horizonLine"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="107dp"
+            android:background="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundNotebook"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
 
-                <ImageView
-                    android:id="@+id/imageTapeLower"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="-20dp"
-                    android:layout_marginBottom="-20dp"
-                    android:background="@drawable/ic_image_tape"
-                    app:layout_constraintBottom_toBottomOf="@id/backgroundImage"
-                    app:layout_constraintStart_toStartOf="@+id/backgroundImage" />
+        <EditText
+            android:id="@+id/fundingNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:enabled="false"
+            android:includeFontPadding="true"
+            android:paddingBottom="20dp"
+            android:text="펀딩 이름"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/fundingName"
+            app:layout_constraintEnd_toStartOf="@+id/horizonLine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
 
-                <ImageButton
-                    android:id="@+id/addImageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:padding="10dp"
-                    android:src="@drawable/icon_plus_image"
-                    app:layout_constraintBottom_toBottomOf="@+id/backgroundImage"
-                    app:layout_constraintEnd_toEndOf="@+id/backgroundImage"
-                    app:layout_constraintStart_toStartOf="@+id/backgroundImage"
-                    app:layout_constraintTop_toTopOf="@+id/backgroundImage" />
+        <TextView
+            android:id="@+id/fundingName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:hint="@string/hint_funding_name"
+            android:background="@drawable/background_underline_textview"
+            android:includeFontPadding="true"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/horizonLine"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
 
-                <TextView
-                    android:id="@+id/addImageText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="사진을 첨부해주세요"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/addImageButton" />
+        <EditText
+            android:id="@+id/link"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:enabled="false"
+            android:paddingBottom="20dp"
+            android:text="상품 링크"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/linkText"
+            app:layout_constraintEnd_toStartOf="@+id/horizonLine"
+            app:layout_constraintStart_toStartOf="parent" />
 
-                <View
-                    android:id="@+id/line"
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="25dp"
-                    android:background="@color/darkBlue"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageTapeLower" />
+        <TextView
+            android:id="@+id/linkText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:hint="@string/hint_product_link"
+            android:background="@drawable/background_underline_textview"
+            android:includeFontPadding="true"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/horizonLine"
+            app:layout_constraintTop_toBottomOf="@+id/fundingNameText" />
 
-                <View
-                    android:id="@+id/horizonLine"
-                    android:layout_width="1dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="107dp"
-                    android:background="@color/red"
-                    app:layout_constraintBottom_toBottomOf="@+id/backgroundNotebook"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:enabled="false"
+            android:paddingBottom="20dp"
+            android:text="펀딩 내용"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/content"
+            app:layout_constraintEnd_toStartOf="@+id/horizonLine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/link" />
 
-                <EditText
-                    android:id="@+id/fundingNameText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:enabled="false"
-                    android:includeFontPadding="true"
-                    android:paddingBottom="20dp"
-                    android:text="펀딩 이름"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/fundingName"
-                    app:layout_constraintEnd_toStartOf="@+id/horizonLine"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line" />
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:hint="@string/hint_product_description"
+            android:background="@drawable/background_underline_textview"
+            android:includeFontPadding="true"
+            android:minLines="3"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/horizonLine"
+            app:layout_constraintTop_toBottomOf="@+id/linkText" />
 
-                <TextView
-                    android:id="@+id/fundingName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:hint="@string/hint_funding_name"
-                    android:background="@drawable/background_underline_textview"
-                    android:includeFontPadding="true"
-                    android:paddingStart="20dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="20dp"
-                    android:textSize="11sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/horizonLine"
-                    app:layout_constraintTop_toBottomOf="@+id/line" />
+        <EditText
+            android:id="@+id/priceText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:enabled="false"
+            android:paddingBottom="20dp"
+            android:text="목표 금액"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/price"
+            app:layout_constraintEnd_toStartOf="@+id/horizonLine"
+            app:layout_constraintStart_toStartOf="parent" />
 
-                <EditText
-                    android:id="@+id/link"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:enabled="false"
-                    android:paddingBottom="20dp"
-                    android:text="상품 링크"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/linkText"
-                    app:layout_constraintEnd_toStartOf="@+id/horizonLine"
-                    app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/background_underline_textview"
+            android:backgroundTint="@color/darkBlue"
+            android:hint="@string/hint_product_price"
+            android:includeFontPadding="true"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/horizonLine"
+            app:layout_constraintTop_toBottomOf="@+id/content" />
 
-                <TextView
-                    android:id="@+id/linkText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:hint="@string/hint_product_link"
-                    android:background="@drawable/background_underline_textview"
-                    android:includeFontPadding="true"
-                    android:paddingStart="20dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="20dp"
-                    android:textSize="11sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/horizonLine"
-                    app:layout_constraintTop_toBottomOf="@+id/fundingNameText" />
+        <EditText
+            android:id="@+id/fundingDateText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/darkBlue"
+            android:enabled="false"
+            android:paddingBottom="20dp"
+            android:text="펀딩 일정"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/fundingDate"
+            app:layout_constraintEnd_toStartOf="@+id/horizonLine"
+            app:layout_constraintStart_toStartOf="parent" />
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:enabled="false"
-                    android:paddingBottom="20dp"
-                    android:text="펀딩 내용"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/content"
-                    app:layout_constraintEnd_toStartOf="@+id/horizonLine"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/link" />
+        <TextView
+            android:id="@+id/fundingDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/background_underline_textview"
+            android:backgroundTint="@color/darkBlue"
+            android:hint="@string/label_funding_expired_date"
+            android:includeFontPadding="true"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/horizonLine"
+            app:layout_constraintTop_toBottomOf="@+id/price" />
 
-                <TextView
-                    android:id="@+id/content"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:hint="@string/hint_product_description"
-                    android:background="@drawable/background_underline_textview"
-                    android:includeFontPadding="true"
-                    android:minLines="3"
-                    android:paddingStart="20dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="20dp"
-                    android:textSize="11sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/horizonLine"
-                    app:layout_constraintTop_toBottomOf="@+id/linkText" />
-
-                <EditText
-                    android:id="@+id/priceText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:enabled="false"
-                    android:paddingBottom="20dp"
-                    android:text="목표 금액"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/price"
-                    app:layout_constraintEnd_toStartOf="@+id/horizonLine"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/background_underline_textview"
-                    android:backgroundTint="@color/darkBlue"
-                    android:hint="@string/hint_product_price"
-                    android:includeFontPadding="true"
-                    android:paddingStart="20dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="20dp"
-                    android:textSize="11sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/horizonLine"
-                    app:layout_constraintTop_toBottomOf="@+id/content" />
-
-                <EditText
-                    android:id="@+id/fundingDateText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:backgroundTint="@color/darkBlue"
-                    android:enabled="false"
-                    android:paddingBottom="20dp"
-                    android:text="펀딩 일정"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/fundingDate"
-                    app:layout_constraintEnd_toStartOf="@+id/horizonLine"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/fundingDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/background_underline_textview"
-                    android:backgroundTint="@color/darkBlue"
-                    android:hint="@string/label_funding_expired_date"
-                    android:includeFontPadding="true"
-                    android:paddingStart="20dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="20dp"
-                    android:textSize="11sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/horizonLine"
-                    app:layout_constraintTop_toBottomOf="@+id/price" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

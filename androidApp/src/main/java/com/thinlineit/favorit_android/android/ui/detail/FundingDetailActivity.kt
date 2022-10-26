@@ -53,18 +53,18 @@ class FundingDetailActivity : AppCompatActivity() {
     private fun initView() {
         binding.presentButton.setOnClickListener {
             viewModel.present()
-            if (viewModel.presentable.value == true) {
-                PresentActivity.start(this, viewModel.fundingId)
-            }
+//            if (viewModel.presentable.value == true) {
+//                PresentActivity.start(this, viewModel.fundingId)
+//            }
         }
         binding.fundingInfoButton.setOnClickListener {
-            val funding = viewModel.funding.value ?: return@setOnClickListener
+            val funding = viewModel.funding ?: return@setOnClickListener
             FundingInfoDialog(binding.root.context, funding).apply {
                 show()
             }
         }
         binding.copyFundingLinkButton.setOnClickListener {
-            val fundingLink = viewModel.funding.value?.fundingLink
+            val fundingLink = viewModel.funding?.fundingLink
             val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText(getString(R.string.label_funding_link), fundingLink)
             clipboardManager.setPrimaryClip(clip)

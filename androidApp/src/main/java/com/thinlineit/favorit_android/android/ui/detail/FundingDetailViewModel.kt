@@ -27,30 +27,7 @@ class FundingDetailViewModel @Inject constructor(
 
     val intentLiveData = MutableLiveData<Intent>()
 
-    val funding: LiveData<Funding?> = Transformations.map(loadFundingResult) {
-        when (it) {
-            is Result.Loading -> null
-            is Result.Fail -> null
-            is Result.Success -> it.data
-        }
-    }
-
-    val fundingPriceAsCurrency: LiveData<String> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map ""
-        else NumberFormatter.asCurrency(funding.product.price.toLong())
-    }
-
-    val presentable: LiveData<Boolean> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        funding.state == FundingState.OPENED
-    }
-
-    private val closable: LiveData<Boolean> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        val isClosable =
-            funding.state == FundingState.OPENED || funding.state == FundingState.EXPIRED
-        funding.isMaker && isClosable
-    }
+    var funding: Funding? = null
 
     fun loadFundingDetail(fundingId: Int) {
         this.fundingId = fundingId
@@ -58,6 +35,11 @@ class FundingDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _loadFundingResult.postValue(Result.Loading(true))
             _loadFundingResult.postValue(fundingDetailUseCase.getFunding(fundingId))
+           val loadFundingResult = fundingDetailUseCase.getFunding(fundingId)
+           _loadFundingResult.postValue(loadFundingResult)
+            if (loadFundingResult is Result.Success) {
+                funding = loadFundingResult.data
+            }
         }
     }
 
