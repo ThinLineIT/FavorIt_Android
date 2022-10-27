@@ -69,8 +69,7 @@ class MainActivity : AppCompatActivity() {
                     "naver.com",
                     Product(
                         "naver.com",
-                        "에어3세대",
-                        540000
+                        540000,
                     ),
                     "Ipad.jpg"
                 )
