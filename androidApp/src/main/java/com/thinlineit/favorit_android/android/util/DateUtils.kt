@@ -24,3 +24,8 @@ fun Date.laterThanTomorrow(): Boolean {
 fun Date.toDateFormat(): String {
     return dateFormat.format(this)
 }
+
+fun Date.dDayFromToday(): String {
+    val today = Date(System.currentTimeMillis())
+    return ((this.time - today.time) / (24 * 60 * 60 * 1000)).toString()
+}

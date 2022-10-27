@@ -45,10 +45,14 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesFundingDetailUseCase(fundingRepository: FundingRepository): FundingDetailUseCase =
+    fun providesFundingDetailUseCase(
+        fundingRepository: FundingRepository,
+        presentRepository: PresentRepository
+    ): FundingDetailUseCase =
         FundingDetailUseCase(
             GetFunding(fundingRepository),
-            CloseFunding(fundingRepository)
+            CloseFunding(fundingRepository),
+            GetPresentList(presentRepository)
         )
 
     @Provides
