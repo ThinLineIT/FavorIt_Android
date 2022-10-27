@@ -1,9 +1,11 @@
 package com.thinlineit.favorit_android.android.ui.settlefunding
 
-import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Context
+import android.graphics.PointF
 import android.os.Bundle
 import android.text.format.DateUtils.SECOND_IN_MILLIS
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -60,6 +63,9 @@ class DetailSettleFundingFrgment : Fragment() {
 
                 fadeInView(fundingSettlePeopleList)
                 delay(1000)
+                // scroll RecyclerView
+                fundingSettlePeopleList.smoothScrollToPosition(peopleList.size)
+                delay(1000)
 
                 fadeInView(fundingSettleDayTagTextView)
                 delay(1000)
@@ -77,7 +83,8 @@ class DetailSettleFundingFrgment : Fragment() {
         }
 
     }
-    private fun fadeInView(view: View){
+
+    private fun fadeInView(view: View) {
         val fadeInAnim = AnimationUtils.loadAnimation(requireActivity(), R.anim.fadein)
         view.startAnimation(fadeInAnim)
         view.visibility = View.VISIBLE
@@ -126,18 +133,56 @@ class DetailSettleFundingFrgment : Fragment() {
         peopleList.add(People("윤권"))
         peopleList.add(People("정민"))
         peopleList.add(People("동기"))
+        peopleList.add(People("민기"))
+        peopleList.add(People("윤권"))
+        peopleList.add(People("정민"))
+        peopleList.add(People("동기"))
 
         detailSettleFundingPeopleListAdapter = DetailSettleFundingPeopleListAdapter(peopleList)
 
         binding.apply {
             fundingSettlePeopleList.apply {
                 adapter = detailSettleFundingPeopleListAdapter
-                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+                // VariableScrollSpeedLinearLayoutManager for change scroll speed
+                val linearLayoutManager =
+                    VariableScrollSpeedLinearLayoutManager(requireActivity(), 8F)
+                linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                this.layoutManager = linearLayoutManager
+
             }
         }
 
 
     }
+
+    class VariableScrollSpeedLinearLayoutManager(context: Context?, private val factor: Float) :
+        LinearLayoutManager(context) {
+        override fun smoothScrollToPosition(
+            recyclerView: RecyclerView,
+            state: RecyclerView.State,
+            position: Int
+        ) {
+            val linearSmoothScroller: LinearSmoothScroller =
+                object : LinearSmoothScroller(recyclerView.context) {
+                    override fun computeScrollVectorForPosition(targetPosition: Int): PointF? {
+
+                        return this@VariableScrollSpeedLinearLayoutManager
+                            .computeScrollVectorForPosition(
+                            targetPosition
+                        )
+                    }
+
+                    override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
+                        return super.calculateSpeedPerPixel(displayMetrics) * factor
+                    }
+                }
+            linearSmoothScroller.targetPosition = position
+            startSmoothScroll(linearSmoothScroller)
+        }
+
+    }
+
 
     private fun animateProgressBar() {
         val animator = ValueAnimator.ofInt(0, 100)
