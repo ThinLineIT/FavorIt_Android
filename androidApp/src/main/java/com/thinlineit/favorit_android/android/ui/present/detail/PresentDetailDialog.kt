@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import com.thinlineit.favorit_android.android.databinding.DialogPresentDetailBinding
 import com.thinlineit.favorit_android.android.di.GlideApp
-import com.thinlineit.favorit_android.android.ui.present.list.Present
+import com.thinlineit.favorit_android.android.data.entity.Present
 
 class PresentDetailDialog(
     context: Context,

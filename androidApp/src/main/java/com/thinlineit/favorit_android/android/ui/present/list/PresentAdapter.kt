@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.databinding.ItemPresentListBinding
 import com.thinlineit.favorit_android.android.di.GlideApp
 import com.thinlineit.favorit_android.android.util.BindingRecyclerViewAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class PresentAdapter(

@@ -1,4 +1,4 @@
-package com.thinlineit.favorit_android.android.ui.present.list
+package com.thinlineit.favorit_android.android.data.entity
 
 import com.google.gson.annotations.SerializedName
 

@@ -18,6 +18,7 @@ data class Funding(
     @SerializedName("link_for_sharing")
     val fundingLink: String,
     val product: Product,
+    val image: String,
 )
 
 enum class FundingState {

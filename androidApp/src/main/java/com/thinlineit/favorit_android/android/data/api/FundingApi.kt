@@ -9,7 +9,7 @@ import com.thinlineit.favorit_android.android.data.entity.PresentResult
 import com.thinlineit.favorit_android.android.data.entity.ResponseBody
 import com.thinlineit.favorit_android.android.data.entity.SettleFundingRequest
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingResult
-import com.thinlineit.favorit_android.android.ui.present.list.Present
+import com.thinlineit.favorit_android.android.data.entity.Present
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
