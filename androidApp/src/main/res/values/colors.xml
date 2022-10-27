@@ -6,6 +6,8 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="blue">#92D2FF</color>
+    <color name="progressBlue">#A3CEF5</color>
+    <color name="progressBackground">#F9EDE5</color>
     <color name="lightBlue">#E6F6FF</color>
     <color name="lightGray">#CECECE</color>
     <color name="black">#000000</color>
@@ -18,5 +20,6 @@
     <color name="skyBlue">#BCDFFF</color>
     <color name="babyPink">#EE94EB</color>
     <color name="darkBlue">#99222797</color>
+    <color name="apricot">#FFFBF8</color>
 
 </resources>
