@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.databinding.ActivityFundingDetailBinding
-import com.thinlineit.favorit_android.android.ui.present.PresentActivity
 import com.thinlineit.favorit_android.android.ui.settlefunding.SettleFundingActivity
+import com.thinlineit.favorit_android.android.ui.present.list.PresentListActivity
 import com.thinlineit.favorit_android.android.util.longToast
 import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
