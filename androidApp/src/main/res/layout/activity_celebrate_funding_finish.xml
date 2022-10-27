@@ -92,15 +92,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ProgressBar
+            <com.thinlineit.favorit_android.android.ui.customview.IndicatorProgressBar
                 android:id="@+id/moneyProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:progress="0"
-                android:progressBackgroundTint="@color/blue"
-                android:progressTint="@color/blue"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -204,7 +204,7 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
         animator.duration = 2 * DateUtils.SECOND_IN_MILLIS
         animator.interpolator = AccelerateDecelerateInterpolator()
         animator.addUpdateListener { animation ->
-            binding.moneyProgressBar.progress = animation.animatedValue as Int
+            binding.moneyProgressBar.setProgress(animation.animatedValue as Int)
         }
         animator.start()
     }
