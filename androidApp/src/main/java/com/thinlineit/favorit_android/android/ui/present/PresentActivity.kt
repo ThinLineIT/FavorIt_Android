@@ -122,11 +122,13 @@ class PresentActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context, fundingId: Int) {
-            val intent = Intent(context, PresentActivity::class.java).apply {
+            context.startActivity(getIntent(context, fundingId))
+        }
+
+        fun getIntent(context: Context, fundingId: Int) =
+            Intent(context, PresentActivity::class.java).apply {
                 putExtra(FUNDING_ID, fundingId)
             }
-            context.startActivity(intent)
-        }
 
         const val FUNDING_ID = "FUNDING_ID"
     }

@@ -4,19 +4,34 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.graphics.drawable.Animatable2.AnimationCallback
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
+import com.thinlineit.favorit_android.android.data.entity.FundingState
 import com.thinlineit.favorit_android.android.databinding.ActivityFundingDetailBinding
-import com.thinlineit.favorit_android.android.ui.present.PresentActivity
-import com.thinlineit.favorit_android.android.ui.settlefunding.SettleFundingActivity
+import com.thinlineit.favorit_android.android.ui.dialog.BottomUpDialog
+import com.thinlineit.favorit_android.android.ui.present.list.PresentListActivity
 import com.thinlineit.favorit_android.android.util.longToast
 import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class FundingDetailActivity : AppCompatActivity() {
@@ -33,92 +48,127 @@ class FundingDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.apply {
-            lifecycleOwner = this@FundingDetailActivity
-            viewModel = this@FundingDetailActivity.viewModel
-        }
-        initView()
         initObserver()
+        initView()
     }
 
     private fun initObserver() {
         viewModel.loadFundingResult.observe(this) {
             when (it) {
-                is Result.Loading -> {
-                    // nothing to do
-                }
+                is Result.Loading -> Unit
                 is Result.Fail -> {
                     shortToast("Fail to load funding")
                     finish()
                 }
-                is Result.Success -> {
-                    // nothing to do
-                }
+                is Result.Success -> Unit
             }
         }
-
-        viewModel.closeFundingResult.observe(this) {
+        viewModel.fundingStatus.observe(this) {
             when (it) {
-                is Result.Loading -> {
-                    // nothing to do
+                FundingState.OPENED -> {
+                    binding.settleButton.setImageResource(R.drawable.ic_closed_gift_box)
                 }
-                is Result.Fail -> {
-                    shortToast("Fail to close funding")
+                FundingState.EXPIRED -> {
+                    binding.settleButton.setImageResource(R.drawable.ic_closed_gift_box)
                 }
-                is Result.Success -> {
-                    binding.detailActionLayout.visibility = View.VISIBLE
-                    binding.detailActionLayoutWhenAskingClose.visibility = View.GONE
-                    val fundingName = viewModel.funding.value?.name ?: return@observe
-                    SettleFundingActivity.start(this, viewModel.fundingId, fundingName)
+                FundingState.CLOSED -> {
+                    launchFundingCloseAnimAndSetClose()
+                }
+                FundingState.COMPLETED -> {
+                    binding.settleButton.setImageResource(R.drawable.ic_closed_gift_box)
                 }
             }
         }
-
-        viewModel.showExpiredAlertDialog.observe(this) { showExpiredAlertDialog ->
-            if (showExpiredAlertDialog) {
-                ExpiredAlertDialog().show(supportFragmentManager, "ExpiredAlert")
-            }
+        viewModel.intentLiveData.observe(this) {
+            startActivity(it)
         }
-
-        viewModel.goToClosedFundingActivity.observe(this) { goToClosedFundingActivity ->
-            if (goToClosedFundingActivity) {
-                val fundingName = viewModel.funding.value?.name ?: return@observe
-                SettleFundingActivity.start(this, viewModel.fundingId, fundingName)
-            }
+        viewModel.funding.observe(this) {
+            binding.fundingProgressNameTextView.text = it.name
+            binding.fundingProgressBar.setProgress(it.progressPercentage)
+        }
+        viewModel.fundingExpiredDateString.observe(this){
+            binding.fundingProgressExpiredDateTextView.text = it
+        }
+        viewModel.presentStatusString.observe(this) {
+            binding.fundingProgressPresentStatusTextView.text = it
         }
     }
 
-    private fun initView() {
-        binding.goToSeeProductTextView.setOnClickListener {
-            val productLink = viewModel.funding.value?.product?.link
-                ?: run {
-                    shortToast("ProductLink is invalid")
-                    return@setOnClickListener
+    private fun launchFundingCloseAnimAndSetClose() {
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.gif_funding_closing) //Your gif resource
+            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+            .listener(object : RequestListener<GifDrawable?> {
+                override fun onResourceReady(
+                    resource: GifDrawable?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<GifDrawable?>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    resource?.setLoopCount(1)
+                    resource?.registerAnimationCallback(object :
+                        Animatable2Compat.AnimationCallback() {
+                        override fun onAnimationEnd(drawable: Drawable?) {
+                            super.onAnimationEnd(drawable)
+                            binding.settleButton.setImageResource(R.drawable.ic_closed_gift_box)
+                        }
+                    })
+                    return false
                 }
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(productLink))
-            startActivity(intent)
+
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<GifDrawable?>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+            }).into(binding.settleButton)
+    }
+
+    private fun initView() {
+        binding.presentButton.setOnClickListener {
+            viewModel.present(this)
         }
-        binding.fundingLinkButtonLayout.setOnClickListener {
-            val fundingLink = viewModel.funding.value?.fundingLink
+        binding.fundingInfoButton.setOnClickListener {
+            val funding = viewModel.funding.value ?: return@setOnClickListener
+            FundingInfoDialog(binding.root.context, funding).apply {
+                show()
+            }
+        }
+        binding.copyFundingLinkButton.setOnClickListener {
+            val fundingLink = viewModel.funding.value?.fundingLink ?: return@setOnClickListener
             val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            val clip =
-                ClipData.newPlainText(getString(R.string.label_funding_link), fundingLink)
+            val clip = ClipData.newPlainText(getString(R.string.label_funding_link), fundingLink)
             clipboardManager.setPrimaryClip(clip)
             longToast(getString(R.string.label_copy_complete))
         }
-        binding.goToPresent.setOnClickListener {
-            PresentActivity.start(this, viewModel.fundingId)
+        binding.settleButton.setOnClickListener {
+            if (viewModel.fundingStatus.value == FundingState.CLOSED) {
+                viewModel.settle()
+            } else {
+                PresentListActivity.start(this, viewModel.fundingId)
+            }
         }
-        binding.askCloseFunding.setOnClickListener {
-            binding.detailActionLayout.visibility = View.GONE
-            binding.detailActionLayoutWhenAskingClose.visibility = View.VISIBLE
-        }
-        binding.keepFundingOpenButton.setOnClickListener {
-            binding.detailActionLayout.visibility = View.VISIBLE
-            binding.detailActionLayoutWhenAskingClose.visibility = View.GONE
-        }
-        binding.closeFundingButton.setOnClickListener {
-            viewModel.closeFunding()
+        binding.closeButton.setOnClickListener {
+            if (viewModel.isClosable) {
+                BottomUpDialog(this).apply {
+                    bodyText = "마감하면 더 이상 선물을 받을 수 없습니다."
+                    bodySubText = "펀딩을 마감할까요?"
+                    confirmButtonText = "네, 마감할게요!"
+                    dismissButtonText = "계속 진행하고 싶어요!"
+                    confirmClickListener = {
+                        viewModel.close()
+                        this.dismiss()
+                    }
+                    dismissClickListener = {
+                        this.dismiss()
+                    }
+                }.show()
+            }
         }
     }
 

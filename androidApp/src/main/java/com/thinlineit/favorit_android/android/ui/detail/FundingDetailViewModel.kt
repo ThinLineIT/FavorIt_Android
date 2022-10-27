@@ -1,17 +1,19 @@
 package com.thinlineit.favorit_android.android.ui.detail
 
-import android.view.View
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingState
+import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUseCase
-import com.thinlineit.favorit_android.android.util.NumberFormatter
+import com.thinlineit.favorit_android.android.ui.present.PresentActivity
+import com.thinlineit.favorit_android.android.util.dDayFromToday
 import com.thinlineit.favorit_android.android.util.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -26,73 +28,87 @@ class FundingDetailViewModel @Inject constructor(
     private val _loadFundingResult = MutableLiveData<Result<Funding>>(Result.Loading(false))
     val loadFundingResult: LiveData<Result<Funding>> = _loadFundingResult
 
-    val funding: LiveData<Funding?> = Transformations.map(loadFundingResult) {
-        when (it) {
-            is Result.Loading -> null
-            is Result.Fail -> null
-            is Result.Success -> it.data
+    val intentLiveData = MutableLiveData<Intent>()
+
+    val funding: MutableLiveData<Funding> = MutableLiveData()
+    val fundingExpiredDateString: LiveData<String> = Transformations.map(funding) {
+        when(it.state) {
+            FundingState.OPENED -> {
+                val dDay = it.expiredDate.toDate()?.dDayFromToday()
+                "펀딩 마감까지 ${dDay}일 남았어요"
+            }
+            FundingState.EXPIRED -> {
+                "펀딩이 만료되었습니다."
+            }
+            FundingState.CLOSED -> {
+                "펀딩이 마감되었습니다."
+            }
+            FundingState.COMPLETED -> {
+                "펀딩이 완료되었습니다."
+            }
         }
     }
-
-    val fundingDateProgressPercentage: LiveData<Int> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map 0
-        val startDateTime = funding.startDate.toDate()?.time ?: return@map 0
-        val endDateTime = funding.expiredDate.toDate()?.time ?: return@map 0
-        val currentTime = System.currentTimeMillis()
-        return@map ((currentTime - startDateTime) / (endDateTime - startDateTime).toFloat() * 100).toInt()
-            .takeIf { it <= 100 } ?: 100
+    val presentList: MutableLiveData<List<Present>> = MutableLiveData()
+    val presentStatusString: LiveData<String> = Transformations.map(presentList){
+        "${it.count()}명이 선물해줬어요."
     }
 
-    val fundingPriceAsCurrency: LiveData<String> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map ""
-        else NumberFormatter.asCurrency(funding.product.price.toLong())
+    val fundingStatus: LiveData<FundingState> = Transformations.map(funding) {
+        it.state
     }
 
-    val presentable: LiveData<Boolean> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        funding.state == FundingState.OPENED
-    }
-    val goToPresentText: LiveData<Int> = Transformations.map(presentable) { presentable ->
-        if (presentable) R.string.button_present
-        else R.string.button_already_closed_funding
-    }
+    val isClosable: Boolean
+        get() {
+            val funding = funding.value ?: return false
+            val isNotClosed =
+                funding.state == FundingState.OPENED || funding.state == FundingState.EXPIRED
+            return funding.isMaker && isNotClosed
+        }
 
-    private val closable: LiveData<Boolean> = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        val isClosable =
-            funding.state == FundingState.OPENED || funding.state == FundingState.EXPIRED
-        funding.isMaker && isClosable
-    }
-    val askCloseFundingVisibility: LiveData<Int> = Transformations.map(closable) { closable ->
-        if (closable) View.VISIBLE
-        else View.GONE
-    }
-
-    private val _closeFundingResult = MutableLiveData<Result<Unit>>()
-    val closeFundingResult: LiveData<Result<Unit>> = _closeFundingResult
-
-    val showExpiredAlertDialog = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        funding.state == FundingState.EXPIRED && funding.isMaker
-    }
-
-    val goToClosedFundingActivity = Transformations.map(funding) { funding ->
-        if (funding == null) return@map false
-        funding.state == FundingState.CLOSED && funding.isMaker
-    }
 
     fun loadFundingDetail(fundingId: Int) {
         this.fundingId = fundingId
 
         viewModelScope.launch {
             _loadFundingResult.postValue(Result.Loading(true))
-            _loadFundingResult.postValue(fundingDetailUseCase.getFunding(fundingId))
+            val loadFundingResult = fundingDetailUseCase.getFunding(fundingId)
+            _loadFundingResult.postValue(loadFundingResult)
+            if (loadFundingResult is Result.Success) {
+                funding.value = loadFundingResult.data
+            }
+        }
+        viewModelScope.launch {
+            val result = fundingDetailUseCase.getPresentList(fundingId)
+            if(result is Result.Success) {
+                presentList.value = result.data
+            }
         }
     }
 
-    fun closeFunding() {
+    fun present(context: Context) {
+        val presentable = funding.value?.state == FundingState.OPENED
+        if (presentable) {
+            intentLiveData.value = PresentActivity.getIntent(context, fundingId)
+        }
+    }
+
+    fun close() {
         viewModelScope.launch {
-            _closeFundingResult.postValue(fundingDetailUseCase.closeFunding(fundingId))
+            if (isClosable) {
+                val result = fundingDetailUseCase.closeFunding(fundingId)
+                if (result is Result.Success) {
+                    loadFundingDetail(fundingId)
+                }
+            }
+        }
+    }
+
+    fun settle() {
+        viewModelScope.launch {
+            val funding = funding.value ?: return@launch
+            if (funding.state == FundingState.CLOSED) {
+                // TODO: Go to celebrate funding activity
+            }
         }
     }
 }

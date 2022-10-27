@@ -2,7 +2,9 @@ package com.thinlineit.favorit_android.android.ui.present.list
 
 import androidx.lifecycle.*
 import com.thinlineit.favorit_android.android.data.Result
+import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.ui.present.list.PresentAdapter.Companion.MAX_PRESENT_COUNT_EACH_PAGE
+import com.thinlineit.favorit_android.android.ui.present.list.PresentListActivity.Companion.FUNDING_ID
 import com.thinlineit.favorit_android.android.ui.present.usecase.GetPresentList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,7 +31,7 @@ class PresentListViewModel @Inject constructor(
     val pagingEvent: LiveData<PagingEvent> = _pagingEvent
 
     init {
-        val fundingId = 83 /*state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")*/
+        val fundingId = state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")
         loadPresentList(fundingId)
     }
 
