@@ -127,9 +127,6 @@ class FundingDetailActivity : AppCompatActivity() {
                     return false
                 }
             }).into(binding.settleButton)
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(1500)
-        }
     }
 
     private fun initView() {
