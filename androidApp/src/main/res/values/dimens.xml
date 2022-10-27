@@ -1,5 +1,4 @@
 <resources>
-<<<<<<< HEAD
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="funding_item_width">150dp</dimen>
     <dimen name="funding_item_height">215dp</dimen>
@@ -17,6 +16,4 @@
     <dimen name="exit_size">30dp</dimen>
     <dimen name="exit_left_margin">15dp</dimen>
 
-=======
->>>>>>> main
 </resources>
