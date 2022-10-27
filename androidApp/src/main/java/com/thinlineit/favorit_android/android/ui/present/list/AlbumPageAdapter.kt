@@ -1,15 +1,12 @@
 package com.thinlineit.favorit_android.android.ui.present.list
 
-import android.app.ProgressDialog.show
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.thinlineit.favorit_android.android.R
+import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.databinding.PagePresentListBinding
 import com.thinlineit.favorit_android.android.ui.present.detail.PresentDetailDialog
 

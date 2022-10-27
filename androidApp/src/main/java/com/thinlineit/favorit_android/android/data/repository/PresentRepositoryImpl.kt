@@ -1,7 +1,5 @@
 package com.thinlineit.favorit_android.android.data.repository
 
-import android.content.ContentResolver
-import androidx.core.net.toFile
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.api.FundingApi
 import com.thinlineit.favorit_android.android.data.entity.PresentRequest
@@ -10,7 +8,6 @@ import com.thinlineit.favorit_android.android.data.entity.Present
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 import javax.inject.Inject
 
 class PresentRepositoryImpl @Inject constructor(
