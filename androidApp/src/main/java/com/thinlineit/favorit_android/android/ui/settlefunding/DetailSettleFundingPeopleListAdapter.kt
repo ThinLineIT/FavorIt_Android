@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.entity.Present
+import com.thinlineit.favorit_android.android.di.GlideApp
 
 class DetailSettleFundingPeopleListAdapter(private val presentList: ArrayList<Present>) :
     RecyclerView.Adapter<DetailSettleFundingPeopleListAdapter.PeopleInfoHolder>() {
@@ -28,7 +29,10 @@ class DetailSettleFundingPeopleListAdapter(private val presentList: ArrayList<Pr
             }
             view.findViewById<TextView>(R.id.peopleNameTextView).text =
                 presentData.supporterNickName
-            //view.findViewById<ImageView>(R.id.peopleImageView).setImageURI(presentData.photo)
+            GlideApp.with(view.context)
+                .load(presentData.photo)
+                .centerCrop()
+                .into(view.findViewById(R.id.peopleImageView))
         }
     }
 
