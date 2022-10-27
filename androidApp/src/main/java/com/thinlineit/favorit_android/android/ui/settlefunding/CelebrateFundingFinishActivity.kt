@@ -218,11 +218,15 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
         const val PRESENT_LIST = "presentList"
 
         fun start(context: Context, funding: Funding, presentList: ArrayList<Present>) {
-            val intent = Intent(context, CelebrateFundingFinishActivity::class.java).apply {
+            val intent = getIntent(context, funding, presentList)
+            context.startActivity(intent)
+        }
+
+        fun getIntent(context: Context, funding: Funding, presentList: ArrayList<Present>): Intent {
+            return Intent(context, CelebrateFundingFinishActivity::class.java).apply {
                 putExtra(FUNDING, funding)
                 putExtra(PRESENT_LIST, presentList)
             }
-            context.startActivity(intent)
         }
     }
 }
