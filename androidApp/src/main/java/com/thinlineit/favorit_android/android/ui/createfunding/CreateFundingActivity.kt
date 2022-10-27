@@ -20,6 +20,7 @@ import com.thinlineit.favorit_android.android.databinding.ActivityCreateFundingB
 import com.thinlineit.favorit_android.android.ui.MainActivity
 import com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarView
 import com.thinlineit.favorit_android.android.ui.customview.numberkeypad.NumberKeyPadView
+import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.util.checkPermission
 import com.thinlineit.favorit_android.android.util.fileFromContentUri
 import com.thinlineit.favorit_android.android.util.shortToast
@@ -113,7 +114,7 @@ class CreateFundingActivity : AppCompatActivity() {
             }
 
             it.goToBackButton.setOnClickListener {
-                MainActivity.start(this)
+                finish()
             }
         }
     }
@@ -137,24 +138,26 @@ class CreateFundingActivity : AppCompatActivity() {
 
     private fun datePickerVisible(value: Boolean) {
         if (value) {
-            imm?.hideSoftInputFromWindow(binding.fundingName.windowToken, 0)
-            imm?.hideSoftInputFromWindow(binding.content.windowToken, 0)
-            imm?.hideSoftInputFromWindow(binding.linkText.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.fundingName.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.content.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.linkText.windowToken, 0)
             binding.fundingName.clearFocus()
             binding.content.clearFocus()
             binding.linkText.clearFocus()
+            numberKeypadVisible(false)
             binding.calendarDatePicker.visibility = View.VISIBLE
             calendarOnBackPressedCallback.isEnabled = true
         } else {
             binding.calendarDatePicker.visibility = View.GONE
+            calendarOnBackPressedCallback.isEnabled = false
         }
     }
 
     private fun numberKeypadVisible(value: Boolean) {
         if (value) {
-            imm?.hideSoftInputFromWindow(binding.fundingName.windowToken, 0)
-            imm?.hideSoftInputFromWindow(binding.content.windowToken, 0)
-            imm?.hideSoftInputFromWindow(binding.linkText.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.fundingName.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.content.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.linkText.windowToken, 0)
             binding.fundingName.clearFocus()
             binding.content.clearFocus()
             binding.linkText.clearFocus()
@@ -162,6 +165,7 @@ class CreateFundingActivity : AppCompatActivity() {
             numberKeyPadOnBackPressedCallback.isEnabled = true
         } else {
             binding.numberKeyPad.visibility = View.GONE
+            numberKeyPadOnBackPressedCallback.isEnabled = false
         }
     }
 
@@ -211,9 +215,7 @@ class CreateFundingActivity : AppCompatActivity() {
                 }
                 is Result.Success -> {
                     binding.createButton.isEnabled = true
-                    this.shortToast("성공")
-                    // TODO: go to funding detail
-                    // (result.data.fundingLink, result.data.fundingID)
+                    FundingDetailActivity.start(this, result.data.fundingID)
                 }
             }
         }

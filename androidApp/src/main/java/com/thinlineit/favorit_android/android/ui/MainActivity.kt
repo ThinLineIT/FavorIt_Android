@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        fun start(context: Context) {
+            start(context, FundingDetailActivity.INVALID_FUNDING_ID)
+        }
+
         fun start(context: Context, fundingId: Int) {
             val intent = Intent(context, MainActivity::class.java).apply {
                 putExtra(FundingDetailActivity.FUNDING_ID, fundingId)
