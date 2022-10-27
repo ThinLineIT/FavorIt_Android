@@ -98,4 +98,9 @@
     <string name="label_settlement_is_over">정산 완료되었습니다! \n 좋은 선물 사세요 :)</string>
     <string name="title_activity_funding_list">FundingListActivity</string>
 
+    <!-- fundingList -->
+    <string name="label_my_funding_list">내가 만든 펀딩(*/ω＼*)</string>
+    <string name="label_friend_funding_list">친구들의 펀딩 (●\'e\'●)</string>
+    <string name="label_empty_funding_list">"아직 공유받은 펀딩이 없어요"</string>
+
 </resources>
