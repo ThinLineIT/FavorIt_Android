@@ -3,16 +3,18 @@ package com.thinlineit.favorit_android.android.ui.settlefunding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thinlineit.favorit_android.android.R
+import com.thinlineit.favorit_android.android.data.entity.Present
 
-class DetailSettleFundingPeopleListAdapter(private val peopleList: MutableList<People>) :
+class DetailSettleFundingPeopleListAdapter(private val presentList: ArrayList<Present>) :
     RecyclerView.Adapter<DetailSettleFundingPeopleListAdapter.PeopleInfoHolder>() {
 
     inner class PeopleInfoHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bindInfo(peopleData: People) {
+        fun bindInfo(presentData: Present) {
             when (layoutPosition % 3) {
                 0 -> view.rotation = 0f
                 1 -> {
@@ -24,7 +26,9 @@ class DetailSettleFundingPeopleListAdapter(private val peopleList: MutableList<P
                     view.y = view.y - 40
                 }
             }
-            view.findViewById<TextView>(R.id.peopleNameTextView).text = peopleData.name
+            view.findViewById<TextView>(R.id.peopleNameTextView).text =
+                presentData.supporterNickName
+            //view.findViewById<ImageView>(R.id.peopleImageView).setImageURI(presentData.photo)
         }
     }
 
@@ -38,10 +42,10 @@ class DetailSettleFundingPeopleListAdapter(private val peopleList: MutableList<P
 
     override fun onBindViewHolder(holder: PeopleInfoHolder, position: Int) {
         holder.apply {
-            bindInfo(peopleList[position])
+            bindInfo(presentList[position])
         }
     }
 
-    override fun getItemCount(): Int = peopleList.size
+    override fun getItemCount(): Int = presentList.size
 
 }

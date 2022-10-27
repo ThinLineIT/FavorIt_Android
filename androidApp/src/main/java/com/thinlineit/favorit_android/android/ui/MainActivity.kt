@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.thinlineit.favorit_android.android.data.entity.Funding
+import com.thinlineit.favorit_android.android.data.entity.FundingState
+import com.thinlineit.favorit_android.android.data.entity.Present
+import com.thinlineit.favorit_android.android.data.entity.Product
 import com.thinlineit.favorit_android.android.databinding.ActivityMainBinding
 import com.thinlineit.favorit_android.android.ui.createfunding.CreateFundingActivity
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
@@ -54,7 +58,97 @@ class MainActivity : AppCompatActivity() {
                 PresentListActivity.start(this@MainActivity, 95)
             }
             goToFundingSettleButton.setOnClickListener {
-                CelebrateFundingFinishActivity.start(this@MainActivity, 3, "minki")
+                val funding = Funding(
+                    "홍민기",
+                    "아이패드 사줘요",
+                    FundingState.COMPLETED,
+                    true,
+                    "2022.10.10",
+                    "2022.10.25",
+                    70,
+                    "naver.com",
+                    Product(
+                        "naver.com",
+                        "에어3세대",
+                        540000
+                    ),
+                    "Ipad.jpg"
+                )
+                val presentList = ArrayList<Present>()
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "윤권",
+                        "이거나 먹어",
+                        "photo1.jpg",
+                        300000
+                    )
+                )
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "정빈",
+                        "이거나 먹어",
+                        "photo2.jpg",
+                        100000
+                    )
+                )
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "정민",
+                        "이거나 먹어",
+                        "photo3.jpg",
+                        120000
+                    )
+                )
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "동기",
+                        "이거나 먹어",
+                        "photo4.jpg",
+                        260000
+                    )
+                )
+
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "윤권",
+                        "이거나 먹어",
+                        "photo1.jpg",
+                        300000
+                    )
+                )
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "정빈",
+                        "이거나 먹어",
+                        "photo2.jpg",
+                        100000
+                    )
+                )
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "정민",
+                        "이거나 먹어",
+                        "photo3.jpg",
+                        120000
+                    )
+                )
+                presentList.add(
+                    Present(
+                        "홍민기",
+                        "동기",
+                        "이거나 먹어",
+                        "photo4.jpg",
+                        260000
+                    )
+                )
+                CelebrateFundingFinishActivity.start(this@MainActivity, funding, presentList)
             }
         }
     }

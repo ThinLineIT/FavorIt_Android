@@ -138,7 +138,7 @@ class DetailSettleFundingFrgment : Fragment() {
         peopleList.add(People("정민"))
         peopleList.add(People("동기"))
 
-        detailSettleFundingPeopleListAdapter = DetailSettleFundingPeopleListAdapter(peopleList)
+        //detailSettleFundingPeopleListAdapter = DetailSettleFundingPeopleListAdapter(peopleList)
 
         binding.apply {
             fundingSettlePeopleList.apply {
