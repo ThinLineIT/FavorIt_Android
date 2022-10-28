@@ -39,8 +39,6 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
     }
 
     private lateinit var detailSettleFundingPeopleListAdapter: DetailSettleFundingPeopleListAdapter
-    private lateinit var peopleList: ArrayList<People>
-
     private lateinit var presentList: ArrayList<Present>
     private lateinit var funding: Funding
 
@@ -93,16 +91,16 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.apply {
-            fundingSettlePeopleTagTextView.text = presentList.size.toString() + " 명이 선물해 줬어요"
+            fundingSettlePeopleTagTextView.text = "${presentList.size} 명이 선물해 줬어요"
             // 일자 확인 후 연산 해서 일수 측정 필요
             fundingSettleDayTagTextView.text = funding.expiredDate
             // 000, 000 형태로 변환 필요
-            targetAmountTextView.text = "목표금액은 " + funding.product.price.toString() + " 원"
+            targetAmountTextView.text = "목표금액은 ${funding.product.price}원"
 
             var achievedAmount = 0
             for (present in presentList) achievedAmount += present.amount
 
-            achievedAmountTextView.text = achievedAmount.toString() + "원을 모았어요"
+            achievedAmountTextView.text = "${achievedAmount}원을 모았어요"
 
         }
 
@@ -136,25 +134,9 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
             .into(binding.boxImageView)
 
         binding.goToBank.setOnClickListener {
-            /*navController.navigate(
-                DetailSettleFundingFrgmentDirections
-                    .actionDetailFundingSettleFragmentToClosedFundingFragment()
-            )*/
+            /*SettleFundingActivity.start(this, 1, funding.name)*/
         }
         detailSettleFundingPeopleListAdapter = DetailSettleFundingPeopleListAdapter(presentList)
-
-
-        /*peopleList = ArrayList()
-        peopleList.add(People("민기"))
-        peopleList.add(People("윤권"))
-        peopleList.add(People("정민"))
-        peopleList.add(People("동기"))
-        peopleList.add(People("민기"))
-        peopleList.add(People("윤권"))
-        peopleList.add(People("정민"))
-        peopleList.add(People("동기"))*/
-
-        //
 
         binding.apply {
             fundingSettlePeopleList.apply {
@@ -211,9 +193,6 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
 
 
     companion object {
-        const val FUNDING_ID = "fundingId"
-        const val FUNDING_NAME = "fundingName"
-
         const val FUNDING = "funding"
         const val PRESENT_LIST = "presentList"
 

@@ -58,98 +58,102 @@ class MainActivity : AppCompatActivity() {
                 PresentListActivity.start(this@MainActivity, 95)
             }
             goToFundingSettleButton.setOnClickListener {
-                val funding = Funding(
-                    "홍민기",
-                    "아이패드 사줘요",
-                    FundingState.COMPLETED,
-                    true,
-                    "2022.10.10",
-                    "2022.10.25",
-                    70,
-                    "naver.com",
-                    Product(
-                        "naver.com",
-                        540000,
-                    ),
-                    "Ipad.jpg"
-                )
-                val presentList = ArrayList<Present>()
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "윤권",
-                        "이거나 먹어",
-                        "photo1.jpg",
-                        300000
-                    )
-                )
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "정빈",
-                        "이거나 먹어",
-                        "photo2.jpg",
-                        100000
-                    )
-                )
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "정민",
-                        "이거나 먹어",
-                        "photo3.jpg",
-                        120000
-                    )
-                )
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "동기",
-                        "이거나 먹어",
-                        "photo4.jpg",
-                        260000
-                    )
-                )
-
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "윤권",
-                        "이거나 먹어",
-                        "photo1.jpg",
-                        300000
-                    )
-                )
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "정빈",
-                        "이거나 먹어",
-                        "photo2.jpg",
-                        100000
-                    )
-                )
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "정민",
-                        "이거나 먹어",
-                        "photo3.jpg",
-                        120000
-                    )
-                )
-                presentList.add(
-                    Present(
-                        "홍민기",
-                        "동기",
-                        "이거나 먹어",
-                        "photo4.jpg",
-                        260000
-                    )
-                )
-                CelebrateFundingFinishActivity.start(this@MainActivity, funding, presentList)
+                makeMockData()
             }
         }
+    }
+
+    private fun makeMockData() {
+        val funding = Funding(
+            "홍민기",
+            "아이패드 사줘요",
+            FundingState.COMPLETED,
+            true,
+            "2022.10.10",
+            "2022.10.25",
+            70,
+            "naver.com",
+            Product(
+                "naver.com",
+                540000,
+            ),
+            "Ipad.jpg"
+        )
+        val presentList = ArrayList<Present>()
+        presentList.add(
+            Present(
+                "홍민기",
+                "윤권",
+                "이거나 먹어",
+                "photo1.jpg",
+                300000
+            )
+        )
+        presentList.add(
+            Present(
+                "홍민기",
+                "정빈",
+                "이거나 먹어",
+                "photo2.jpg",
+                100000
+            )
+        )
+        presentList.add(
+            Present(
+                "홍민기",
+                "정민",
+                "이거나 먹어",
+                "photo3.jpg",
+                120000
+            )
+        )
+        presentList.add(
+            Present(
+                "홍민기",
+                "동기",
+                "이거나 먹어",
+                "photo4.jpg",
+                260000
+            )
+        )
+
+        presentList.add(
+            Present(
+                "홍민기",
+                "윤권",
+                "이거나 먹어",
+                "photo1.jpg",
+                300000
+            )
+        )
+        presentList.add(
+            Present(
+                "홍민기",
+                "정빈",
+                "이거나 먹어",
+                "photo2.jpg",
+                100000
+            )
+        )
+        presentList.add(
+            Present(
+                "홍민기",
+                "정민",
+                "이거나 먹어",
+                "photo3.jpg",
+                120000
+            )
+        )
+        presentList.add(
+            Present(
+                "홍민기",
+                "동기",
+                "이거나 먹어",
+                "photo4.jpg",
+                260000
+            )
+        )
+        CelebrateFundingFinishActivity.start(this@MainActivity, funding, presentList)
     }
 
     companion object {

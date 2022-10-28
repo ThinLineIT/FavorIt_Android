@@ -33,7 +33,6 @@
             android:layout_marginTop="100dp"
             android:background="@drawable/icon_funding_settle_tag"
             android:gravity="center"
-            android:text="7명이 선물해줬어요"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="invisible"
@@ -61,7 +60,6 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/icon_funding_settle_tag"
             android:gravity="center"
-            android:text="12 일간의 펀딩이 완료되었습니다."
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="invisible"
@@ -85,7 +83,6 @@
                 android:id="@+id/targetAmountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="목표 금액은 1000,000,원"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@id/moneyProgressBar"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +101,6 @@
                 android:id="@+id/achievedAmountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="150,000원을 모았어요."
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -133,28 +129,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-
-
-    <!--
-    <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background"
-        tools:context=".ui.settlefunding.SettleFundingActivity">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentLayout"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/celebrate_funding_finish_nav_graph" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>-->
