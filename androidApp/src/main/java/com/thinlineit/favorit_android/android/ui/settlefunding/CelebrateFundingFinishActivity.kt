@@ -105,13 +105,13 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
             fundingSettleDayTagTextView.text = "${calcDDay(from!!, to)} 일간의 펀딩이 완료되었습니다."
 
             targetAmountTextView.text =
-                "목표금액은 ${NumberFormatter.asCurrency(funding.product.price.toLong())}원"
+                NumberFormatter.asCurrency(funding.product.price.toLong())
 
             var achievedAmount = 0
             for (present in presentList) achievedAmount += present.amount
 
             achievedAmountTextView.text =
-                "${NumberFormatter.asCurrency(achievedAmount.toLong())}원을 모았어요"
+                NumberFormatter.asCurrency(achievedAmount.toLong())
         }
 
         // play gif once

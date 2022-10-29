@@ -17,24 +17,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <ImageView
             android:id="@+id/fundingSettleBackgroundImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/background_dark"
-            android:visibility="invisible" />
-
+            android:visibility="invisible"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <TextView
             android:id="@+id/fundingSettlePeopleTagTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
+            android:layout_marginEnd="100dp"
             android:background="@drawable/icon_funding_settle_tag"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,13 +59,15 @@
 
         <TextView
             android:id="@+id/fundingSettleDayTagTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
             android:background="@drawable/icon_funding_settle_tag"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fundingSettlePeopleList" />
@@ -74,21 +80,44 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="80dp"
-            android:background="@drawable/background_round_white"
+            android:background="@drawable/background_celebrate_funding_finish"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@id/settleFundingButton"
             app:layout_constraintTop_toBottomOf="@id/fundingSettleDayTagTextView">
 
-            <TextView
-                android:id="@+id/targetAmountTextView"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@id/moneyProgressBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/beforeTargetAmountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="목표금액은   "
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/targetAmountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/targetAmountWonTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 원"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             <com.thinlineit.favorit_android.android.ui.customview.IndicatorProgressBar
                 android:id="@+id/moneyProgressBar"
@@ -98,16 +127,30 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/achievedAmountTextView"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/moneyProgressBar" />
+                app:layout_constraintTop_toBottomOf="@id/moneyProgressBar">
+
+                <TextView
+                    android:id="@+id/achievedAmountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 원을 모았어요"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -115,11 +158,11 @@
         <Button
             android:id="@+id/settleFundingButton"
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/background_round_shadow"
+            android:background="@drawable/background_celebrate_funding_finish"
             android:text="@string/button_get_settlement"
             android:textColor="@color/black"
             android:textSize="16sp"
