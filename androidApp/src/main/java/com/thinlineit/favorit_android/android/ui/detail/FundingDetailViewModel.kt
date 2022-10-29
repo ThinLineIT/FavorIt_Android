@@ -110,7 +110,7 @@ class FundingDetailViewModel @Inject constructor(
             val presentList = presentList.value ?: return@launch
             if (funding.state == FundingState.CLOSED) {
                 intentLiveData.value =
-                    CelebrateFundingFinishActivity.getIntent(context, funding, ArrayList(presentList))
+                    CelebrateFundingFinishActivity.getIntent(context,fundingId, funding, ArrayList(presentList))
             }
         }
     }

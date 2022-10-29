@@ -76,7 +76,7 @@
             android:layout_marginBottom="80dp"
             android:background="@drawable/background_round_white"
             android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@id/goToBank"
+            app:layout_constraintBottom_toTopOf="@id/settleFundingButton"
             app:layout_constraintTop_toBottomOf="@id/fundingSettleDayTagTextView">
 
             <TextView
@@ -111,7 +111,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/goToBank"
+            android:id="@+id/settleFundingButton"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="20dp"

@@ -40,20 +40,22 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
 
     private lateinit var detailSettleFundingPeopleListAdapter: DetailSettleFundingPeopleListAdapter
     private lateinit var presentList: ArrayList<Present>
+    private var fundingId: Int = 0
     private lateinit var funding: Funding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        fundingId = intent.getIntExtra(FUNDING_ID, 0)
+        funding = intent.getSerializableExtra(FUNDING) as Funding
+        presentList = intent.getSerializableExtra(PRESENT_LIST) as ArrayList<Present>
+        initView()
     }
 
     override fun onResume() {
         super.onResume()
 
-        funding = intent.getSerializableExtra("funding") as Funding
-        presentList = intent.getSerializableExtra("presentList") as ArrayList<Present>
-
-        initView()
         CoroutineScope(Dispatchers.Main).launch {
             delay(4000)
             binding.apply {
@@ -78,7 +80,7 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
                 animateProgressBar()
                 delay(2500)
 
-                fadeInView(goToBank)
+                fadeInView(settleFundingButton)
             }
         }
     }
@@ -101,7 +103,6 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
             for (present in presentList) achievedAmount += present.amount
 
             achievedAmountTextView.text = "${achievedAmount}원을 모았어요"
-
         }
 
         // play gif once
@@ -133,8 +134,8 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
             })
             .into(binding.boxImageView)
 
-        binding.goToBank.setOnClickListener {
-            /*SettleFundingActivity.start(this, 1, funding.name)*/
+        binding.settleFundingButton.setOnClickListener {
+            SettleFundingActivity.start(this, fundingId, funding.name)
         }
         detailSettleFundingPeopleListAdapter = DetailSettleFundingPeopleListAdapter(presentList)
 
@@ -193,16 +194,18 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
 
 
     companion object {
+        const val FUNDING_ID = "FUNDING_ID"
         const val FUNDING = "funding"
         const val PRESENT_LIST = "presentList"
 
-        fun start(context: Context, funding: Funding, presentList: ArrayList<Present>) {
-            val intent = getIntent(context, funding, presentList)
+        fun start(context: Context, fundingId: Int, funding: Funding, presentList: ArrayList<Present>) {
+            val intent = getIntent(context, fundingId, funding, presentList)
             context.startActivity(intent)
         }
 
-        fun getIntent(context: Context, funding: Funding, presentList: ArrayList<Present>): Intent {
+        fun getIntent(context: Context, fundingId: Int, funding: Funding, presentList: ArrayList<Present>): Intent {
             return Intent(context, CelebrateFundingFinishActivity::class.java).apply {
+                putExtra(FUNDING_ID, fundingId)
                 putExtra(FUNDING, funding)
                 putExtra(PRESENT_LIST, presentList)
             }

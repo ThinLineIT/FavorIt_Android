@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                 260000
             )
         )
-        CelebrateFundingFinishActivity.start(this@MainActivity, funding, presentList)
+        CelebrateFundingFinishActivity.start(this@MainActivity, 95, funding, presentList)
     }
 
     companion object {
