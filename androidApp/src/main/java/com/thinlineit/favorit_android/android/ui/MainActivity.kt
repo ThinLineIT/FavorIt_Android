@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity() {
             "아이패드 사줘요",
             FundingState.COMPLETED,
             true,
-            "2022.10.10",
-            "2022.10.25",
+            "2022-10-10",
+            "2022-10-25",
             70,
             "naver.com",
             Product(

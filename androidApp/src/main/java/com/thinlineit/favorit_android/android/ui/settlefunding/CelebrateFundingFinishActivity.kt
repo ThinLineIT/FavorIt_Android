@@ -25,10 +25,15 @@ import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.databinding.ActivityCelebrateFundingFinishBinding
+import com.thinlineit.favorit_android.android.util.NumberFormatter
+import com.thinlineit.favorit_android.android.util.calcDDay
+import com.thinlineit.favorit_android.android.util.toDate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CelebrateFundingFinishActivity : AppCompatActivity() {
 
@@ -94,15 +99,19 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
     private fun initView() {
         binding.apply {
             fundingSettlePeopleTagTextView.text = "${presentList.size} 명이 선물해 줬어요"
-            // 일자 확인 후 연산 해서 일수 측정 필요
-            fundingSettleDayTagTextView.text = funding.expiredDate
-            // 000, 000 형태로 변환 필요
-            targetAmountTextView.text = "목표금액은 ${funding.product.price}원"
+
+            val to = Date(System.currentTimeMillis())
+            val from = funding.startDate.toDate()
+            fundingSettleDayTagTextView.text = "${calcDDay(from!!, to)} 일간의 펀딩이 완료되었습니다."
+
+            targetAmountTextView.text =
+                "목표금액은 ${NumberFormatter.asCurrency(funding.product.price.toLong())}원"
 
             var achievedAmount = 0
             for (present in presentList) achievedAmount += present.amount
 
-            achievedAmountTextView.text = "${achievedAmount}원을 모았어요"
+            achievedAmountTextView.text =
+                "${NumberFormatter.asCurrency(achievedAmount.toLong())}원을 모았어요"
         }
 
         // play gif once
@@ -198,12 +207,22 @@ class CelebrateFundingFinishActivity : AppCompatActivity() {
         const val FUNDING = "funding"
         const val PRESENT_LIST = "presentList"
 
-        fun start(context: Context, fundingId: Int, funding: Funding, presentList: ArrayList<Present>) {
+        fun start(
+            context: Context,
+            fundingId: Int,
+            funding: Funding,
+            presentList: ArrayList<Present>
+        ) {
             val intent = getIntent(context, fundingId, funding, presentList)
             context.startActivity(intent)
         }
 
-        fun getIntent(context: Context, fundingId: Int, funding: Funding, presentList: ArrayList<Present>): Intent {
+        fun getIntent(
+            context: Context,
+            fundingId: Int,
+            funding: Funding,
+            presentList: ArrayList<Present>
+        ): Intent {
             return Intent(context, CelebrateFundingFinishActivity::class.java).apply {
                 putExtra(FUNDING_ID, fundingId)
                 putExtra(FUNDING, funding)
