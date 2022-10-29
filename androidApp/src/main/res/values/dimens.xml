@@ -1,4 +1,5 @@
 <resources>
+<<<<<<< HEAD
     <!-- landingPage -->
     <dimen name="pictures_height">112dp</dimen>
     <dimen name="pictures_bottom_margin">40dp</dimen>
@@ -11,5 +12,23 @@
     <dimen name="ribbon_height">100dp</dimen>
     <dimen name="pencil_height">120dp</dimen>
     <dimen name="default_margin_left">6dp</dimen>
+=======
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="funding_item_width">150dp</dimen>
+    <dimen name="funding_item_height">215dp</dimen>
+    <dimen name="funding_item_box_size">140dp</dimen>
+    <dimen name="funding_item_left_margin">30dp</dimen>
+    <dimen name="funding_item_right_margin">20dp</dimen>
+    <dimen name="funding_item_top_padding">40dp</dimen>
+    <dimen name="funding_item_image_size">120dp</dimen>
+    <dimen name="funding_list_name_width">216dp</dimen>
+    <dimen name="funding_list_name_height">57dp</dimen>
+    <dimen name="my_funding_list_left_margin">15dp</dimen>
+    <dimen name="friend_funding_list_left_margin">40dp</dimen>
+    <dimen name="default_top_margin">30dp</dimen>
+    <dimen name="green_tape_width">40dp</dimen>
+    <dimen name="exit_size">30dp</dimen>
+    <dimen name="exit_left_margin">15dp</dimen>
+>>>>>>> main
 
 </resources>

@@ -8,7 +8,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Surface
@@ -22,10 +30,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import com.skydoves.landscapist.glide.GlideImage
@@ -88,9 +97,9 @@ fun Main(viewModel: FundingListViewModel) {
     ) {
         Column {
             ExitButton()
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.default_top_margin)))
             MyFundingList(fundingList = myFundingList)
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.default_top_margin)))
             FriendFundingList(fundingList = friendFundingList)
         }
     }
@@ -100,56 +109,61 @@ fun Main(viewModel: FundingListViewModel) {
 fun ExitButton() {
     val activity = (LocalContext.current as? Activity)
     Column() {
-        Spacer(modifier = Modifier.height(27.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.default_top_margin)))
         Row() {
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.my_funding_list_left_margin)))
             Image(painter = painterResource(id = R.drawable.icon_exit),
                 contentDescription = "",
-                modifier = Modifier.size(32.dp).clickable {
-                    activity?.finish()
-                })
+                modifier = Modifier
+                    .size(dimensionResource(id = R.dimen.exit_size))
+                    .clickable {
+                        activity?.finish()
+                    })
         }
     }
 
 }
 
-
 @Composable
 fun MyFundingList(fundingList: List<FundingInfo>?) {
     Column() {
-        Box(modifier = Modifier.rotate(3f)) {
+        Box() {
             Image(
                 painter = painterResource(id = R.drawable.icon_my_funding),
                 contentDescription = "",
-                modifier = Modifier.width(216.dp).height(57.dp)
+                modifier = Modifier
+                    .width(dimensionResource(id = R.dimen.funding_list_name_width))
+                    .height(dimensionResource(id = R.dimen.funding_list_name_height))
             )
             Row(modifier = Modifier.align(Alignment.CenterStart)) {
-                Spacer(modifier = Modifier.width(20.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.exit_left_margin)))
                 Text(
-                    text = "내가 만든 펀딩(*/ω＼*)",
+                    text = stringResource(id = R.string.label_my_funding_list),
                     fontSize = 16.sp,
                     color = Color.White,
                     modifier = Modifier.rotate(3f)
                 )
             }
-
         }
         if (fundingList == null) {
-            Spacer(modifier = Modifier.width(30.dp))
-            CreateFunding()
+            Row() {
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_left_margin)))
+                CreateFunding()
+            }
         } else {
             LazyRow {
                 itemsIndexed(fundingList) { index, item ->
-                    Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_left_margin)))
                     if (index % 2 == 0)
                         FundingItem(funding = item, modifier = Modifier.rotate(10f))
                     else
                         FundingItem(funding = item, modifier = Modifier.rotate(-10f))
                     if (index == fundingList.lastIndex) {
-                        Spacer(modifier = Modifier.width(30.dp))
+                        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_left_margin)))
                         CreateFunding()
                     }
-                    Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_right_margin)))
+
                 }
             }
         }
@@ -162,35 +176,35 @@ fun FriendFundingList(fundingList: List<FundingInfo>?) {
         Box(
             modifier = Modifier
                 .align(Alignment.End)
-                .rotate(358f)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_friend_funding),
                 contentDescription = "",
-                modifier = Modifier.width(219.dp).height(58.dp)
+                modifier = Modifier
+                    .width(dimensionResource(id = R.dimen.funding_list_name_width))
+                    .height(dimensionResource(id = R.dimen.funding_list_name_height))
             )
             Row(modifier = Modifier.align(Alignment.CenterStart)) {
-                Spacer(modifier = Modifier.width(40.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.friend_funding_list_left_margin)))
                 Text(
-                    text = "친구들의 펀딩 (●'e'●)",
+                    text = stringResource(id = R.string.label_friend_funding_list),
                     fontSize = 16.sp,
                     color = Color.White,
-                    modifier = Modifier.rotate(357f)
+                    modifier = Modifier.rotate(-3f)
                 )
             }
-
         }
         if (fundingList == null) {
-            Text("아직 공유받은 펀딩이 없어요")
+            Text(stringResource(id = R.string.label_empty_funding_list))
         } else {
             LazyRow {
                 itemsIndexed(fundingList) { index, item ->
-                    Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_left_margin)))
                     if (index % 2 == 0)
                         FundingItem(funding = item, modifier = Modifier.rotate(10f))
                     else
                         FundingItem(funding = item, modifier = Modifier.rotate(-10f))
-                    Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_right_margin)))
                 }
             }
         }
@@ -202,28 +216,27 @@ fun FundingItem(funding: FundingInfo, modifier: Modifier) {
     val mContext = LocalContext.current
     Box(
         modifier = modifier
-            .width(168.dp)
-            .height(242.dp)
+            .width(dimensionResource(id = R.dimen.funding_item_width))
+            .height(dimensionResource(id = R.dimen.funding_item_height))
             .clickable {
                 FundingDetailActivity.start(mContext, funding.fundingID)
             }
     ) {
         Image(
             painter = painterResource(id = R.drawable.icon_funding_item),
-            contentDescription = "",
-            modifier = Modifier.width(168.dp).height(242.dp)
+            modifier = Modifier.fillMaxSize(),
+            contentDescription = ""
         )
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(30.dp))
-            Box(modifier = Modifier.size(168.dp)) {
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.default_top_margin)))
+            Box(modifier = Modifier.size(dimensionResource(id = R.dimen.funding_item_box_size))) {
                 GlideImage(
                     imageModel = funding.image,
                     modifier = Modifier
-                        .size(130.dp)
+                        .size(dimensionResource(id = R.dimen.funding_item_image_size))
                         .align(Alignment.Center),
                     placeHolder = ImageBitmap.imageResource(R.drawable.icon_celebrate),
                     error = ImageBitmap.imageResource(R.drawable.icon_celebrate)
@@ -231,15 +244,22 @@ fun FundingItem(funding: FundingInfo, modifier: Modifier) {
                 Image(
                     painter = painterResource(id = R.drawable.icon_green_tape),
                     contentDescription = "",
-                    modifier = Modifier.width(43.dp).height(39.dp).align(Alignment.TopEnd)
+                    modifier = Modifier
+                        .size(dimensionResource(id = R.dimen.green_tape_width))
+                        .align(Alignment.TopEnd)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.icon_green_tape),
                     contentDescription = "",
-                    modifier = Modifier.width(43.dp).height(39.dp).align(Alignment.BottomStart)
+                    modifier = Modifier
+                        .size(dimensionResource(id = R.dimen.green_tape_width))
+                        .align(Alignment.BottomStart)
                 )
-                Text(text = funding.name, modifier = Modifier.align(Alignment.BottomCenter))
             }
+            Text(
+                text = funding.name,
+                textAlign = TextAlign.Center
+            )
             Text(text = funding.dueDate, textAlign = TextAlign.Center)
         }
     }
@@ -251,7 +271,10 @@ fun CreateFunding() {
     Image(
         painter = painterResource(id = R.drawable.icon_create_funding),
         contentDescription = "",
-        modifier = Modifier.width(173.dp).height(242.dp).clickable {
-            CreateFundingActivity.start(mContext)
-        })
+        modifier = Modifier
+            .width(dimensionResource(id = R.dimen.funding_item_width))
+            .height(dimensionResource(id = R.dimen.funding_item_height))
+            .clickable {
+                CreateFundingActivity.start(mContext)
+            })
 }
