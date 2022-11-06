@@ -13,11 +13,14 @@ import com.thinlineit.favorit_android.android.data.entity.FundingState
 import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUseCase
 import com.thinlineit.favorit_android.android.ui.present.PresentActivity
-import com.thinlineit.favorit_android.android.util.dDayFromToday
+import com.thinlineit.favorit_android.android.ui.settlefunding.CelebrateFundingFinishActivity
+import com.thinlineit.favorit_android.android.util.calcDDay
 import com.thinlineit.favorit_android.android.util.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
+import java.util.Date
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class FundingDetailViewModel @Inject constructor(
@@ -32,9 +35,11 @@ class FundingDetailViewModel @Inject constructor(
 
     val funding: MutableLiveData<Funding> = MutableLiveData()
     val fundingExpiredDateString: LiveData<String> = Transformations.map(funding) {
-        when(it.state) {
+        when (it.state) {
             FundingState.OPENED -> {
-                val dDay = it.expiredDate.toDate()?.dDayFromToday()
+                val from = Date(System.currentTimeMillis())
+                val to = it.expiredDate.toDate() ?: throw Exception("Date format is wrong")
+                val dDay = calcDDay(from, to)
                 "펀딩 마감까지 ${dDay}일 남았어요"
             }
             FundingState.EXPIRED -> {
@@ -49,7 +54,7 @@ class FundingDetailViewModel @Inject constructor(
         }
     }
     val presentList: MutableLiveData<List<Present>> = MutableLiveData()
-    val presentStatusString: LiveData<String> = Transformations.map(presentList){
+    val presentStatusString: LiveData<String> = Transformations.map(presentList) {
         "${it.count()}명이 선물해줬어요."
     }
 
@@ -79,7 +84,7 @@ class FundingDetailViewModel @Inject constructor(
         }
         viewModelScope.launch {
             val result = fundingDetailUseCase.getPresentList(fundingId)
-            if(result is Result.Success) {
+            if (result is Result.Success) {
                 presentList.value = result.data
             }
         }
@@ -103,11 +108,18 @@ class FundingDetailViewModel @Inject constructor(
         }
     }
 
-    fun settle() {
+    fun settle(context: Context) {
         viewModelScope.launch {
             val funding = funding.value ?: return@launch
+            val presentList = presentList.value ?: return@launch
             if (funding.state == FundingState.CLOSED) {
-                // TODO: Go to celebrate funding activity
+                intentLiveData.value =
+                    CelebrateFundingFinishActivity.getIntent(
+                        context,
+                        fundingId,
+                        funding,
+                        ArrayList(presentList)
+                    )
             }
         }
     }

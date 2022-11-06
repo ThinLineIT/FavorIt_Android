@@ -18,14 +18,13 @@ fun Date.isBetweenDay(startDate: Date, endDate: Date): Boolean =
 
 fun Date.laterThanTomorrow(): Boolean {
     return DateUtils.isToday(this.time - DateUtils.DAY_IN_MILLIS) ||
-        System.currentTimeMillis() < this.time - DateUtils.DAY_IN_MILLIS
+            System.currentTimeMillis() < this.time - DateUtils.DAY_IN_MILLIS
 }
 
 fun Date.toDateFormat(): String {
     return dateFormat.format(this)
 }
 
-fun Date.dDayFromToday(): String {
-    val today = Date(System.currentTimeMillis())
-    return ((this.time - today.time) / (24 * 60 * 60 * 1000)).toString()
+fun calcDDay(from: Date, to: Date): String {
+    return ((to.time - from.time) / (24 * 60 * 60 * 1000)).toString()
 }

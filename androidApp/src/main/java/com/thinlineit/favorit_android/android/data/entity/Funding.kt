@@ -1,6 +1,7 @@
 package com.thinlineit.favorit_android.android.data.entity
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Funding(
     val name: String,
@@ -19,7 +20,7 @@ data class Funding(
     val fundingLink: String,
     val product: Product,
     val image: String,
-)
+) : Serializable
 
 enum class FundingState {
     OPENED, EXPIRED, CLOSED, COMPLETED

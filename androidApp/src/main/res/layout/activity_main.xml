@@ -17,8 +17,8 @@
         <ImageView
             android:id="@+id/goToFundingListButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
+            android:layout_height="@dimen/pictures_height"
+            android:layout_marginBottom="@dimen/pictures_bottom_margin"
             android:scaleType="fitXY"
             android:src="@drawable/icon_pictures"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,9 +29,10 @@
         <ImageView
             android:id="@+id/boxButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="4dp"
+            android:layout_height="@dimen/box_height"
+            android:layout_marginTop="@dimen/box_top_margin"
+            android:layout_marginRight="@dimen/box_right_margin"
+            android:scaleType="fitXY"
             android:src="@drawable/icon_box"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -40,17 +41,18 @@
         <ImageView
             android:id="@+id/createFundingButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="@dimen/note_height"
+            android:layout_marginTop="@dimen/note_top_margin"
             android:background="@drawable/icon_note"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goToFundingListButton" />
 
         <ImageView
             android:id="@+id/cameraButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
+            android:layout_height="@dimen/camera_height"
+            android:layout_marginLeft="@dimen/default_margin_left"
             android:background="@drawable/icon_camera"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goToFundingListButton" />
@@ -58,8 +60,7 @@
         <ImageView
             android:id="@+id/pencil"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/pencil_height"
             android:background="@drawable/icon_pencil"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/boxButton" />
@@ -67,33 +68,41 @@
         <ImageView
             android:id="@+id/ribbon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/ribbon_height"
             android:background="@drawable/icon_ribbon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/boxButton" />
+
         <LinearLayout
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
             <Button
                 android:id="@+id/goToPresentButton"
-                android:text="go to present"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="go to present" />
+
             <Button
                 android:id="@+id/goToPresentListButton"
-                android:text="go to present list"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="go to present list" />
+
             <Button
                 android:id="@+id/goToFundingDetailButton"
-                android:text="go to funding detail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="go to funding detail" />
+            <Button
+                android:id="@+id/goToFundingSettleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="go to funding settle" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

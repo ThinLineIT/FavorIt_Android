@@ -114,9 +114,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startSplash() {
-        binding.kakaoLoginButton.visibility = View.GONE
-        binding.root.setBackgroundResource(R.drawable.background_door)
         CoroutineScope(Dispatchers.Main).launch {
+            binding.kakaoLoginButton.visibility = View.GONE
+            binding.root.setBackgroundResource(R.drawable.background_door)
             delay(1000)
             SplashActivity.start(this@LoginActivity, fundingId)
             overridePendingTransition(R.anim.fadein, R.anim.fadeout)
