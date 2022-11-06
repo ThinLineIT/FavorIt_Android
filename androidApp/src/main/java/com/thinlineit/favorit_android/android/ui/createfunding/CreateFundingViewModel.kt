@@ -133,7 +133,6 @@ class CreateFundingViewModel @Inject constructor(
 
     suspend fun createFunding() {
         viewModelScope.launch(Dispatchers.IO) {
-            createFundingResult.postValue(Result.Loading(true))
             val createFundingRequest = getCreateFundingRequest() ?: run {
                 createFundingResult.postValue(Result.Fail(Exception("Some value is null")))
                 return@launch

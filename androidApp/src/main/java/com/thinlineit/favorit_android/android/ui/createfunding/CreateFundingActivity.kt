@@ -210,7 +210,7 @@ class CreateFundingActivity : AppCompatActivity() {
         viewModel.createFundingResult.observe(this) { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.createButton.isEnabled = !result.isLoading
+                    binding.createButton.isEnabled = result.isLoading
                 }
                 is Result.Fail -> {
                     binding.createButton.isEnabled = true
