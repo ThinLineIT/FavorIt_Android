@@ -3,8 +3,10 @@ package com.thinlineit.favorit_android.android.ui.present.list
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.lifecycle.ViewModelProvider
 import com.thinlineit.favorit_android.android.databinding.ActivityPresentListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +25,7 @@ class PresentListActivity : AppCompatActivity() {
     }
 
     private val albumPageAdapter by lazy {
-        AlbumPageAdapter(viewModel)
+        AlbumPageAdapter(this, viewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,9 @@ class PresentListActivity : AppCompatActivity() {
     private fun initObserver() {
         viewModel.pagingEvent.observe(this) {
             binding.albumViewPager.currentItem = it.toLeftPage
+        }
+        viewModel.presentStatusText.observe(this){
+            binding.presentListTitle.text = Html.fromHtml(it, FROM_HTML_MODE_LEGACY)
         }
     }
 

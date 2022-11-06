@@ -11,20 +11,20 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_margin="5dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/polaroidFrame"
-            android:layout_width="130dp"
+            android:layout_width="110dp"
             android:layout_height="130dp"
-            android:padding="10dp"
             android:background="@drawable/background_polaroid_frame"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/photo"
@@ -32,23 +32,24 @@
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
-                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintBottom_toTopOf="@id/supporterName"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/polaroidFrame" />
 
             <TextView
                 android:id="@+id/supporterName"
-                tools:text="신윤권"
-                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:src="@drawable/ic_present_sticker_pink_circle"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/polaroidFrame"
                 app:layout_constraintEnd_toEndOf="@id/polaroidFrame"
                 app:layout_constraintStart_toStartOf="@id/polaroidFrame"
-                app:layout_constraintTop_toBottomOf="@id/photo" />
+                app:layout_constraintTop_toBottomOf="@id/photo"
+                tools:text="신윤권" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

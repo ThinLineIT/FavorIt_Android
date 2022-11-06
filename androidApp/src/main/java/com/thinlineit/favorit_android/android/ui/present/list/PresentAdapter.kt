@@ -24,7 +24,7 @@ class PresentAdapter(
     }
 
     override fun onBindViewHolder(holder: PresentViewHolder, position: Int) {
-        holder.bind(presentList[position], onPresentClicked)
+        holder.bind(position, presentList[position], onPresentClicked)
     }
 
     override fun getItemCount(): Int = presentList.size
@@ -32,7 +32,7 @@ class PresentAdapter(
     class PresentViewHolder(
         private val dataBinding: ItemPresentListBinding
     ) : RecyclerView.ViewHolder(dataBinding.root) {
-        fun bind(present: Present, onPresentClicked: (Present) -> Unit) {
+        fun bind(position: Int, present: Present, onPresentClicked: (Present) -> Unit) {
             CoroutineScope(Dispatchers.Main).launch {
                 GlideApp.with(dataBinding.photo.context)
                     .load(present.photo)
@@ -42,6 +42,11 @@ class PresentAdapter(
             dataBinding.supporterName.text = present.supporterNickName
             dataBinding.root.setOnClickListener {
                 onPresentClicked(present)
+            }
+            dataBinding.root.rotation = when (position % 3) {
+                0 -> 5f
+                1 -> -5f
+                else -> 5f
             }
         }
 

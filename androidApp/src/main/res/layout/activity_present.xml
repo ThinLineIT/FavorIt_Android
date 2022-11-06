@@ -17,15 +17,14 @@
             android:id="@+id/presentRootScrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/background"
+            android:background="@drawable/background_blurred"
             android:fillViewport="true"
             app:layout_constraintBottom_toTopOf="@id/numberKeyPad"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/polaroidFrame"
@@ -49,6 +48,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:layout_marginTop="5dp"
                         android:id="@+id/photoImageView"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -78,6 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:textSize="13sp"
                         android:text="친구와의 추억이 담긴 사진을 넣어주세요!"
                         android:textColor="@color/white"
                         android:visibility="@{viewModel.isPhotoSelected}"
@@ -100,6 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:textSize="13sp"
                         android:background="@null"
                         android:hint="친구를 10자 이내로 표현해주세요"
                         android:text="@={viewModel.makerNickName}"
@@ -113,6 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:layout_margin="10dp"
+                        android:textSize="13sp"
                         android:background="@null"
                         android:hint="선물과 함께 보낼 메시지를 적어보세요"
                         android:text="@={viewModel.presentMessage}"
@@ -134,6 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@null"
+                        android:textSize="13sp"
                         android:hint="친구에게 보여질 이름이에요"
                         android:text="@={viewModel.supporterNickName}"
                         app:layout_constraintBaseline_toBottomOf="@id/supporterNameTitle"
@@ -157,8 +161,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="얼마를 선물할까요?"
-                        android:text="@{viewModel.presentPriceAsNumerals}"
-                        android:textSize="20sp"
+                        android:text="@{viewModel.presentAmountAsCurrency}"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="@id/presentAmountTitle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/presentAmountTitle" />
@@ -173,6 +177,8 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/background_round_white"
                     android:text="선물하기"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/polaroidFrame" />
             </androidx.constraintlayout.widget.ConstraintLayout>
