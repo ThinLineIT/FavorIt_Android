@@ -7,6 +7,7 @@
     <color name="red">#FF0000</color>
     <color name="blue">#92D2FF</color>
     <color name="progressBlue">#A3CEF5</color>
+    <color name="progressCircleBlue">#6FB0E6</color>
     <color name="progressBackground">#F9EDE5</color>
     <color name="lightBlue">#E6F6FF</color>
     <color name="lightGray">#CECECE</color>

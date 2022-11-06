@@ -102,5 +102,8 @@
     <string name="label_my_funding_list">내가 만든 펀딩(*/ω＼*)</string>
     <string name="label_friend_funding_list">친구들의 펀딩 (●\'e\'●)</string>
     <string name="label_empty_funding_list">"아직 공유받은 펀딩이 없어요"</string>
+    <string name="funding_detail_progress_expired_date">펀딩 마감까지  &lt;big>&lt;b>%1$s&lt;/b>&lt;/big>일 남았어요</string>
+    <string name="funding_detail_progress_present_status"> &lt;big>&lt;b>%1$s&lt;/b>&lt;/big>명이 선물해줬어요.</string>
+    <string name="present_list_present_status">총 &lt;font color="#FDA2E3">%1$s&lt;/font>분이 선물하셨어요!</string>
 
 </resources>
