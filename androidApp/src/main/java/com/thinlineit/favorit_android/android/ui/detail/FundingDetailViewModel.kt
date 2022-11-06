@@ -16,12 +16,15 @@ import com.thinlineit.favorit_android.android.data.entity.FundingState
 import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.ui.detail.usecase.FundingDetailUseCase
 import com.thinlineit.favorit_android.android.ui.present.PresentActivity
-import com.thinlineit.favorit_android.android.util.dDayFromToday
+import com.thinlineit.favorit_android.android.ui.settlefunding.CelebrateFundingFinishActivity
+import com.thinlineit.favorit_android.android.util.calcDDay
 import com.thinlineit.favorit_android.android.util.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.launch
+import java.util.Date
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class FundingDetailViewModel @Inject constructor(
@@ -39,7 +42,9 @@ class FundingDetailViewModel @Inject constructor(
     val fundingExpiredDateString: LiveData<String> = Transformations.map(funding) {
         when (it.state) {
             FundingState.OPENED -> {
-                val dDay = it.expiredDate.toDate()?.dDayFromToday()
+                val from = Date(System.currentTimeMillis())
+                val to = it.expiredDate.toDate() ?: throw Exception("Date format is wrong")
+                val dDay = calcDDay(from, to)
                 context.resources.getString(R.string.funding_detail_progress_expired_date, dDay)
             }
             FundingState.EXPIRED -> {
@@ -108,11 +113,18 @@ class FundingDetailViewModel @Inject constructor(
         }
     }
 
-    fun settle() {
+    fun settle(context: Context) {
         viewModelScope.launch {
             val funding = funding.value ?: return@launch
+            val presentList = presentList.value ?: return@launch
             if (funding.state == FundingState.CLOSED) {
-                // TODO: Go to celebrate funding activity
+                intentLiveData.value =
+                    CelebrateFundingFinishActivity.getIntent(
+                        context,
+                        fundingId,
+                        funding,
+                        ArrayList(presentList)
+                    )
             }
         }
     }
