@@ -2,7 +2,9 @@ package com.thinlineit.favorit_android.android.util
 
 import android.content.Context
 import android.net.Uri
+import android.view.View
 import android.webkit.MimeTypeMap
+import androidx.constraintlayout.widget.Group
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -45,5 +47,11 @@ private fun copy(source: InputStream, target: OutputStream) {
     var length: Int
     while (source.read(buf).also { length = it } > 0) {
         target.write(buf, 0, length)
+    }
+}
+
+fun Group.setAllOnClickListener(listener: View.OnClickListener?) {
+    referencedIds.forEach { id ->
+        rootView.findViewById<View>(id).setOnClickListener(listener)
     }
 }

@@ -23,6 +23,7 @@ import com.thinlineit.favorit_android.android.ui.customview.numberkeypad.NumberK
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.util.checkPermission
 import com.thinlineit.favorit_android.android.util.fileFromContentUri
+import com.thinlineit.favorit_android.android.util.setAllOnClickListener
 import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,6 +44,7 @@ class CreateFundingActivity : AppCompatActivity() {
             if (binding.calendarDatePicker.visibility == View.VISIBLE) {
                 isEnabled = false
                 binding.calendarDatePicker.visibility = View.GONE
+                binding.calendarBackground.visibility = View.GONE
             }
         }
     }
@@ -75,7 +77,6 @@ class CreateFundingActivity : AppCompatActivity() {
                 numberKeypadVisible(false)
                 datePickerVisible(true)
             }
-
             it.fundingName.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     datePickerVisible(false)
@@ -102,10 +103,12 @@ class CreateFundingActivity : AppCompatActivity() {
                 datePickerVisible(false)
             }
 
-            it.addImageButton.setOnClickListener {
+            it.imageGroup.setAllOnClickListener {
                 attachImage()
             }
-
+            it.reUploadButton.setOnClickListener {
+                attachImage()
+            }
             it.createButton.setOnClickListener {
                 CreateFundingClickListener(
                     this,
@@ -146,9 +149,11 @@ class CreateFundingActivity : AppCompatActivity() {
             binding.linkText.clearFocus()
             numberKeypadVisible(false)
             binding.calendarDatePicker.visibility = View.VISIBLE
+            binding.calendarBackground.visibility = View.VISIBLE
             calendarOnBackPressedCallback.isEnabled = true
         } else {
             binding.calendarDatePicker.visibility = View.GONE
+            binding.calendarBackground.visibility = View.GONE
             calendarOnBackPressedCallback.isEnabled = false
         }
     }
@@ -191,6 +196,7 @@ class CreateFundingActivity : AppCompatActivity() {
             imageUri.let {
                 binding.addImageButton.visibility = View.GONE
                 binding.addImageText.visibility = View.GONE
+                binding.reUploadButton.visibility = View.VISIBLE
             }
             val mimeType = this.contentResolver.getType(imageUri)
 
@@ -207,7 +213,7 @@ class CreateFundingActivity : AppCompatActivity() {
         viewModel.createFundingResult.observe(this) { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.createButton.isEnabled = !result.isLoading
+                    binding.createButton.isEnabled = result.isLoading
                 }
                 is Result.Fail -> {
                     binding.createButton.isEnabled = true
