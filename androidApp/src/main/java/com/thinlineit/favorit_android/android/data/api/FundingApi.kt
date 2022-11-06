@@ -55,7 +55,7 @@ interface FundingApi {
         @Part image: MultipartBody.Part,
     ): Response<ResponseBody<PresentResult>>
 
-    @POST("funding/options/bank")
+    @GET("funding/options/bank")
     suspend fun getBankList(): List<Bank>
 
     @POST("funding/verification/bank-account")

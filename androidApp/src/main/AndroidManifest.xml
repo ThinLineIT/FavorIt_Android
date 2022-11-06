@@ -80,6 +80,8 @@
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.settlefunding.CelebrateFundingFinishActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
