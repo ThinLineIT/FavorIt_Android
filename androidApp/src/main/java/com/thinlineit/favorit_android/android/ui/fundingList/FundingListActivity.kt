@@ -34,7 +34,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import com.skydoves.landscapist.glide.GlideImage
@@ -155,15 +157,14 @@ fun MyFundingList(fundingList: List<FundingInfo>?) {
                 itemsIndexed(fundingList) { index, item ->
                     Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_left_margin)))
                     if (index % 2 == 0)
-                        FundingItem(funding = item, modifier = Modifier.rotate(10f))
+                        FundingItem(funding = item, modifier = Modifier.rotate(5.66f), index)
                     else
-                        FundingItem(funding = item, modifier = Modifier.rotate(-10f))
+                        FundingItem(funding = item, modifier = Modifier.rotate(-5.66f), index)
                     if (index == fundingList.lastIndex) {
                         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_left_margin)))
                         CreateFunding()
                     }
                     Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_right_margin)))
-
                 }
             }
         }
@@ -195,15 +196,16 @@ fun FriendFundingList(fundingList: List<FundingInfo>?) {
             }
         }
         if (fundingList == null) {
-            Text(stringResource(id = R.string.label_empty_funding_list))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.friend_funding_list_empty_top_margin)))
+            Text(text = stringResource(id = R.string.label_empty_funding_list), fontSize = 17.sp)
         } else {
             LazyRow {
                 itemsIndexed(fundingList) { index, item ->
                     Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_left_margin)))
                     if (index % 2 == 0)
-                        FundingItem(funding = item, modifier = Modifier.rotate(10f))
+                        FundingItem(funding = item, modifier = Modifier.rotate(5.66f), index + 1)
                     else
-                        FundingItem(funding = item, modifier = Modifier.rotate(-10f))
+                        FundingItem(funding = item, modifier = Modifier.rotate(-5.66f), index + 1)
                     Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.funding_item_right_margin)))
                 }
             }
@@ -212,7 +214,7 @@ fun FriendFundingList(fundingList: List<FundingInfo>?) {
 }
 
 @Composable
-fun FundingItem(funding: FundingInfo, modifier: Modifier) {
+fun FundingItem(funding: FundingInfo, modifier: Modifier, itemNum: Int) {
     val mContext = LocalContext.current
     Box(
         modifier = modifier
@@ -232,36 +234,57 @@ fun FundingItem(funding: FundingInfo, modifier: Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.default_top_margin)))
-            Box(modifier = Modifier.size(dimensionResource(id = R.dimen.funding_item_box_size))) {
-                GlideImage(
-                    imageModel = funding.image,
-                    modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.funding_item_image_size))
-                        .align(Alignment.Center),
-                    placeHolder = ImageBitmap.imageResource(R.drawable.icon_celebrate),
-                    error = ImageBitmap.imageResource(R.drawable.icon_celebrate)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.icon_green_tape),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.green_tape_width))
-                        .align(Alignment.TopEnd)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.icon_green_tape),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.green_tape_width))
-                        .align(Alignment.BottomStart)
-                )
-            }
+            FundingItemImage(fundingImage = funding.image, itemNum = itemNum)
             Text(
                 text = funding.name,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold
             )
-            Text(text = funding.dueDate, textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.funding_item_text_margin)))
+            Text(
+                text = funding.dueDate.replace('-', '.'),
+                textAlign = TextAlign.Center,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
+    }
+}
+
+@Composable
+fun FundingItemImage(fundingImage: String, itemNum: Int) {
+    val tapePainter = when (itemNum % 3) {
+        0 -> painterResource(id = R.drawable.icon_green_tape)
+        1 -> painterResource(id = R.drawable.icon_pink_tape)
+        else -> painterResource(id = R.drawable.icon_yellow_tape)
+    }
+
+    Box(modifier = Modifier.size(dimensionResource(id = R.dimen.funding_item_box_size))) {
+        GlideImage(
+            imageModel = fundingImage,
+            modifier = Modifier
+                .size(dimensionResource(id = R.dimen.funding_item_image_size))
+                .align(Alignment.Center),
+            placeHolder = ImageBitmap.imageResource(R.drawable.icon_celebrate),
+            error = ImageBitmap.imageResource(R.drawable.icon_celebrate)
+        )
+        Image(
+            painter = tapePainter,
+            contentDescription = "",
+            modifier = Modifier
+                .size(dimensionResource(id = R.dimen.green_tape_width))
+                .align(Alignment.TopEnd)
+        )
+        Image(
+            painter = tapePainter,
+            contentDescription = "",
+            modifier = Modifier
+                .size(dimensionResource(id = R.dimen.green_tape_width))
+                .align(Alignment.BottomStart)
+        )
     }
 }
 
