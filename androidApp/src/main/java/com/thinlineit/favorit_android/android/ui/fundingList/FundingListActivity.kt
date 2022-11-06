@@ -197,7 +197,11 @@ fun FriendFundingList(fundingList: List<FundingInfo>?) {
         }
         if (fundingList == null) {
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.friend_funding_list_empty_top_margin)))
-            Text(text = stringResource(id = R.string.label_empty_funding_list), fontSize = 17.sp)
+            Text(
+                text = stringResource(id = R.string.label_empty_funding_list),
+                fontSize = 17.sp,
+                textAlign = TextAlign.Center
+            )
         } else {
             LazyRow {
                 itemsIndexed(fundingList) { index, item ->
