@@ -68,10 +68,10 @@ class FundingDetailActivity : AppCompatActivity() {
         viewModel.fundingStatus.observe(this) {
             when (it) {
                 FundingState.OPENED -> {
-                    binding.settleButton.setImageResource(R.drawable.ic_closed_gift_box)
+                    binding.settleButton.setImageResource(R.drawable.icon_box)
                 }
                 FundingState.EXPIRED -> {
-                    binding.settleButton.setImageResource(R.drawable.ic_closed_gift_box)
+                    binding.settleButton.setImageResource(R.drawable.icon_box)
                 }
                 FundingState.CLOSED -> {
                     launchFundingCloseAnimAndSetClose()
