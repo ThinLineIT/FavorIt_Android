@@ -13,6 +13,7 @@
     <color name="black">#000000</color>
     <color name="yellow">#FFBA50</color>
     <color name="transparent">#00000000</color>
+    <color name="shadow">#55000000</color>
     <color name="navajoWhite">#FFE0B2</color>
     <color name="lightYellow">#FFFBA7</color>
     <color name="darkYellow">#FFB84E</color>

@@ -384,6 +384,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
+        <View
+            android:id="@+id/calendarBackground"
+            android:visibility="gone"
+            android:background="@color/shadow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <com.thinlineit.favorit_android.android.ui.customview.calendar.CalendarView
             android:id="@+id/calendarDatePicker"
             android:layout_width="match_parent"

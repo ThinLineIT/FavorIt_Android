@@ -44,6 +44,7 @@ class CreateFundingActivity : AppCompatActivity() {
             if (binding.calendarDatePicker.visibility == View.VISIBLE) {
                 isEnabled = false
                 binding.calendarDatePicker.visibility = View.GONE
+                binding.calendarBackground.visibility = View.GONE
             }
         }
     }
@@ -148,9 +149,11 @@ class CreateFundingActivity : AppCompatActivity() {
             binding.linkText.clearFocus()
             numberKeypadVisible(false)
             binding.calendarDatePicker.visibility = View.VISIBLE
+            binding.calendarBackground.visibility = View.VISIBLE
             calendarOnBackPressedCallback.isEnabled = true
         } else {
             binding.calendarDatePicker.visibility = View.GONE
+            binding.calendarBackground.visibility = View.GONE
             calendarOnBackPressedCallback.isEnabled = false
         }
     }
