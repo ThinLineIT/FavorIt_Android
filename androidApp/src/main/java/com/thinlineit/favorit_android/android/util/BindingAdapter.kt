@@ -4,6 +4,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.thinlineit.favorit_android.android.di.GlideApp
 
 @BindingAdapter("app:data")
 fun <T> setRecyclerViewData(recyclerView: RecyclerView, data: T) {
@@ -15,7 +16,7 @@ fun <T> setRecyclerViewData(recyclerView: RecyclerView, data: T) {
 @BindingAdapter("android:imageURI")
 fun loadImage(view: ImageView, uri: String) {
     uri.let {
-        Glide.with(view.context)
+        GlideApp.with(view.context)
             .load(uri)
             .fitCenter()
             .into(view)

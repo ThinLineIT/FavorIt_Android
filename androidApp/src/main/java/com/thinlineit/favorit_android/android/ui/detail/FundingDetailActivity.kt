@@ -148,7 +148,7 @@ class FundingDetailActivity : AppCompatActivity() {
         }
         binding.settleButton.setOnClickListener {
             if (viewModel.fundingStatus.value == FundingState.CLOSED) {
-                viewModel.settle()
+                viewModel.settle(this)
             } else {
                 PresentListActivity.start(this, viewModel.fundingId)
             }
