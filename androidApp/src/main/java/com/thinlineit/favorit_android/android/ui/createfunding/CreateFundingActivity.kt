@@ -23,6 +23,7 @@ import com.thinlineit.favorit_android.android.ui.customview.numberkeypad.NumberK
 import com.thinlineit.favorit_android.android.ui.detail.FundingDetailActivity
 import com.thinlineit.favorit_android.android.util.checkPermission
 import com.thinlineit.favorit_android.android.util.fileFromContentUri
+import com.thinlineit.favorit_android.android.util.setAllOnClickListener
 import com.thinlineit.favorit_android.android.util.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,7 +76,6 @@ class CreateFundingActivity : AppCompatActivity() {
                 numberKeypadVisible(false)
                 datePickerVisible(true)
             }
-
             it.fundingName.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     datePickerVisible(false)
@@ -102,10 +102,12 @@ class CreateFundingActivity : AppCompatActivity() {
                 datePickerVisible(false)
             }
 
-            it.addImageButton.setOnClickListener {
+            it.imageGroup.setAllOnClickListener {
                 attachImage()
             }
-
+            it.reUploadButton.setOnClickListener {
+                attachImage()
+            }
             it.createButton.setOnClickListener {
                 CreateFundingClickListener(
                     this,
@@ -191,6 +193,7 @@ class CreateFundingActivity : AppCompatActivity() {
             imageUri.let {
                 binding.addImageButton.visibility = View.GONE
                 binding.addImageText.visibility = View.GONE
+                binding.reUploadButton.visibility = View.VISIBLE
             }
             val mimeType = this.contentResolver.getType(imageUri)
 
