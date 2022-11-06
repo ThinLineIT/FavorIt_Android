@@ -2,11 +2,14 @@ package com.thinlineit.favorit_android.android.ui.detail
 
 import android.content.Context
 import android.content.Intent
+import android.text.Html
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingState
@@ -16,11 +19,13 @@ import com.thinlineit.favorit_android.android.ui.present.PresentActivity
 import com.thinlineit.favorit_android.android.util.dDayFromToday
 import com.thinlineit.favorit_android.android.util.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FundingDetailViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val fundingDetailUseCase: FundingDetailUseCase,
 ) : ViewModel() {
     var fundingId: Int = 0
@@ -32,10 +37,10 @@ class FundingDetailViewModel @Inject constructor(
 
     val funding: MutableLiveData<Funding> = MutableLiveData()
     val fundingExpiredDateString: LiveData<String> = Transformations.map(funding) {
-        when(it.state) {
+        when (it.state) {
             FundingState.OPENED -> {
                 val dDay = it.expiredDate.toDate()?.dDayFromToday()
-                "펀딩 마감까지 ${dDay}일 남았어요"
+                context.resources.getString(R.string.funding_detail_progress_expired_date, dDay)
             }
             FundingState.EXPIRED -> {
                 "펀딩이 만료되었습니다."
@@ -49,8 +54,8 @@ class FundingDetailViewModel @Inject constructor(
         }
     }
     val presentList: MutableLiveData<List<Present>> = MutableLiveData()
-    val presentStatusString: LiveData<String> = Transformations.map(presentList){
-        "${it.count()}명이 선물해줬어요."
+    val presentStatusString: LiveData<String> = Transformations.map(presentList) {
+        context.resources.getString(R.string.funding_detail_progress_present_status, it.count())
     }
 
     val fundingStatus: LiveData<FundingState> = Transformations.map(funding) {
@@ -79,7 +84,7 @@ class FundingDetailViewModel @Inject constructor(
         }
         viewModelScope.launch {
             val result = fundingDetailUseCase.getPresentList(fundingId)
-            if(result is Result.Success) {
+            if (result is Result.Success) {
                 presentList.value = result.data
             }
         }

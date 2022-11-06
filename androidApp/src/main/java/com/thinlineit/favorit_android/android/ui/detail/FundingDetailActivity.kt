@@ -7,8 +7,10 @@ import android.content.Intent
 import android.graphics.drawable.Animatable2.AnimationCallback
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Html
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import com.bumptech.glide.Glide
@@ -86,11 +88,13 @@ class FundingDetailActivity : AppCompatActivity() {
             binding.fundingProgressNameTextView.text = it.name
             binding.fundingProgressBar.setProgress(it.progressPercentage)
         }
-        viewModel.fundingExpiredDateString.observe(this){
-            binding.fundingProgressExpiredDateTextView.text = it
+        viewModel.fundingExpiredDateString.observe(this) {
+            binding.fundingProgressExpiredDateTextView.text =
+                Html.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
         viewModel.presentStatusString.observe(this) {
-            binding.fundingProgressPresentStatusTextView.text = it
+            binding.fundingProgressPresentStatusTextView.text =
+                Html.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
     }
 
