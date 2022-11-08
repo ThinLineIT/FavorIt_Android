@@ -24,9 +24,11 @@
         android:layout_height="30dp"
         android:background="@drawable/background_circle"
         android:gravity="center"
-        app:layout_constraintHorizontal_bias="0"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/progressBar"
         tools:text="0%" />

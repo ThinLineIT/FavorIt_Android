@@ -2,11 +2,14 @@ package com.thinlineit.favorit_android.android.ui.detail
 
 import android.content.Context
 import android.content.Intent
+import android.text.Html
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Funding
 import com.thinlineit.favorit_android.android.data.entity.FundingState
@@ -17,6 +20,7 @@ import com.thinlineit.favorit_android.android.ui.settlefunding.CelebrateFundingF
 import com.thinlineit.favorit_android.android.util.calcDDay
 import com.thinlineit.favorit_android.android.util.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -24,6 +28,7 @@ import kotlin.collections.ArrayList
 
 @HiltViewModel
 class FundingDetailViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val fundingDetailUseCase: FundingDetailUseCase,
 ) : ViewModel() {
     var fundingId: Int = 0
@@ -40,7 +45,7 @@ class FundingDetailViewModel @Inject constructor(
                 val from = Date(System.currentTimeMillis())
                 val to = it.expiredDate.toDate() ?: throw Exception("Date format is wrong")
                 val dDay = calcDDay(from, to)
-                "펀딩 마감까지 ${dDay}일 남았어요"
+                context.resources.getString(R.string.funding_detail_progress_expired_date, dDay)
             }
             FundingState.EXPIRED -> {
                 "펀딩이 만료되었습니다."
@@ -55,7 +60,7 @@ class FundingDetailViewModel @Inject constructor(
     }
     val presentList: MutableLiveData<List<Present>> = MutableLiveData()
     val presentStatusString: LiveData<String> = Transformations.map(presentList) {
-        "${it.count()}명이 선물해줬어요."
+        context.resources.getString(R.string.funding_detail_progress_present_status, it.count())
     }
 
     val fundingStatus: LiveData<FundingState> = Transformations.map(funding) {

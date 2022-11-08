@@ -18,7 +18,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_onlytop_round_white"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"
             app:layout_constraintStart_toStartOf="parent"

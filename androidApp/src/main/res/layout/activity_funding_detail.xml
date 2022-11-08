@@ -42,12 +42,14 @@
             android:id="@+id/fundingProgressNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:textSize="25sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/fundingProgressBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="이거사줘 님의 선물상자" />
+            tools:text="이거사줘" />
 
         <com.thinlineit.favorit_android.android.ui.customview.IndicatorProgressBar
             android:id="@+id/fundingProgressBar"
@@ -61,24 +63,28 @@
             android:id="@+id/fundingProgressPresentStatusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/fundingProgressExpiredDateTextView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fundingProgressBar"
-            tools:text="30명이 선물해줬어요" />
+            tools:text="@string/funding_detail_progress_present_status" />
 
         <TextView
             android:id="@+id/fundingProgressExpiredDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fundingProgressPresentStatusTextView"
-            tools:text="펀딩 마감까지 12일 남았어요" />
+            tools:text="@string/funding_detail_progress_expired_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

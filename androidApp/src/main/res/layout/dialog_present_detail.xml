@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@null"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@null">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/polaroidFrame"
@@ -26,13 +26,16 @@
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="목록으로 가기"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/backButton"
             app:layout_constraintStart_toEndOf="@id/backButton"
-            app:layout_constraintTop_toTopOf="@id/backButton"
-            app:layout_constraintBottom_toBottomOf="@id/backButton"/>
+            app:layout_constraintTop_toTopOf="@id/backButton" />
 
         <ImageView
             android:id="@+id/photoImageView"
@@ -63,11 +66,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@null"
-            tools:text="대충 별명"
+            android:textColor="@color/black"
             app:layout_constraintBaseline_toBottomOf="@id/makerNickNameTitle"
             app:layout_constraintBottom_toTopOf="@id/presentMessageTextView"
             app:layout_constraintStart_toEndOf="@+id/makerNickNameTitle"
-            app:layout_constraintTop_toBottomOf="@+id/photoImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/photoImageView"
+            tools:text="대충 별명" />
 
         <TextView
             android:id="@+id/presentMessageTextView"
@@ -75,9 +79,10 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:background="@null"
-            tools:text="제 작고 귀여운 노트북이 어도비를 힘들어합니다..제 작고 귀여운 노트북이 어도비를 힘들어합니다.."
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/supporterNameTitle"
-            app:layout_constraintTop_toBottomOf="@+id/makerNickNameTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/makerNickNameTextView"
+            tools:text="제 작고 귀여운 노트북이 어도비를 힘들어합니다..제 작고 귀여운 노트북이 어도비를 힘들어합니다.." />
 
         <ImageView
             android:id="@+id/supporterNameTitle"
@@ -94,11 +99,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            tools:text="정빈정빈정빈"
+            android:textColor="@color/black"
             app:layout_constraintBaseline_toBottomOf="@id/supporterNameTitle"
             app:layout_constraintBottom_toTopOf="@id/presentAmountTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/presentMessageTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/presentMessageTextView"
+            tools:text="정빈정빈정빈" />
 
         <ImageView
             android:id="@+id/presentAmountTitle"
@@ -115,11 +121,12 @@
             android:id="@+id/presentAmountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="5,000원"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/presentAmountTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/presentAmountTitle" />
+            app:layout_constraintTop_toTopOf="@id/presentAmountTitle"
+            tools:text="5,000원" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

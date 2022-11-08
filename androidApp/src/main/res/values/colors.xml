@@ -7,12 +7,14 @@
     <color name="red">#FF0000</color>
     <color name="blue">#92D2FF</color>
     <color name="progressBlue">#A3CEF5</color>
+    <color name="progressCircleBlue">#6FB0E6</color>
     <color name="progressBackground">#F9EDE5</color>
     <color name="lightBlue">#E6F6FF</color>
     <color name="lightGray">#CECECE</color>
     <color name="black">#000000</color>
     <color name="yellow">#FFBA50</color>
     <color name="transparent">#00000000</color>
+    <color name="shadow">#55000000</color>
     <color name="navajoWhite">#FFE0B2</color>
     <color name="lightYellow">#FFFBA7</color>
     <color name="darkYellow">#FFB84E</color>

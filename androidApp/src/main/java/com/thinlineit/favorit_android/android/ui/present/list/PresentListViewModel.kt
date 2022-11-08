@@ -1,17 +1,22 @@
 package com.thinlineit.favorit_android.android.ui.present.list
 
+import android.content.Context
+import android.view.View
 import androidx.lifecycle.*
+import com.thinlineit.favorit_android.android.R
 import com.thinlineit.favorit_android.android.data.Result
 import com.thinlineit.favorit_android.android.data.entity.Present
 import com.thinlineit.favorit_android.android.ui.present.list.PresentAdapter.Companion.MAX_PRESENT_COUNT_EACH_PAGE
 import com.thinlineit.favorit_android.android.ui.present.list.PresentListActivity.Companion.FUNDING_ID
 import com.thinlineit.favorit_android.android.ui.present.usecase.GetPresentList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PresentListViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val getPresentList: GetPresentList,
     state: SavedStateHandle
 ) : ViewModel(), AlbumPageAdapter.BookPage.BookPageClickListener {
@@ -30,6 +35,8 @@ class PresentListViewModel @Inject constructor(
     private val _pagingEvent: MutableLiveData<PagingEvent> = MutableLiveData()
     val pagingEvent: LiveData<PagingEvent> = _pagingEvent
 
+    val presentStatusText: MutableLiveData<String> = MutableLiveData("")
+
     init {
         val fundingId = state.get<Int>(FUNDING_ID) ?: throw Exception("Funding id is invalid")
         loadPresentList(fundingId)
@@ -43,13 +50,19 @@ class PresentListViewModel @Inject constructor(
                 is Result.Success -> {
                     presentList = result.data
                     fetchPageInfo(-2, 0)
+                    presentStatusText.value = context.resources.getString(
+                        R.string.present_list_present_status,
+                        presentList.size.toString()
+                    )
                 }
             }
         }
     }
 
     private fun getPageInfo(page: Int): PageInfo? {
-        if (presentList.size / MAX_PRESENT_COUNT_EACH_PAGE < page) return null
+        val lastPage =
+            (presentList.size / MAX_PRESENT_COUNT_EACH_PAGE) - 1 + if ((presentList.size % MAX_PRESENT_COUNT_EACH_PAGE) > 0) 1 else 0
+        if (lastPage < page) return null
         val startPosition = page * MAX_PRESENT_COUNT_EACH_PAGE
         val endPosition = Integer.min(
             startPosition + MAX_PRESENT_COUNT_EACH_PAGE,
@@ -58,8 +71,8 @@ class PresentListViewModel @Inject constructor(
         return PageInfo(
             page,
             presentList.subList(startPosition, endPosition),
-            page - 1 in presentList.indices,
-            page + 1 in presentList.indices
+            page > 0,
+            page < lastPage
         )
     }
 
@@ -87,10 +100,6 @@ class PresentListViewModel @Inject constructor(
     override fun onPageClick(nextPage: Int) {
         fetchPageInfo(currentPage, nextPage)
         currentPage = nextPage
-    }
-
-    fun onPresentClicked(present: Present) {
-
     }
 
     data class PageInfo(
