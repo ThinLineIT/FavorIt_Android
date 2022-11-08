@@ -20,11 +20,13 @@
     <dimen name="funding_item_left_margin">30dp</dimen>
     <dimen name="funding_item_right_margin">20dp</dimen>
     <dimen name="funding_item_top_padding">40dp</dimen>
-    <dimen name="funding_item_image_size">120dp</dimen>
+    <dimen name="funding_item_image_size">110dp</dimen>
+    <dimen name="funding_item_text_margin">5dp</dimen>
     <dimen name="funding_list_name_width">216dp</dimen>
     <dimen name="funding_list_name_height">57dp</dimen>
     <dimen name="my_funding_list_left_margin">15dp</dimen>
     <dimen name="friend_funding_list_left_margin">40dp</dimen>
+    <dimen name="friend_funding_list_empty_top_margin">40dp</dimen>
     <dimen name="default_top_margin">30dp</dimen>
     <dimen name="green_tape_width">40dp</dimen>
     <dimen name="exit_size">30dp</dimen>
