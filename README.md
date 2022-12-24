@@ -1,5 +1,5 @@
 # FavorIt_Android
-난 이걸로 부탁해
+<img width="300" src="https://user-images.githubusercontent.com/50603273/209434980-14943a78-3672-4ee3-a0ab-b084daf2557b.png">
 
 # Contributor
 <a href="https://github.com/ThinLineIT/FavorIt_Android/graphs/contributors">
@@ -147,4 +147,37 @@ Favorit
 └─📂util
 
 ```
+
+# Specification
+<table class="tg">
+<tbody>
+  <tr>
+    <td><b>Architecture</b></td>
+    <td>MVVM</td>
+  </tr>
+<tr>
+    <td><b>Jetpack Components</b></td>
+<td>DataBinding, LiveData, ViewModel, Lifecycle, Compose </td>
+</tr>
+<tr>
+    <td><b>Other Library</b></td>
+<td>Glide, Hilt2 </td>
+</tr>
+<tr>
+    <td><b>Network</b></td>
+<td>Retrofit2, coroutine</td>
+</tr>
+<tr>
+    <td><b>Strategy</b></td>
+<td>Git Flow</td>
+</tr>
+<tr>
+    <td><b>Other Tool</b></td>
+<td>Slack, Trello, Confluence</td>
+</tr>
+
+
+</tbody>
+</table>
+
 
